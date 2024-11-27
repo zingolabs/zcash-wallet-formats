@@ -1,6 +1,6 @@
 # Zcashd Wallets
 
-The `wallet.dat` files here (0 to 7) where generated while running the `qa/zcash/full_test_suite.py` tests from [Zcashd](https://github.com/zcash/zcash).
+The `wallet.dat` files under `zcashd/` (0 to 7) were generated while running the `qa/zcash/full_test_suite.py` tests from [Zcashd](https://github.com/zcash/zcash).
 
 ## Important Information
 
