@@ -4,7 +4,7 @@ The `wallet.dat` files under `zcashd/` (0 to 7) were generated while running the
 
 ## Important Information
 
-[ZIP-400](https://zips.z.cash/zip-0400) documents the schema used for zcashd `v3.0.0-rc1`. However, zcashd version `4.7.0` introduced **Unified Addresses**.
+[ZIP-400](https://zips.z.cash/zip-0400) documents the schema used for zcashd `v3.0.0-rc1`. However, zcashd version `4.7.0` [introduced **Unified Addresses**](https://hackmd.io/@daira/rJVEmOCkh#Changes-to-the-zcashd-wallet).
 
 ## Resources
 
