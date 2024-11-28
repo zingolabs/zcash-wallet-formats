@@ -12,3 +12,4 @@ The `wallet.dat` files under `zcashd/` (0 to 7) were generated while running the
 - [Zcashd Wallet Guide for Exchanges](https://hackmd.io/@daira/rJVEmOCkh)
 - [ZIP-400 (Wallet.dat format)](https://zips.z.cash/zip-0400)
 - [ZIP-316 (Unified Addresses and Unified Viewing Keys)](https://zips.z.cash/zip-0316)
+- [Bitcoin wallet.dat parser script](https://github.com/jackjack-jj/pywallet)
