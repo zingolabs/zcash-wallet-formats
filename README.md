@@ -6,6 +6,8 @@ The `wallet.dat` files under `zcashd/` (0 to 7) were generated while running the
 
 [ZIP-400](https://zips.z.cash/zip-0400) documents the schema used for zcashd `v3.0.0-rc1`. Since then, the format has changed a bit.
 
+Some work related to parsing is being done [here](https://github.com/dorianvp/zcashd-bdb-parser).
+
 ## Resources
 
 - [zcash/zips #964: Update ZIP 400 for NU5/Orchard changes](https://github.com/zcash/zips/issues/964)
