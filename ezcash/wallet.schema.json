@@ -1,0 +1,686 @@
+{
+  "oneOf": [
+    {
+      "$ref": "#/definitions/Nerdbank.Zcash.App.Models.DataRoot"
+    },
+    {
+      "type": "null"
+    }
+  ],
+  "definitions": {
+    "Nerdbank.Bitcoin.Bip39Mnemonic": {
+      "type": "array",
+      "minItems": 1,
+      "items": [
+        {
+          "type": "string",
+          "description": "Seed phrase"
+        },
+        {
+          "type": "string",
+          "description": "Password"
+        }
+      ]
+    },
+    "Nerdbank.Zcash.App.Models.HDWallet": {
+      "type": [
+        "object",
+        "array"
+      ],
+      "properties": {
+        "0": {
+          "$ref": "#/definitions/Nerdbank.Bitcoin.Bip39Mnemonic"
+        },
+        "1": {
+          "type": "string"
+        },
+        "2": {
+          "type": "boolean"
+        }
+      },
+      "items": [
+        {
+          "$ref": "#/definitions/Nerdbank.Bitcoin.Bip39Mnemonic"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "boolean"
+        }
+      ],
+      "required": [
+        "Mnemonic",
+        "Name"
+      ]
+    },
+    "System.Collections.ObjectModel.ReadOnlyObservableCollection\u00601[[Nerdbank.Zcash.App.Models.HDWallet, Nerdbank.Zcash.App, Version=0.3.0.0, Culture=neutral, PublicKeyToken=3e15ffa5751f3ca7]]": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Nerdbank.Zcash.App.Models.HDWallet"
+      }
+    },
+    "Nerdbank.Zcash.ZcashNetwork": {
+      "type": "integer",
+      "enum": [
+        0,
+        1
+      ],
+      "description": "0 = MainNet, 1 = TestNet"
+    },
+    "Nerdbank.Zcash.ZcashAccount": {
+      "type": "array",
+      "minItems": 1,
+      "items": [
+        {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "unified-viewing-key"
+        },
+        {
+          "oneOf": [
+            {
+              "type": "array",
+              "description": "Seed (no mnemonic)",
+              "minItems": 2,
+              "items": [
+                {
+                  "$ref": "#/definitions/Nerdbank.Zcash.ZcashNetwork"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^msgpack binary as base64: ",
+                  "description": "Seed"
+                }
+              ]
+            },
+            {
+              "type": "array",
+              "description": "Mnemonic",
+              "minItems": 2,
+              "items": [
+                {
+                  "$ref": "#/definitions/Nerdbank.Zcash.ZcashNetwork"
+                },
+                {
+                  "type": "string",
+                  "description": "Seed phrase"
+                },
+                {
+                  "type": "string",
+                  "description": "Password"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": [
+            "null",
+            "integer"
+          ],
+          "minimum": 0,
+          "description": "Account index"
+        },
+        {
+          "type": [
+            "null",
+            "integer"
+          ],
+          "minimum": 0,
+          "description": "Birthday height"
+        },
+        {
+          "type": [
+            "null",
+            "integer"
+          ],
+          "minimum": 0,
+          "description": "Max transparent address index"
+        }
+      ]
+    },
+    "Nerdbank.Zcash.TxId": {
+      "type": "string",
+      "pattern": "^msgpack binary as base64: "
+    },
+    "System.DateTimeOffset": {
+      "type": "array",
+      "items": [
+        {
+          "type": "string",
+          "pattern": "^msgpack extension -1 as base64: "
+        },
+        {
+          "type": "integer"
+        }
+      ]
+    },
+    "System.Decimal": {
+      "type": "string",
+      "pattern": "^-?\\d\u002B(\\.\\d\u002B)?$"
+    },
+    "Nerdbank.Zcash.App.Models.ZcashTransaction\u002BLineItem": {
+      "type": [
+        "object",
+        "array"
+      ],
+      "properties": {
+        "0": {
+          "type": "string"
+        },
+        "1": {
+          "$ref": "#/definitions/System.Decimal"
+        },
+        "2": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "string",
+              "maxLength": 512
+            },
+            {
+              "type": "string",
+              "pattern": "^msgpack binary as base64: ",
+              "description": "Binary memo"
+            }
+          ]
+        },
+        "3": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "4": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "items": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/System.Decimal"
+        },
+        {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "string",
+              "maxLength": 512
+            },
+            {
+              "type": "string",
+              "pattern": "^msgpack binary as base64: ",
+              "description": "Binary memo"
+            }
+          ]
+        },
+        {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      ],
+      "required": [
+        "ToAddress",
+        "Amount",
+        "Memo"
+      ]
+    },
+    "System.Collections.Immutable.ImmutableArray\u00601[[Nerdbank.Zcash.App.Models.ZcashTransaction\u002BLineItem, Nerdbank.Zcash.App, Version=0.3.0.0, Culture=neutral, PublicKeyToken=3e15ffa5751f3ca7]]": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Nerdbank.Zcash.App.Models.ZcashTransaction\u002BLineItem"
+      }
+    },
+    "Nerdbank.Zcash.App.Models.ZcashTransaction": {
+      "type": [
+        "object",
+        "array"
+      ],
+      "properties": {
+        "0": {
+          "oneOf": [
+            {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/Nerdbank.Zcash.TxId"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "1": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "2": {
+          "type": "boolean"
+        },
+        "3": {
+          "oneOf": [
+            {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/System.DateTimeOffset"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "4": {
+          "oneOf": [
+            {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/System.Decimal"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "5": {
+          "type": "string"
+        },
+        "8": {
+          "$ref": "#/definitions/System.Collections.Immutable.ImmutableArray\u00601[[Nerdbank.Zcash.App.Models.ZcashTransaction\u002BLineItem, Nerdbank.Zcash.App, Version=0.3.0.0, Culture=neutral, PublicKeyToken=3e15ffa5751f3ca7]]"
+        },
+        "9": {
+          "$ref": "#/definitions/System.Collections.Immutable.ImmutableArray\u00601[[Nerdbank.Zcash.App.Models.ZcashTransaction\u002BLineItem, Nerdbank.Zcash.App, Version=0.3.0.0, Culture=neutral, PublicKeyToken=3e15ffa5751f3ca7]]"
+        },
+        "10": {
+          "type": "boolean"
+        }
+      },
+      "items": [
+        {
+          "oneOf": [
+            {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/Nerdbank.Zcash.TxId"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "oneOf": [
+            {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/System.DateTimeOffset"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        {
+          "oneOf": [
+            {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/System.Decimal"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": [
+            "number",
+            "integer",
+            "string",
+            "boolean",
+            "object",
+            "array",
+            "null"
+          ],
+          "description": "This is an undocumented element that is ignored by the deserializer and always serialized as null."
+        },
+        {
+          "type": [
+            "number",
+            "integer",
+            "string",
+            "boolean",
+            "object",
+            "array",
+            "null"
+          ],
+          "description": "This is an undocumented element that is ignored by the deserializer and always serialized as null."
+        },
+        {
+          "$ref": "#/definitions/System.Collections.Immutable.ImmutableArray\u00601[[Nerdbank.Zcash.App.Models.ZcashTransaction\u002BLineItem, Nerdbank.Zcash.App, Version=0.3.0.0, Culture=neutral, PublicKeyToken=3e15ffa5751f3ca7]]"
+        },
+        {
+          "$ref": "#/definitions/System.Collections.Immutable.ImmutableArray\u00601[[Nerdbank.Zcash.App.Models.ZcashTransaction\u002BLineItem, Nerdbank.Zcash.App, Version=0.3.0.0, Culture=neutral, PublicKeyToken=3e15ffa5751f3ca7]]"
+        },
+        {
+          "type": "boolean"
+        }
+      ],
+      "required": [
+        "TransactionId",
+        "IsIncoming"
+      ]
+    },
+    "System.Collections.ObjectModel.ObservableCollection\u00601[[Nerdbank.Zcash.App.Models.ZcashTransaction, Nerdbank.Zcash.App, Version=0.3.0.0, Culture=neutral, PublicKeyToken=3e15ffa5751f3ca7]]": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Nerdbank.Zcash.App.Models.ZcashTransaction"
+      }
+    },
+    "Nerdbank.Zcash.App.Models.Account": {
+      "type": [
+        "object",
+        "array"
+      ],
+      "properties": {
+        "0": {
+          "$ref": "#/definitions/Nerdbank.Zcash.ZcashAccount"
+        },
+        "1": {
+          "type": "string"
+        },
+        "2": {
+          "type": "integer"
+        },
+        "3": {
+          "$ref": "#/definitions/System.Collections.ObjectModel.ObservableCollection\u00601[[Nerdbank.Zcash.App.Models.ZcashTransaction, Nerdbank.Zcash.App, Version=0.3.0.0, Culture=neutral, PublicKeyToken=3e15ffa5751f3ca7]]"
+        },
+        "4": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "5": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "6": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      },
+      "items": [
+        {
+          "$ref": "#/definitions/Nerdbank.Zcash.ZcashAccount"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "integer"
+        },
+        {
+          "$ref": "#/definitions/System.Collections.ObjectModel.ObservableCollection\u00601[[Nerdbank.Zcash.App.Models.ZcashTransaction, Nerdbank.Zcash.App, Version=0.3.0.0, Culture=neutral, PublicKeyToken=3e15ffa5751f3ca7]]"
+        },
+        {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        {
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      ],
+      "required": [
+        "ZcashAccount"
+      ]
+    },
+    "System.Collections.ObjectModel.ReadOnlyObservableCollection\u00601[[Nerdbank.Zcash.App.Models.Account, Nerdbank.Zcash.App, Version=0.3.0.0, Culture=neutral, PublicKeyToken=3e15ffa5751f3ca7]]": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Nerdbank.Zcash.App.Models.Account"
+      }
+    },
+    "Nerdbank.Zcash.App.Models.ZcashWallet": {
+      "type": [
+        "object",
+        "array"
+      ],
+      "properties": {
+        "0": {
+          "$ref": "#/definitions/System.Collections.ObjectModel.ReadOnlyObservableCollection\u00601[[Nerdbank.Zcash.App.Models.HDWallet, Nerdbank.Zcash.App, Version=0.3.0.0, Culture=neutral, PublicKeyToken=3e15ffa5751f3ca7]]"
+        },
+        "1": {
+          "$ref": "#/definitions/System.Collections.ObjectModel.ReadOnlyObservableCollection\u00601[[Nerdbank.Zcash.App.Models.Account, Nerdbank.Zcash.App, Version=0.3.0.0, Culture=neutral, PublicKeyToken=3e15ffa5751f3ca7]]"
+        },
+        "2": {
+          "type": "integer"
+        }
+      },
+      "items": [
+        {
+          "$ref": "#/definitions/System.Collections.ObjectModel.ReadOnlyObservableCollection\u00601[[Nerdbank.Zcash.App.Models.HDWallet, Nerdbank.Zcash.App, Version=0.3.0.0, Culture=neutral, PublicKeyToken=3e15ffa5751f3ca7]]"
+        },
+        {
+          "$ref": "#/definitions/System.Collections.ObjectModel.ReadOnlyObservableCollection\u00601[[Nerdbank.Zcash.App.Models.Account, Nerdbank.Zcash.App, Version=0.3.0.0, Culture=neutral, PublicKeyToken=3e15ffa5751f3ca7]]"
+        },
+        {
+          "type": "integer"
+        }
+      ],
+      "required": [
+        "HDWallets",
+        "Accounts"
+      ]
+    },
+    "System.Collections.ObjectModel.ObservableCollection\u00601[[Nerdbank.Zcash.ZcashAddress, Nerdbank.Zcash, Version=0.3.0.0, Culture=neutral, PublicKeyToken=3e15ffa5751f3ca7]]": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "Nerdbank.Zcash.App.Models.Contact\u002BAssignedSendingAddresses": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 2,
+      "items": [
+        {
+          "type": "string",
+          "pattern": "^msgpack binary as base64: ",
+          "description": "Diversifier"
+        },
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295,
+          "description": "The transparent address index."
+        }
+      ]
+    },
+    "System.Collections.Immutable.ImmutableDictionary\u00602[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[Nerdbank.Zcash.App.Models.Contact\u002BAssignedSendingAddresses, Nerdbank.Zcash.App, Version=0.3.0.0, Culture=neutral, PublicKeyToken=3e15ffa5751f3ca7]]": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/Nerdbank.Zcash.App.Models.Contact\u002BAssignedSendingAddresses"
+      },
+      "description": "This object uses System.Int32 values as its keys instead of strings."
+    },
+    "Nerdbank.Zcash.App.Models.Contact": {
+      "type": [
+        "object",
+        "array"
+      ],
+      "properties": {
+        "0": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "1": {
+          "type": "string"
+        },
+        "2": {
+          "$ref": "#/definitions/System.Collections.ObjectModel.ObservableCollection\u00601[[Nerdbank.Zcash.ZcashAddress, Nerdbank.Zcash, Version=0.3.0.0, Culture=neutral, PublicKeyToken=3e15ffa5751f3ca7]]"
+        },
+        "3": {
+          "$ref": "#/definitions/System.Collections.Immutable.ImmutableDictionary\u00602[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[Nerdbank.Zcash.App.Models.Contact\u002BAssignedSendingAddresses, Nerdbank.Zcash.App, Version=0.3.0.0, Culture=neutral, PublicKeyToken=3e15ffa5751f3ca7]]"
+        }
+      },
+      "items": [
+        {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/System.Collections.ObjectModel.ObservableCollection\u00601[[Nerdbank.Zcash.ZcashAddress, Nerdbank.Zcash, Version=0.3.0.0, Culture=neutral, PublicKeyToken=3e15ffa5751f3ca7]]"
+        },
+        {
+          "$ref": "#/definitions/System.Collections.Immutable.ImmutableDictionary\u00602[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[Nerdbank.Zcash.App.Models.Contact\u002BAssignedSendingAddresses, Nerdbank.Zcash.App, Version=0.3.0.0, Culture=neutral, PublicKeyToken=3e15ffa5751f3ca7]]"
+        }
+      ],
+      "required": [
+        "ReceivingAddresses",
+        "AssignedAddresses"
+      ]
+    },
+    "System.Collections.ObjectModel.ReadOnlyObservableCollection\u00601[[Nerdbank.Zcash.App.Models.Contact, Nerdbank.Zcash.App, Version=0.3.0.0, Culture=neutral, PublicKeyToken=3e15ffa5751f3ca7]]": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Nerdbank.Zcash.App.Models.Contact"
+      }
+    },
+    "Nerdbank.Zcash.App.Models.ContactManager": {
+      "type": [
+        "object",
+        "array"
+      ],
+      "properties": {
+        "0": {
+          "$ref": "#/definitions/System.Collections.ObjectModel.ReadOnlyObservableCollection\u00601[[Nerdbank.Zcash.App.Models.Contact, Nerdbank.Zcash.App, Version=0.3.0.0, Culture=neutral, PublicKeyToken=3e15ffa5751f3ca7]]"
+        },
+        "1": {
+          "type": "integer"
+        }
+      },
+      "items": [
+        {
+          "$ref": "#/definitions/System.Collections.ObjectModel.ReadOnlyObservableCollection\u00601[[Nerdbank.Zcash.App.Models.Contact, Nerdbank.Zcash.App, Version=0.3.0.0, Culture=neutral, PublicKeyToken=3e15ffa5751f3ca7]]"
+        },
+        {
+          "type": "integer"
+        }
+      ],
+      "required": [
+        "Contacts"
+      ]
+    },
+    "Nerdbank.Zcash.App.Models.ExchangeRateRecord": {
+      "type": "object",
+      "description": "The keys in this object are TradingPair values.",
+      "additionalProperties": {
+        "type": "object",
+        "description": "The keys in this object are DateTimeOffset values. The values are exchange rates.",
+        "additionalProperties": {
+          "type": "number"
+        }
+      }
+    },
+    "Nerdbank.Zcash.App.Models.DataRoot": {
+      "type": "object",
+      "properties": {
+        "wallet": {
+          "$ref": "#/definitions/Nerdbank.Zcash.App.Models.ZcashWallet"
+        },
+        "contactManager": {
+          "$ref": "#/definitions/Nerdbank.Zcash.App.Models.ContactManager"
+        },
+        "exchangeRates": {
+          "$ref": "#/definitions/Nerdbank.Zcash.App.Models.ExchangeRateRecord"
+        }
+      }
+    }
+  },
+  "$schema": "http://json-schema.org/draft-04/schema"
+}
