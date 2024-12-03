@@ -27,10 +27,14 @@ Check out the full diff [here](#v4)
 
 ## v5.0.0
 
-### Added fields:
+### Added and Removed Fields:
 
 | Name                         | Description | Key        | Value                                          |
 | ---------------------------- | ----------- | ---------- | ---------------------------------------------- |
+| ~~acc~~                      |             |            |                                                |
+| ~~acentry~~                  |             |            |                                                |
+| ~~hdseed~~                   |             |            |                                                |
+| ~~chdseed~~                  |             |            |                                                |
 | networkinfo                  |             | `string`   | `string`                                       |
 | orchard_note_commitment_tree |             |            | `OrchardWallet`                                |
 | unifiedaccount               |             |            | `ZcashdUnifiedAccountMetadata`                 |
@@ -40,16 +44,17 @@ Check out the full diff [here](#v4)
 | cmnemonicphrase              |             | `uint256&` | `std::vector<unsigned char>& vchCryptedSecret` |
 | mnemonichdchain              |             |            | `CHDChain`                                     |
 
-### Removed Fields:
-
-| Name    | Class |
-| ------- | ----- |
-| acc     |       |
-| acentry |       |
-| hdseed  |       |
-| chdseed |       |
-
 Check out the full diff [here](#v5)
+
+## v6.0.0
+
+### Added Fields:
+
+| Name               | Description                                                                                                  | Key               | Value           |
+| ------------------ | ------------------------------------------------------------------------------------------------------------ | ----------------- | --------------- |
+| bestblock_nomerkle | A place in the block chain. If another node doesn't have the same branch, it can find a recent common trunk. | `vector<uint256>` | `CBlockLocator` |
+
+Check out the full diff [here](#v6)
 
 ## Full Diffs
 
@@ -1095,4 +1100,76 @@ index 52222ea6d..2055b3f57 100644
 -    return Write(std::string("hdchain"), chain);
 +    return nWalletDBUpdateCounter;
  }
+```
+
+<a id="v6"></a>
+
+## v5.0.0 <> v6.0.0
+
+```diff
+diff --git a/src/wallet/walletdb.cpp b/src/wallet/walletdb.cpp
+index 2055b3f57..96d82cfe6 100644
+--- a/src/wallet/walletdb.cpp
++++ b/src/wallet/walletdb.cpp
+@@ -1,5 +1,6 @@
+ // Copyright (c) 2009-2010 Satoshi Nakamoto
+ // Copyright (c) 2009-2014 The Bitcoin Core developers
++// Copyright (c) 2016-2023 The Zcash developers
+ // Distributed under the MIT software license, see the accompanying
+ // file COPYING or https://www.opensource.org/licenses/mit-license.php .
+
+@@ -14,8 +15,8 @@
+ #include "serialize.h"
+ #include "script/standard.h"
+ #include "sync.h"
+-#include "util.h"
+-#include "utiltime.h"
++#include "util/system.h"
++#include "util/time.h"
+ #include "wallet/wallet.h"
+ #include "zcash/Proof.hpp"
+
+@@ -275,12 +276,14 @@ bool CWalletDB::EraseWatchOnly(const CScript &dest)
+ bool CWalletDB::WriteBestBlock(const CBlockLocator& locator)
+ {
+     nWalletDBUpdateCounter++;
+-    return Write(std::string("bestblock"), locator);
++    Write(std::string("bestblock"), CBlockLocator()); // Write empty block locator so versions that require a merkle branch automatically rescan
++    return Write(std::string("bestblock_nomerkle"), locator);
+ }
+
+ bool CWalletDB::ReadBestBlock(CBlockLocator& locator)
+ {
+-    return Read(std::string("bestblock"), locator);
++    if (Read(std::string("bestblock"), locator) && !locator.vHave.empty()) return true;
++    return Read(std::string("bestblock_nomerkle"), locator);
+ }
+
+ bool CWalletDB::WriteOrderPosNext(int64_t nOrderPosNext)
+@@ -971,6 +974,7 @@ DBErrors CWalletDB::LoadWallet(CWallet* pwallet)
+                     fNoncriticalErrors = true; // ... but do warn the user there is something wrong.
+                     if (strType == "tx") {
+                         // Rescan if there is a bad transaction record:
++                        LogPrintf("LoadWallet: Malformed transaction data encountered; starting with -rescan.");
+                         SoftSetBoolArg("-rescan", true);
+                     }
+                 }
+@@ -1133,7 +1137,7 @@ DBErrors CWalletDB::ZapWalletTx(CWallet* pwallet, vector<CWalletTx>& vWtx)
+ void ThreadFlushWalletDB(const string& strFile)
+ {
+     // Make this thread recognisable as the wallet flushing thread
+-    RenameThread("zcash-wallet");
++    RenameThread("zc-wallet-flush");
+
+     static bool fOneThread;
+     if (fOneThread)
+@@ -1214,7 +1218,7 @@ bool BackupWallet(const CWallet& wallet, const string& strDest)
+                     pathDest /= wallet.strWalletFile;
+
+                 try {
+-                    fs::copy_file(pathSrc, pathDest, fs::copy_option::overwrite_if_exists);
++                    fs::copy_file(pathSrc, pathDest, fs::copy_options::overwrite_existing);
+                     LogPrintf("copied %s to %s\n", wallet.strWalletFile, pathDest.string());
+                     return true;
+                 } catch (const fs::filesystem_error& e) {
 ```
