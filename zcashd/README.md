@@ -1,5 +1,15 @@
 # Zcashd's `wallet.dat`
 
+## Important Information
+
+[ZIP-400](https://zips.z.cash/zip-0400) documents the schema used for zcashd `v3.0.0-rc1`. Since then, the format has changed a bit.
+
+Some work related to parsing is being done [here](https://github.com/dorianvp/zcashd-bdb-parser).
+
+## Source
+
+The `wallet.dat` files under `dat_files/` (0 to 7) were generated while running the `qa/zcash/full_test_suite.py` tests from [Zcashd](https://github.com/zcash/zcash).
+
 ## Scheme
 
 Format = keyname length + name
