@@ -22,12 +22,39 @@ Value = binary data, check following sections
 
 Taken from: https://zips.z.cash/zip-0400
 
-| Name          | Description                                       | Keys     | Values            | Class           |
-| ------------- | ------------------------------------------------- | -------- | ----------------- | --------------- |
-| acc\*         |                                                   | `string` |                   | `CAccount`      |
-| **bestblock** | The current best block of the blockchain.         | -        | `vector<uint256>` | `CBlockLocator` |
-| pool\*        | Key Pool                                          |          |                   | `CKeyPool`      |
-| name\*        | Name of an address to insert in the address book. | `string` | `string`          | `string`        |
+| Name                 | Description                                       | Keys                  | Value                   | Value Description |
+| -------------------- | ------------------------------------------------- | --------------------- | ----------------------- | ----------------- |
+| acc\*                | Account data                                      | `string`              | `CAccount`              |                   |
+| acentry\*            | Account entry. Tracks internal transfers.         | `string` + `uint64_t` | `CAccountingEntry`      |                   |
+| **bestblock**        | The current best block of the blockchain.         | -                     | `CBlockLocator`         | `vector<uint256>` |
+| **chdseed**          | Encrypted HD seed                                 | `uint256`             | `vector<unsigned char>` |                   |
+| ckey\*               |                                                   |                       |                         |                   |
+| csapzkey\*           |                                                   |                       |                         |                   |
+| **cscript**          |                                                   |                       |                         |                   |
+| czkey\*              |                                                   |                       |                         |                   |
+| **defaultkey**       |                                                   |                       |                         |                   |
+| destdata\*           |                                                   |                       |                         |                   |
+| **hdchain**          |                                                   |                       |                         |                   |
+| hdseed\*             |                                                   |                       | `HDSeed`                |                   |
+| key\*                |                                                   |                       |                         |                   |
+| keymeta\*            |                                                   |                       |                         |                   |
+| **minversion**       |                                                   |                       |                         |                   |
+| **mkey**             |                                                   |                       |                         |                   |
+| name\*               | Name of an address to insert in the address book. | `string`              | `string`                | `string`          |
+| **orderposnext**     |                                                   |                       |                         |                   |
+| pool\*               | Key Pool                                          |                       |                         | `CKeyPool`        |
+| purpose\*            |                                                   |                       |                         |                   |
+| sapzaddr\*           |                                                   |                       |                         |                   |
+| sapextfvk\*          |                                                   |                       |                         |                   |
+| sapzkey\*            |                                                   |                       |                         |                   |
+| tx\*                 |                                                   |                       |                         |                   |
+| **version**          |                                                   |                       |                         |                   |
+| vkey\*               |                                                   |                       |                         |                   |
+| watchs\*             |                                                   |                       |                         |                   |
+| **witnesscachesize** |                                                   |                       |                         |                   |
+| wkey\*               |                                                   |                       |                         |                   |
+| zkey\*               |                                                   |                       |                         |                   |
+| zkeymeta\*           |                                                   |                       |                         |                   |
 
 ## v4.0.0
 
@@ -39,20 +66,20 @@ Check out the full diff [here](#v4)
 
 ### Added and Removed Fields:
 
-| Name                         | Description | Key        | Value                                          |
-| ---------------------------- | ----------- | ---------- | ---------------------------------------------- |
-| ~~acc~~                      |             |            |                                                |
-| ~~acentry~~                  |             |            |                                                |
-| ~~hdseed~~                   |             |            |                                                |
-| ~~chdseed~~                  |             |            |                                                |
-| networkinfo                  |             | `string`   | `string`                                       |
-| orchard_note_commitment_tree |             |            | `OrchardWallet`                                |
-| unifiedaccount               |             |            | `ZcashdUnifiedAccountMetadata`                 |
-| unifiedfvk                   |             |            | `UnifiedFullViewingKey`                        |
-| unifiedaddrmeta              |             |            | `ZcashdUnifiedAddressMetadata`                 |
-| mnemonicphrase               |             |            | `MnemonicSeed`                                 |
-| cmnemonicphrase              |             | `uint256&` | `std::vector<unsigned char>& vchCryptedSecret` |
-| mnemonichdchain              |             |            | `CHDChain`                                     |
+| Name                         | Description | Keys                  | Value                                         |
+| ---------------------------- | ----------- | --------------------- | --------------------------------------------- |
+| ~~acc~~                      |             | `string`              | `CAccount`                                    |
+| ~~acentry~~                  |             | `string` + `uint64_t` | `CAccountingEntry`                            |
+| ~~hdseed~~                   |             | `uin256`              | `HDSeed`                                      |
+| ~~chdseed~~                  |             | `uin256`              | `vector<unsigned char>`                       |
+| networkinfo                  |             | `string`              | `string`                                      |
+| orchard_note_commitment_tree |             |                       | `OrchardWallet`                               |
+| unifiedaccount               |             |                       | `ZcashdUnifiedAccountMetadata`                |
+| unifiedfvk                   |             |                       | `UnifiedFullViewingKey`                       |
+| unifiedaddrmeta              |             |                       | `ZcashdUnifiedAddressMetadata`                |
+| mnemonicphrase               |             |                       | `MnemonicSeed`                                |
+| cmnemonicphrase              |             | `uint256&`            | `std::vector<unsigned char> vchCryptedSecret` |
+| mnemonichdchain              |             |                       | `CHDChain`                                    |
 
 Check out the full diff [here](#v5)
 
