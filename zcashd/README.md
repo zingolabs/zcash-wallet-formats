@@ -22,39 +22,39 @@ Value = binary data, check following sections
 
 Taken from: https://zips.z.cash/zip-0400
 
-| Name                 | Description                                       | Keys                  | Value                   | Value Description |
-| -------------------- | ------------------------------------------------- | --------------------- | ----------------------- | ----------------- |
-| acc\*                | Account data                                      | `string`              | `CAccount`              |                   |
-| acentry\*            | Account entry. Tracks internal transfers.         | `string` + `uint64_t` | `CAccountingEntry`      |                   |
-| **bestblock**        | The current best block of the blockchain.         | -                     | `CBlockLocator`         | `vector<uint256>` |
-| **chdseed**          | Encrypted HD seed                                 | `uint256`             | `vector<unsigned char>` |                   |
-| ckey\*               |                                                   |                       |                         |                   |
-| csapzkey\*           |                                                   |                       |                         |                   |
-| **cscript**          |                                                   |                       |                         |                   |
-| czkey\*              |                                                   |                       |                         |                   |
-| **defaultkey**       |                                                   |                       |                         |                   |
-| destdata\*           |                                                   |                       |                         |                   |
-| **hdchain**          |                                                   |                       |                         |                   |
-| hdseed\*             |                                                   |                       | `HDSeed`                |                   |
-| key\*                |                                                   |                       |                         |                   |
-| keymeta\*            |                                                   |                       |                         |                   |
-| **minversion**       |                                                   |                       |                         |                   |
-| **mkey**             |                                                   |                       |                         |                   |
-| name\*               | Name of an address to insert in the address book. | `string`              | `string`                | `string`          |
-| **orderposnext**     |                                                   |                       |                         |                   |
-| pool\*               | Key Pool                                          |                       |                         | `CKeyPool`        |
-| purpose\*            |                                                   |                       |                         |                   |
-| sapzaddr\*           |                                                   |                       |                         |                   |
-| sapextfvk\*          |                                                   |                       |                         |                   |
-| sapzkey\*            |                                                   |                       |                         |                   |
-| tx\*                 |                                                   |                       |                         |                   |
-| **version**          |                                                   |                       |                         |                   |
-| vkey\*               |                                                   |                       |                         |                   |
-| watchs\*             |                                                   |                       |                         |                   |
-| **witnesscachesize** |                                                   |                       |                         |                   |
-| wkey\*               |                                                   |                       |                         |                   |
-| zkey\*               |                                                   |                       |                         |                   |
-| zkeymeta\*           |                                                   |                       |                         |                   |
+| Name                 | Description                                                          | Keys                  | Value                                                               | Value Description |
+| -------------------- | -------------------------------------------------------------------- | --------------------- | ------------------------------------------------------------------- | ----------------- |
+| acc\*                | Account data.                                                        | `string`              | `CAccount`                                                          |                   |
+| acentry\*            | Account entry. Tracks internal transfers.                            | `string` + `uint64_t` | `CAccountingEntry`                                                  |                   |
+| **bestblock**        | The current best block of the blockchain.                            | -                     | `CBlockLocator`                                                     | `vector<uint256>` |
+| **chdseed**          | Encrypted HD seed.                                                   | `uint256`             | `vector<unsigned char>`                                             |                   |
+| ckey\*               | Encrypted transparent pubkey and private key.                        | `CPubKey`             | `vector<unsigned char>`                                             |                   |
+| csapzkey\*           | Encrypted Sapling pubkey and private key.                            |                       | `libzcash::SaplingExtendedFullViewingKey` + `vector<unsigned char>` |                   |
+| **cscript**          | Serialized script, used inside transaction inputs and outputs.       |                       | `CScript`                                                           |                   |
+| czkey\*              | Encrypted Sprout pubkey and private key.                             |                       | `uint256` + `vector<unsigned char>`                                 |                   |
+| **defaultkey**       | Default Transparent key.                                             |                       | `CPubKey`                                                           |                   |
+| destdata\*           | Adds a destination data tuple to the store.                          |                       | `string`                                                            |                   |
+| **hdchain**          | Hierarchical Deterministic chain code, derived from seed.            |                       | `CHDChain`                                                          |                   |
+| hdseed\*             | Hierarchical Deterministic seed.                                     |                       | `HDSeed`                                                            |                   |
+| key\*                | Transparent pubkey and privkey.                                      |                       | `CPrivKey`                                                          |                   |
+| keymeta\*            | Transparent key metadata.                                            |                       | `CKeyMetadata`                                                      |                   |
+| **minversion**       | Wallet required minimal version.                                     |                       |                                                                     |                   |
+| **mkey**             | Master key, used to encrypt public and private keys of the database. |                       | `CMasterKey`                                                        |                   |
+| name\*               | Name of an address to insert in the address book.                    | `string`              | `string`                                                            | `string`          |
+| **orderposnext**     | Index of next tx.                                                    |                       | `int64_t`                                                           |                   |
+| pool\*               | Key pool.                                                            |                       | `CKeyPool`                                                          | `CKeyPool`        |
+| purpose\*            |                                                                      |                       | `string`                                                            |                   |
+| sapzaddr\*           |                                                                      |                       | `libzcash::SaplingIncomingViewingKey`                               |                   |
+| sapextfvk\*          |                                                                      |                       |                                                                     |                   |
+| sapzkey\*            |                                                                      |                       | `libzcash::SaplingExtendedSpendingKey`                              |                   |
+| tx\*                 |                                                                      |                       | `CWalletTx`                                                         |                   |
+| **version**          |                                                                      |                       | `int`                                                               |                   |
+| vkey\*               |                                                                      |                       | `char`                                                              |                   |
+| watchs\*             |                                                                      |                       | `char`                                                              |                   |
+| **witnesscachesize** |                                                                      |                       | `int64_t`                                                           |                   |
+| wkey\*               |                                                                      |                       |                                                                     |                   |
+| zkey\*               |                                                                      |                       | `libzcash::SproutSpendingKey`                                       |                   |
+| zkeymeta\*           |                                                                      |                       | `CKeyMetadata`                                                      |                   |
 
 ## v4.0.0
 
