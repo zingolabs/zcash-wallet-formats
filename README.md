@@ -2,6 +2,8 @@
 
 This repository tracks the progress of a survey on wallet export formats, with an emphasis on zcashd and other wallets.
 
+Check out Zcashd progress [here](./zcashd/README.md)
+
 ## Important resources and links:
 
 - [zcash/zips #964: Update ZIP 400 for NU5/Orchard changes](https://github.com/zcash/zips/issues/964)
