@@ -12,9 +12,16 @@ The `wallet.dat` files under `dat_files/` (0 to 7) were generated while running 
 
 ## Scheme
 
-Format = keyname length + name
+### Format
 
-Value = binary data, check following sections
+Entries are stored as follows:
+
+```
+<keyname_length><keyname><key>
+<value(s)>
+```
+
+Each _value_ has an associated C++ class from [zcashd](https://github.com/zcash/zcash). Check the following sections to see what each one is serialized into.
 
 ## v3.0.0-rc1
 
