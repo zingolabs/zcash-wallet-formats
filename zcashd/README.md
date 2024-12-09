@@ -94,9 +94,9 @@ Check out the full diff [here](#v5)
 
 ### Added Fields:
 
-| Name               | Description                                                                                                  | Key               | Value           |
-| ------------------ | ------------------------------------------------------------------------------------------------------------ | ----------------- | --------------- |
-| bestblock_nomerkle | A place in the block chain. If another node doesn't have the same branch, it can find a recent common trunk. | `vector<uint256>` | `CBlockLocator` |
+| Name               | Description                                                                                                  | Key | Value           |
+| ------------------ | ------------------------------------------------------------------------------------------------------------ | --- | --------------- |
+| bestblock_nomerkle | A place in the block chain. If another node doesn't have the same branch, it can find a recent common trunk. | -   | `CBlockLocator` |
 
 Check out the full diff [here](#v6)
 
