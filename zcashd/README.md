@@ -94,9 +94,10 @@ Check out the full diff [here](#v5)
 
 ### Added Fields:
 
-| Name               | Description                                                                                                  | Key | Value           | Serialized as |
-| ------------------ | ------------------------------------------------------------------------------------------------------------ | --- | --------------- | ------------- |
-| bestblock_nomerkle | A place in the block chain. If another node doesn't have the same branch, it can find a recent common trunk. | -   | `CBlockLocator` |               |
+| Name               | Description                                                                                                                 | Key | Value           | Serialized as             |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------------- | --- | --------------- | ------------------------- |
+| **bestblock**      | The current best block of the blockchain. Empty block locator so versions that require a merkle branch automatically rescan | -   | `CBlockLocator` | `vector<uint256>` (empty) |
+| bestblock_nomerkle | A place in the block chain. If another node doesn't have the same branch, it can find a recent common trunk.                | -   | `CBlockLocator` |                           |
 
 Check out the full diff [here](#v6)
 
