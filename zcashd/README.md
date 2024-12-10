@@ -75,15 +75,15 @@ Check out the full diff [here](#v4)
 
 | Name                         | Description | Keys                           | Value                                         | Serialized as |
 | ---------------------------- | ----------- | ------------------------------ | --------------------------------------------- | ------------- |
-| ~~acc~~                      |             | `string`                       | `CAccount`                                    |               |
-| ~~acentry~~                  |             | `string` + `uint64_t`          | `CAccountingEntry`                            |               |
-| ~~hdseed~~                   |             | `uin256`                       | `HDSeed`                                      |               |
-| ~~chdseed~~                  |             | `uin256`                       | `vector<unsigned char>`                       |               |
+| ~~acc~~                      |             | ~~`string`~~                   | ~~`CAccount`~~                                |               |
+| ~~acentry~~                  |             | ~~`string` + `uint64_t`~~      | ~~`CAccountingEntry`~~                        |               |
+| ~~hdseed~~                   |             | ~~`uin256`~~                   | ~~`HDSeed`~~                                  |               |
+| ~~chdseed~~                  |             | ~~`uin256`~~                   | ~~`vector<unsigned char>`~~                   |               |
 | networkinfo                  |             | `string`                       | `string`                                      |               |
 | orchard_note_commitment_tree |             | -                              | `OrchardWallet`                               |               |
-| unifiedaccount               |             | `ZcashdUnifiedAccountMetadata` | `0x00`                                        |               |
+| unifiedaccount               |             | `ZcashdUnifiedAccountMetadata` | 0x00                                          |               |
 | unifiedfvk                   |             | `libzcash::UFVKId`             | `boost::CChainParams`                         |               |
-| unifiedaddrmeta              |             | `ZcashdUnifiedAddressMetadata` | `0x00`                                        |               |
+| unifiedaddrmeta              |             | `ZcashdUnifiedAddressMetadata` | 0x00                                          |               |
 | mnemonicphrase               |             | `uint256`                      | `MnemonicSeed`                                |               |
 | cmnemonicphrase              |             | `uint256`                      | `std::vector<unsigned char> vchCryptedSecret` |               |
 | mnemonichdchain              |             | -                              | `CHDChain`                                    |               |
