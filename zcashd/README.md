@@ -6,22 +6,22 @@
 
 Some work related to parsing is being done [here](https://github.com/dorianvp/zcashd-bdb-parser).
 
-## Source
+## Format
 
-The `wallet.dat` files under `dat_files/` (0 to 7) were generated while running the `qa/zcash/full_test_suite.py` tests from [Zcashd](https://github.com/zcash/zcash).
-
-## Scheme
-
-### Format
-
-Entries are stored as follows:
+Each `dat` file is a BerkeleyDB store. Entries are stored as follows:
 
 ```
 <keyname_length><keyname><key>
 <value(s)>
 ```
 
-Each _value_ has an associated C++ class from [zcashd](https://github.com/zcash/zcash). Check the following sections to see what each one is serialized into.
+where `<keyname>` is an ASCII encoded string of the length `<keyname_length>` and `<key>` the binary data.
+
+Each `value` has an associated C++ class from [zcashd](https://github.com/zcash/zcash). Check the **serialized as** field to learn more about each `value`.
+
+## Source
+
+The `wallet.dat` files under `dat_files/` (0 to 7) were generated while running the `qa/zcash/full_test_suite.py` tests from [Zcashd](https://github.com/zcash/zcash).
 
 ## v3.0.0-rc1
 
@@ -29,7 +29,7 @@ Each _value_ has an associated C++ class from [zcashd](https://github.com/zcash/
 
 Taken from: https://zips.z.cash/zip-0400
 
-| Name                 | Description                                                          | Keys                                  | Value                                                               | Value Description |
+| Name                 | Description                                                          | Keys                                  | Value                                                               | Serialized as     |
 | -------------------- | -------------------------------------------------------------------- | ------------------------------------- | ------------------------------------------------------------------- | ----------------- |
 | acc\*                | Account data.                                                        | `string`                              | `CAccount`                                                          |                   |
 | acentry\*            | Account entry. Tracks internal transfers.                            | `string` + `uint64_t`                 | `CAccountingEntry`                                                  |                   |
@@ -73,20 +73,20 @@ Check out the full diff [here](#v4)
 
 ### Added and Removed Fields:
 
-| Name                         | Description | Keys                           | Value                                         |
-| ---------------------------- | ----------- | ------------------------------ | --------------------------------------------- |
-| ~~acc~~                      |             | `string`                       | `CAccount`                                    |
-| ~~acentry~~                  |             | `string` + `uint64_t`          | `CAccountingEntry`                            |
-| ~~hdseed~~                   |             | `uin256`                       | `HDSeed`                                      |
-| ~~chdseed~~                  |             | `uin256`                       | `vector<unsigned char>`                       |
-| networkinfo                  |             | `string`                       | `string`                                      |
-| orchard_note_commitment_tree |             | -                              | `OrchardWallet`                               |
-| unifiedaccount               |             | `ZcashdUnifiedAccountMetadata` | `0x00`                                        |
-| unifiedfvk                   |             | `libzcash::UFVKId`             | `boost::CChainParams`                         |
-| unifiedaddrmeta              |             | `ZcashdUnifiedAddressMetadata` | `0x00`                                        |
-| mnemonicphrase               |             | `uint256`                      | `MnemonicSeed`                                |
-| cmnemonicphrase              |             | `uint256`                      | `std::vector<unsigned char> vchCryptedSecret` |
-| mnemonichdchain              |             | -                              | `CHDChain`                                    |
+| Name                         | Description | Keys                           | Value                                         | Serialized as |
+| ---------------------------- | ----------- | ------------------------------ | --------------------------------------------- | ------------- |
+| ~~acc~~                      |             | `string`                       | `CAccount`                                    |               |
+| ~~acentry~~                  |             | `string` + `uint64_t`          | `CAccountingEntry`                            |               |
+| ~~hdseed~~                   |             | `uin256`                       | `HDSeed`                                      |               |
+| ~~chdseed~~                  |             | `uin256`                       | `vector<unsigned char>`                       |               |
+| networkinfo                  |             | `string`                       | `string`                                      |               |
+| orchard_note_commitment_tree |             | -                              | `OrchardWallet`                               |               |
+| unifiedaccount               |             | `ZcashdUnifiedAccountMetadata` | `0x00`                                        |               |
+| unifiedfvk                   |             | `libzcash::UFVKId`             | `boost::CChainParams`                         |               |
+| unifiedaddrmeta              |             | `ZcashdUnifiedAddressMetadata` | `0x00`                                        |               |
+| mnemonicphrase               |             | `uint256`                      | `MnemonicSeed`                                |               |
+| cmnemonicphrase              |             | `uint256`                      | `std::vector<unsigned char> vchCryptedSecret` |               |
+| mnemonichdchain              |             | -                              | `CHDChain`                                    |               |
 
 Check out the full diff [here](#v5)
 
@@ -94,9 +94,9 @@ Check out the full diff [here](#v5)
 
 ### Added Fields:
 
-| Name               | Description                                                                                                  | Key | Value           |
-| ------------------ | ------------------------------------------------------------------------------------------------------------ | --- | --------------- |
-| bestblock_nomerkle | A place in the block chain. If another node doesn't have the same branch, it can find a recent common trunk. | -   | `CBlockLocator` |
+| Name               | Description                                                                                                  | Key | Value           | Serialized as |
+| ------------------ | ------------------------------------------------------------------------------------------------------------ | --- | --------------- | ------------- |
+| bestblock_nomerkle | A place in the block chain. If another node doesn't have the same branch, it can find a recent common trunk. | -   | `CBlockLocator` |               |
 
 Check out the full diff [here](#v6)
 
