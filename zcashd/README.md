@@ -73,20 +73,20 @@ Check out the full diff [here](#v4)
 
 ### Added and Removed Fields:
 
-| Name                         | Description | Keys                           | Value                                         | Serialized as |
-| ---------------------------- | ----------- | ------------------------------ | --------------------------------------------- | ------------- |
-| ~~acc~~                      |             | ~~`string`~~                   | ~~`CAccount`~~                                |               |
-| ~~acentry~~                  |             | ~~`string` + `uint64_t`~~      | ~~`CAccountingEntry`~~                        |               |
-| ~~hdseed~~                   |             | ~~`uin256`~~                   | ~~`HDSeed`~~                                  |               |
-| ~~chdseed~~                  |             | ~~`uin256`~~                   | ~~`vector<unsigned char>`~~                   |               |
-| networkinfo                  |             | `string`                       | `string`                                      |               |
-| orchard_note_commitment_tree |             | -                              | `OrchardWallet`                               |               |
-| unifiedaccount               |             | `ZcashdUnifiedAccountMetadata` | 0x00                                          |               |
-| unifiedfvk                   |             | `libzcash::UFVKId`             | `boost::CChainParams`                         |               |
-| unifiedaddrmeta              |             | `ZcashdUnifiedAddressMetadata` | 0x00                                          |               |
-| mnemonicphrase               |             | `uint256`                      | `MnemonicSeed`                                |               |
-| cmnemonicphrase              |             | `uint256`                      | `std::vector<unsigned char> vchCryptedSecret` |               |
-| mnemonichdchain              |             | -                              | `CHDChain`                                    |               |
+| Name                         | Description | Keys                           | Value                                   | Serialized as |
+| ---------------------------- | ----------- | ------------------------------ | --------------------------------------- | ------------- |
+| ~~acc~~                      |             | ~~`string`~~                   | ~~`CAccount`~~                          |               |
+| ~~acentry~~                  |             | ~~`string` + `uint64_t`~~      | ~~`CAccountingEntry`~~                  |               |
+| ~~hdseed~~                   |             | ~~`uin256`~~                   | ~~`HDSeed`~~                            |               |
+| ~~chdseed~~                  |             | ~~`uin256`~~                   | ~~`vector<unsigned char>`~~             |               |
+| networkinfo                  |             | -                              | `string`                                |               |
+| orchard_note_commitment_tree |             | -                              | `OrchardWalletNoteCommitmentTreeWriter` |               |
+| unifiedaccount               |             | `ZcashdUnifiedAccountMetadata` | 0x00                                    |               |
+| unifiedfvk                   |             | `libzcash::UFVKId`             | `boost::CChainParams`                   |               |
+| unifiedaddrmeta              |             | `ZcashdUnifiedAddressMetadata` | 0x00                                    |               |
+| mnemonicphrase               |             | `uint256`                      | `MnemonicSeed`                          |               |
+| cmnemonicphrase              |             | `uint256`                      | `std::vector<unsigned char>`            |               |
+| mnemonichdchain              |             | -                              | `CHDChain`                              |               |
 
 Check out the full diff [here](#v5)
 
