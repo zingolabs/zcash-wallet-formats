@@ -69,8 +69,8 @@ Taken from: https://zips.z.cash/zip-0400. Open full screen, as this table is too
 | -------------------- | -------------------------------------------------------------- | ---------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
 | acc\*                | Account information.                                           | `string` (account name)                        | `CAccount`                                                          | `byte` (public key length) + `unsigned char[33 \| 65]`(public key in compressed/uncompressed format)   |
 | acentry\*            | Account entry. Tracks internal transfers.                      | `string` (account name) + `uint64_t` (counter) | `CAccountingEntry`                                                  | `int64_t` (credit_debit) + `int64_t` (unix timestamp) + `string` (other) (WIP: Specify LIMITED_STRING) |
-| **bestblock**        | The current best block of the blockchain.                      | -                                              | `CBlockLocator`                                                     | `vector<uint256>` (WIP)                                                                                |
-| **chdseed**          | Encrypted HD seed.                                             | `uint256`                                      | `vector<unsigned char>`                                             |                                                                                                        |
+| **bestblock**        | The current best block of the blockchain.                      | -                                              | `CBlockLocator`                                                     | `vector<uint256>` (list of block hashes) (WIP: how is it stored?)                                      |
+| **chdseed**          | Encrypted HD seed.                                             | `uint256` (seed fingerprint)                   | `vector<unsigned char>`                                             |                                                                                                        |
 | ckey\*               | Encrypted transparent pubkey and private key.                  | `vector<unsigned char>`                        | `vector<unsigned char>`                                             | `vchCryptedSecret` (WIP)                                                                               |
 | csapzkey\*           | Encrypted Sapling pubkey and private key.                      | `libzcash::SaplingIncomingViewingKey`          | `libzcash::SaplingExtendedFullViewingKey` + `vector<unsigned char>` |                                                                                                        |
 | **cscript**          | Serialized script, used inside transaction inputs and outputs. | `uint160`                                      | `CScript`                                                           |                                                                                                        |
@@ -81,7 +81,7 @@ Taken from: https://zips.z.cash/zip-0400. Open full screen, as this table is too
 | hdseed\*             | Hierarchical Deterministic seed.                               | `uint256`                                      | `RawHDSeed`                                                         |                                                                                                        |
 | key\*                | Transparent pubkey and privkey.                                | `CPubKey`                                      | `CPrivKey`                                                          | `private_key` + SHA256(`public_key`+`private_key`)                                                     |
 | keymeta\*            | Transparent key metadata.                                      | `CPubKey`                                      | `CKeyMetadata`                                                      |                                                                                                        |
-| **minversion**       | Wallet required minimal version.                               | -                                              | -                                                                   |                                                                                                        |
+| **minversion**       | Wallet required minimal version.                               | -                                              | `int` (check [wallet versions](#wallet-versions))                   |                                                                                                        |
 | **mkey**             | Master key, used to encrypt public and private keys of the db. | `unsigned int`                                 | `CMasterKey`                                                        |                                                                                                        |
 | name\*               | Name of an address to insert in the address book.              | `string`                                       | `string`                                                            | `string`                                                                                               |
 | **orderposnext**     | Index of next tx.                                              | -                                              | `int64_t`                                                           |                                                                                                        |
@@ -136,6 +136,22 @@ Check out the full diff [here](#v5)
 | bestblock_nomerkle | A place in the block chain. If another node doesn't have the same branch, it can find a recent common trunk.                | -   | `CBlockLocator` | `vector<uint256>`         |
 
 Check out the full diff [here](#v6)
+
+## Wallet versions
+
+The following specifies the client version numbers for particular wallet features:
+
+```cpp
+enum WalletFeature
+{
+    FEATURE_BASE = 10500, // the earliest version new wallets supports (only useful for getinfo's clientversion output)
+
+    FEATURE_WALLETCRYPT = 40000, // wallet encryption
+    FEATURE_COMPRPUBKEY = 60000, // compressed public keys
+
+    FEATURE_LATEST = 60000
+};
+```
 
 ## Full Diffs
 
