@@ -34,232 +34,39 @@ The `wallet.dat` files under `dat_files/` (0 to 7) were generated while running 
 
 Taken from: https://zips.z.cash/zip-0400
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Keys</th>
-    <th>Value</th>
-    <th>Serialized as</th>
-  </tr>
-  <tr>
-    <td>acc*</td>
-    <td>Account data.</td>
-    <td>string</td>
-    <td>CAccount</td>
-    <td>byte (public key length) + unsigned char[33 or 65] (public key in compressed/uncompressed format)</td>
-  </tr>
-  <tr>
-    <td>acentry*</td>
-    <td>Account entry. Tracks internal transfers.</td>
-    <td>string + uint64_t</td>
-    <td>CAccountingEntry</td>
-    <td>nCreditDebit + nTime + strOtherAccount (WIP)</td>
-  </tr>
-  <tr>
-    <td>**bestblock**</td>
-    <td>The current best block of the blockchain.</td>
-    <td>-</td>
-    <td>CBlockLocator</td>
-    <td>vector&lt;uint256&gt; (WIP)</td>
-  </tr>
-  <tr>
-    <td>**chdseed**</td>
-    <td>Encrypted HD seed.</td>
-    <td>uint256</td>
-    <td>vector&lt;unsigned char&gt;</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>ckey*</td>
-    <td>Encrypted transparent pubkey and private key.</td>
-    <td>vector&lt;unsigned char&gt;</td>
-    <td>vector&lt;unsigned char&gt;</td>
-    <td>vchCryptedSecret (WIP)</td>
-  </tr>
-  <tr>
-    <td>csapzkey*</td>
-    <td>Encrypted Sapling pubkey and private key.</td>
-    <td>libzcash::SaplingIncomingViewingKey</td>
-    <td>libzcash::SaplingExtendedFullViewingKey + vector&lt;unsigned char&gt;</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>**cscript**</td>
-    <td>Serialized script, used inside transaction tx i/o.</td>
-    <td>uint160</td>
-    <td>CScript</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>czkey*</td>
-    <td>Encrypted Sprout pubkey and private key.</td>
-    <td>libzcash::SproutPaymentAddress</td>
-    <td>uint256 + vector&lt;unsigned char&gt;</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>**defaultkey**</td>
-    <td>Default Transparent key.</td>
-    <td>-</td>
-    <td>CPubKey</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>destdata*</td>
-    <td>Adds a destination data tuple to the store.</td>
-    <td>string + string</td>
-    <td>string</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>**hdchain**</td>
-    <td>Hierarchical Deterministic chain code, derived from seed.</td>
-    <td>-</td>
-    <td>CHDChain</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>hdseed*</td>
-    <td>Hierarchical Deterministic seed.</td>
-    <td>uint256</td>
-    <td>RawHDSeed</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>key*</td>
-    <td>Transparent pubkey and privkey.</td>
-    <td>CPubKey</td>
-    <td>CPrivKey</td>
-    <td>private_key + SHA256(public_key+private_key)</td>
-  </tr>
-  <tr>
-    <td>keymeta*</td>
-    <td>Transparent key metadata.</td>
-    <td>CPubKey</td>
-    <td>CKeyMetadata</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>**minversion**</td>
-    <td>Wallet required minimal version.</td>
-    <td>-</td>
-    <td>-</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>**mkey**</td>
-    <td>Master key.</td>
-    <td>unsigned int nID</td>
-    <td>CMasterKey</td>
-    <td>vchCryptedKey + vchSalt + nDerivationMethod + nDeriveIterations + vchOtherDerivationParameters</td>
-  </tr>
-  <tr>
-    <td>name*</td>
-    <td>Name of an address to insert in the address book.</td>
-    <td>string</td>
-    <td>string</td>
-    <td>string</td>
-  </tr>
-  <tr>
-    <td>**orderposnext**</td>
-    <td>Index of next tx.</td>
-    <td>-</td>
-    <td>int64_t</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>pool*</td>
-    <td>Key pool.</td>
-    <td>int64_t</td>
-    <td>CKeyPool</td>
-    <td>CKeyPool</td>
-  </tr>
-  <tr>
-    <td>purpose*</td>
-    <td>Short description or identifier of an address.</td>
-    <td>string</td>
-    <td>string</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>sapzaddr*</td>
-    <td>Sapling z-addr Incoming Viewing key and address.</td>
-    <td>libzcash::SaplingPaymentAddress</td>
-    <td>libzcash::SaplingIncomingViewingKey</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>sapextfvk*</td>
-    <td>Sapling Extended Full Viewing Key.</td>
-    <td>-</td>
-    <td>-</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>sapzkey*</td>
-    <td>Sapling Incoming Viewing Key and Extended Spending Key</td>
-    <td>libzcash::SaplingIncomingViewingKey</td>
-    <td>libzcash::SaplingExtendedSpendingKey</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>tx*</td>
-    <td>Store all transactions that are related to wallet.</td>
-    <td>uint256</td>
-    <td>CWalletTx</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>**version**</td>
-    <td>The `CLIENT_VERSION` from `clientversion.h`.</td>
-    <td>-</td>
-    <td>int</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>vkey*</td>
-    <td>Sprout Viewing Keys.</td>
-    <td>libzcash::SproutViewingKey</td>
-    <td>char</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>watchs*</td>
-    <td>Watch-only t-addresses.</td>
-    <td>CScript</td>
-    <td>char</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>**witnesscachesize**</td>
-    <td>Shielded Note Witness cache size.</td>
-    <td>-</td>
-    <td>int64_t</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>wkey*</td>
-    <td>Wallet key.</td>
-    <td>-</td>
-    <td>-</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>zkey*</td>
-    <td>Sprout Payment Address and Spending Key.</td>
-    <td>libzcash::SproutPaymentAddress</td>
-    <td>libzcash::SproutSpendingKey</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>zkeymeta*</td>
-    <td>Sprout Payment Address and key metadata.</td>
-    <td>libzcash::SproutPaymentAddress addr</td>
-    <td>CKeyMetadata</td>
-    <td></td>
-  </tr>
-</table>
+| Name                 | Description                                                    | Keys                                  | Value                                                               | Serialized as                                                                                        |
+| -------------------- | -------------------------------------------------------------- | ------------------------------------- | ------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| acc\*                | Account data.                                                  | `string`                              | `CAccount`                                                          | `byte` (public key length) + `unsigned char[33 or 65]`(public key in compressed/uncompressed format) |
+| acentry\*            | Account entry. Tracks internal transfers.                      | `string` + `uint64_t`                 | `CAccountingEntry`                                                  | `nCreditDebit` + `nTime` + `strOtherAccount` (WIP)                                                   |
+| **bestblock**        | The current best block of the blockchain.                      | -                                     | `CBlockLocator`                                                     | `vector<uint256>` (WIP)                                                                              |
+| **chdseed**          | Encrypted HD seed.                                             | `uint256`                             | `vector<unsigned char>`                                             |                                                                                                      |
+| ckey\*               | Encrypted transparent pubkey and private key.                  | `vector<unsigned char>`               | `vector<unsigned char>`                                             | `vchCryptedSecret` (WIP)                                                                             |
+| csapzkey\*           | Encrypted Sapling pubkey and private key.                      | `libzcash::SaplingIncomingViewingKey` | `libzcash::SaplingExtendedFullViewingKey` + `vector<unsigned char>` |                                                                                                      |
+| **cscript**          | Serialized script, used inside transaction inputs and outputs. | `uint160`                             | `CScript`                                                           |                                                                                                      |
+| czkey\*              | Encrypted Sprout pubkey and private key.                       | `libzcash::SproutPaymentAddress`      | `uint256` + `vector<unsigned char>`                                 |                                                                                                      |
+| **defaultkey**       | Default Transparent key.                                       | -                                     | `CPubKey`                                                           |                                                                                                      |
+| destdata\*           | Adds a destination data tuple to the store.                    | `string` + `string`                   | `string`                                                            |                                                                                                      |
+| **hdchain**          | Hierarchical Deterministic chain code, derived from seed.      | -                                     | `CHDChain`                                                          |                                                                                                      |
+| hdseed\*             | Hierarchical Deterministic seed.                               | `uint256`                             | `RawHDSeed`                                                         |                                                                                                      |
+| key\*                | Transparent pubkey and privkey.                                | `CPubKey`                             | `CPrivKey`                                                          | `private_key` + SHA256(`public_key`+`private_key`)                                                   |
+| keymeta\*            | Transparent key metadata.                                      | `CPubKey`                             | `CKeyMetadata`                                                      |                                                                                                      |
+| **minversion**       | Wallet required minimal version.                               | -                                     | -                                                                   |                                                                                                      |
+| **mkey**             | Master key, used to encrypt public and private keys of the db. | `unsigned int`                        | `CMasterKey`                                                        |                                                                                                      |
+| name\*               | Name of an address to insert in the address book.              | `string`                              | `string`                                                            | `string`                                                                                             |
+| **orderposnext**     | Index of next tx.                                              | -                                     | `int64_t`                                                           |                                                                                                      |
+| pool\*               | Key pool.                                                      | `int64_t`                             | `CKeyPool`                                                          | `CKeyPool`                                                                                           |
+| purpose\*            | Short description or identifier of an address.                 | `string`                              | `string`                                                            |                                                                                                      |
+| sapzaddr\*           | Sapling z-addr Incoming Viewing key and address.               | `libzcash::SaplingPaymentAddress`     | `libzcash::SaplingIncomingViewingKey`                               |                                                                                                      |
+| sapextfvk\*          | Sapling Extended Full Viewing Key.                             | -                                     | -                                                                   |                                                                                                      |
+| sapzkey\*            | Sapling Incoming Viewing Key and Extended Spending Key         | `libzcash::SaplingIncomingViewingKey` | `libzcash::SaplingExtendedSpendingKey`                              |                                                                                                      |
+| tx\*                 | Store all transactions that are related to wallet.             | `uint256`                             | `CWalletTx`                                                         |                                                                                                      |
+| **version**          | The `CLIENT_VERSION` from `clientversion.h`.                   | -                                     | `int`                                                               |                                                                                                      |
+| vkey\*               | Sprout Viewing Keys.                                           | `libzcash::SproutViewingKey`          | `char`                                                              |                                                                                                      |
+| watchs\*             | Watch-only t-addresses.                                        | `CScript`                             | `char`                                                              |                                                                                                      |
+| **witnesscachesize** | Shielded Note Witness cache size.                              | -                                     | `int64_t`                                                           |                                                                                                      |
+| wkey\*               | Wallet key.                                                    | -                                     | -                                                                   |                                                                                                      |
+| zkey\*               | Sprout Payment Address and Spending Key.                       | `libzcash::SproutPaymentAddress`      | `libzcash::SproutSpendingKey`                                       |                                                                                                      |
+| zkeymeta\*           | Sprout Payment Address and key metadata.                       | `libzcash::SproutPaymentAddress addr` | `CKeyMetadata`                                                      |                                                                                                      |
 
 ## v4.0.0
 
