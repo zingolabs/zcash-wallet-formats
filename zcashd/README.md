@@ -6,6 +6,37 @@
 
 Some work related to parsing is being done [here](https://github.com/dorianvp/zcashd-bdb-parser).
 
+## Background
+
+> The following text is taken from [this wallet guide for exchanges](https://hackmd.io/@daira/rJVEmOCkh).
+> Read through to learn more about changes accross versions.
+
+The `zcashd` internal wallet was, as with the rest of zcashd, forked from Bitcoin code in May 2015.
+The original design of the wallet treated all transparent addresses in the wallet as receiving funds into
+a single "bucket of money" from which spends could be made. In this original design, individual addresses were not
+treated as having individual, distinguishable balances (even though such per-address balances were representable
+at the protocol layer). This single "bucket" of transparent funds was treated as though it was associated with a single spending authority,
+even though actually spending funds from this pool might involve creating signatures with multiple distinct transparent spending keys.
+The RPC method `getnewaddress` produced new keys internally via derivation from system randomness, and so these keys had to
+be backed up independently even though the wallet did not make distinctions between them visible to the user of `zcashd`.
+Similarly, the `getbalance` RPC method treated funds spendable by these independent keys uniformly, as did the other Bitcoin-inherited methods.
+
+When `zcashd` introduced the Sprout, and later the Sapling protocols, it diverged from this original design
+by treating each Sprout and Sapling address in the wallet as being associated with an independent spending authority
+tied to the address. With Sprout, keys continued to be derived from system randomness, but Sapling introduced a new hierarchical
+derivation mechanism, similar to that defined in BIPs 32, 43 and 44. Instead of deriving keys from randomness,
+Sapling keys were all derived from a single binary seed value.
+
+As part of introducing the Sprout transfer protocol `zcashd` introduced a few new RPC methods, most
+importantly `z_getbalance` and `z_sendmany` which reflected the choice to treat separate addresses
+as holding independent balances, and these semantics were retained when the Sapling protocol was added.
+However, in the process, a conceptual error was introduced.
+
+With the introduction of `z_getbalance` and `z_sendmany`, it became possible for users to begin treating separate transparent addresses
+in the wallet as having independent balances, even though the Bitcoin-derived RPC methods treated those balances as simply being
+part of a larger undifferentiated pool of funds. Over the intervening years, users have come to depend upon this inadvertent semantic
+change.
+
 ## Format
 
 Each `dat` file is a BerkeleyDB store. Entries are stored as follows:
