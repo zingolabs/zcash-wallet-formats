@@ -53,7 +53,8 @@ where:
 - `<key>` is the output of the serialization of each `Key`.
 - `<value>` is the output of the serialization of each `Value`.
 
-Each `value` has an associated C++ class from [zcashd](https://github.com/zcash/zcash). Check the **serialized as** field to learn more about each `value`.
+Each `value` has an associated C++ class from [zcashd](https://github.com/zcash/zcash).
+Check **[this table](#class-serialization-reference)** to learn more about how each class is serialized.
 
 ## Source
 
@@ -63,25 +64,25 @@ The `wallet.dat` files under `dat_files/` (0 to 7) were generated while running 
 
 [Wallet source code](https://github.com/zcash/zcash/blob/v3.0.0/src/wallet/walletdb.cpp)
 
-Taken from: https://zips.z.cash/zip-0400. How each class is serialized is described [here](#class-serialization-reference).
+Taken from: https://zips.z.cash/zip-0400.
 Open in fullscreen, as this table is too wide.
 
 | Name                 | Description                                                    | Keys                                           | Value                                                                                                                  |
 | -------------------- | -------------------------------------------------------------- | ---------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| acc\*                | Account information.                                           | `string` (account name)                        | `CAccount`                                                                                                             |
+| acc\*                | Account information.                                           | `string` (account name)                        | [`CAccount`](#CAccount)                                                                                                |
 | acentry\*            | Account entry. Tracks internal transfers.                      | `string` (account name) + `uint64_t` (counter) | `CAccountingEntry`                                                                                                     |
 | **bestblock**        | The current best block of the blockchain.                      | -                                              | `CBlockLocator`                                                                                                        |
 | **chdseed**          | Encrypted HD seed.                                             | `uint256` (seed fingerprint)                   | `vector<unsigned char>` (WIP: how is it encrypted & stored)                                                            |
-| ckey\*               | Encrypted transparent pubkey and private key.                  | CPubKey                                        | `vector<unsigned char>` (WIP: how is it encrypted & stored)                                                            |
+| ckey\*               | Encrypted transparent pubkey and private key.                  | [`CPubKey`](#CPubKey)                          | `vector<unsigned char>` (WIP: how is it encrypted & stored)                                                            |
 | csapzkey\*           | Encrypted Sapling pubkey and private key.                      | `libzcash::SaplingIncomingViewingKey`          | `libzcash::SaplingExtendedFullViewingKey` (extended full viewing key) + `vector<unsigned char>` (vchCryptedSecret) WIP |
 | **cscript**          | Serialized script, used inside transaction inputs and outputs. | `uint160`                                      | `CScript`                                                                                                              |
 | czkey\*              | Encrypted Sprout pubkey and private key.                       | `libzcash::SproutPaymentAddress`               | `uint256` + `vector<unsigned char>`                                                                                    |
-| **defaultkey**       | Default Transparent key.                                       | -                                              | `CPubKey`                                                                                                              |
+| **defaultkey**       | Default Transparent key.                                       | -                                              | [`CPubKey`](#CPubKey)                                                                                                  |
 | destdata\*           | Adds a destination data tuple to the store.                    | `string` (WIP: address) + `string` (WIP: key)  | `string`                                                                                                               |
 | **hdchain**          | Hierarchical Deterministic chain code, derived from seed.      | -                                              | `CHDChain`                                                                                                             |
 | hdseed\*             | Hierarchical Deterministic seed.                               | `uint256`                                      | `RawHDSeed`                                                                                                            |
-| key\*                | Transparent pubkey and privkey.                                | `CPubKey`                                      | `CPrivKey`                                                                                                             |
-| keymeta\*            | Transparent key metadata.                                      | `CPubKey`                                      | `CKeyMetadata`                                                                                                         |
+| key\*                | Transparent pubkey and privkey.                                | [`CPubKey`](#CPubKey)                          | `CPrivKey`                                                                                                             |
+| keymeta\*            | Transparent key metadata.                                      | [`CPubKey`](#CPubKey)                          | `CKeyMetadata`                                                                                                         |
 | **minversion**       | Wallet required minimal version.                               | -                                              | `int` (check [wallet versions](#wallet-versions))                                                                      |
 | **mkey**             | Master key, used to encrypt public and private keys of the db. | `unsigned int`                                 | `CMasterKey`                                                                                                           |
 | name\*               | Name of an address to insert in the address book.              | `string`                                       | `string`                                                                                                               |
@@ -110,20 +111,20 @@ Check out the full diff [here](#v4)
 
 ### Added and Removed Fields:
 
-| Name                         | Description | Keys                           | Value                                   | Serialized as |
-| ---------------------------- | ----------- | ------------------------------ | --------------------------------------- | ------------- |
-| ~~acc~~                      |             | ~~`string`~~                   | ~~`CAccount`~~                          |               |
-| ~~acentry~~                  |             | ~~`string` + `uint64_t`~~      | ~~`CAccountingEntry`~~                  |               |
-| ~~hdseed~~                   |             | ~~`uin256`~~                   | ~~`HDSeed`~~                            |               |
-| ~~chdseed~~                  |             | ~~`uin256`~~                   | ~~`vector<unsigned char>`~~             |               |
-| networkinfo                  |             | -                              | `string`                                |               |
-| orchard_note_commitment_tree |             | -                              | `OrchardWalletNoteCommitmentTreeWriter` |               |
-| unifiedaccount               |             | `ZcashdUnifiedAccountMetadata` | 0x00                                    |               |
-| unifiedfvk                   |             | `libzcash::UFVKId`             | `boost::CChainParams`                   |               |
-| unifiedaddrmeta              |             | `ZcashdUnifiedAddressMetadata` | 0x00                                    |               |
-| mnemonicphrase               |             | `uint256`                      | `MnemonicSeed`                          |               |
-| cmnemonicphrase              |             | `uint256`                      | `std::vector<unsigned char>`            |               |
-| mnemonichdchain              |             | -                              | `CHDChain`                              |               |
+| Name                         | Description | Keys                           | Value                                   |
+| ---------------------------- | ----------- | ------------------------------ | --------------------------------------- |
+| ~~acc~~                      |             | ~~`string`~~                   | ~~`CAccount`~~                          |
+| ~~acentry~~                  |             | ~~`string` + `uint64_t`~~      | ~~`CAccountingEntry`~~                  |
+| ~~hdseed~~                   |             | ~~`uin256`~~                   | ~~`HDSeed`~~                            |
+| ~~chdseed~~                  |             | ~~`uin256`~~                   | ~~`vector<unsigned char>`~~             |
+| networkinfo                  |             | -                              | `string`                                |
+| orchard_note_commitment_tree |             | -                              | `OrchardWalletNoteCommitmentTreeWriter` |
+| unifiedaccount               |             | `ZcashdUnifiedAccountMetadata` | 0x00                                    |
+| unifiedfvk                   |             | `libzcash::UFVKId`             | `boost::CChainParams`                   |
+| unifiedaddrmeta              |             | `ZcashdUnifiedAddressMetadata` | 0x00                                    |
+| mnemonicphrase               |             | `uint256`                      | `MnemonicSeed`                          |
+| cmnemonicphrase              |             | `uint256`                      | `std::vector<unsigned char>`            |
+| mnemonichdchain              |             | -                              | `CHDChain`                              |
 
 Check out the full diff [here](#v5)
 
@@ -156,24 +157,36 @@ enum WalletFeature
 
 ## Class serialization reference
 
-| Class                                   | Description | Serialized as                                                                                          |
-| --------------------------------------- | ----------- | ------------------------------------------------------------------------------------------------------ |
-| CAccount                                |             | `byte` (public key length) + `unsigned char[33 \| 65]`(public key in compressed/uncompressed format)   |
-| CPubKey                                 |             | `byte` (public key length) + `unsigned char[33 \| 65]`(public key in compressed/uncompressed format)   |
-| CPrivKey                                |             | `private_key` + SHA256(`public_key`+`private_key`)                                                     |
-| CKeyMetadata                            |             | `string` (hdKeypath, optional HD/zip32 keypath) + `uint256` (seed fingerprint)                         |
-| CAccountingEntry                        |             | `int64_t` (credit_debit) + `int64_t` (unix timestamp) + `string` (other) (WIP: Specify LIMITED_STRING) |
-| CBlockLocator                           |             | `vector<uint256>` (vector of block hashes) (WIP: how are they stored?)                                 |
-| CKeyPool                                |             |                                                                                                        |
-| CHDChain                                |             |                                                                                                        |
-| CWallet                                 |             |                                                                                                        |
-| CWalletTx                               |             |                                                                                                        |
-| ZcashdUnifiedAccountMetadata            |             |                                                                                                        |
-| ZcashdUnifiedAddressMetadata            |             |                                                                                                        |
-| MnemonicSeed                            |             |                                                                                                        |
-| libzcash::SaplingExtendedFullViewingKey |             |                                                                                                        |
-| libzcash::SaplingIncomingViewingKey     |             | 32-byte ivk in little-endian, padded with zeros in the most significant bits                           |
-| libzcash::SproutPaymentAddress          |             | `uint256` (spending key) + `uint256` (public key)                                                      |
+| Class                                            | Description | Serialized as                                                                                                                                                                                            |
+| ------------------------------------------------ | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <span id="CAccount">`CAccount`</span>            |             | `byte` (public key length) + `unsigned char[33 \| 65]`(public key in compressed/uncompressed format)                                                                                                     |
+| <span id="CPubKey">`CPubKey`</span>              |             | `byte` (public key length) + `unsigned char[33 \| 65]`(public key in compressed/uncompressed format)                                                                                                     |
+| `CPrivKey` (WIP)                                 |             | `private_key` + SHA256(`public_key`+`private_key`)                                                                                                                                                       |
+| `CKeyMetadata` (WIP)                             |             | `string` (hdKeypath, optional HD/zip32 keypath) + `uint256` (seed fingerprint)                                                                                                                           |
+| `CMasterKey` (WIP)                               |             | `vector<unsigned char>` (vchCryptedKey) + `vector<unsigned char>` (vchSalt) + `unsigned int nDerivationMethod` + `unsigned int nDeriveIterations` + `vector<unsigned char> vchOtherDerivationParameters` |
+| `CAccountingEntry` (WIP: Specify LIMITED_STRING) |             | `int64_t` (credit_debit) + `int64_t` (unix timestamp) + `string` (other_account)                                                                                                                         |
+| `CBlockLocator` (WIP: how are they stored?)      |             | `vector<uint256>` (vector of block hashes)                                                                                                                                                               |
+| `CKeyPool`                                       |             |                                                                                                                                                                                                          |
+| `CHDChain`                                       |             |                                                                                                                                                                                                          |
+| `RawHDSeed`                                      |             |                                                                                                                                                                                                          |
+| `CWallet`                                        |             |                                                                                                                                                                                                          |
+| `CWalletTx`                                      |             |                                                                                                                                                                                                          |
+| `ZcashdUnifiedAccountMetadata`                   |             |                                                                                                                                                                                                          |
+| `ZcashdUnifiedAddressMetadata`                   |             |                                                                                                                                                                                                          |
+| `libzcash::SaplingIncomingViewingKey`            |             | 32-byte ivk in little-endian, padded with zeros in the most significant bits                                                                                                                             |
+| `libzcash::SaplingExtendedFullViewingKey`        |             |                                                                                                                                                                                                          |
+| `libzcash::SaplingExtendedSpendingKey`           |             |                                                                                                                                                                                                          |
+| `libzcash::SaplingPaymentAddress`                |             |                                                                                                                                                                                                          |
+| `libzcash::SproutPaymentAddress`                 |             | `uint256` (spending key) + `uint256` (public key)                                                                                                                                                        |
+| `libzcash::SproutViewingKey`                     |             |                                                                                                                                                                                                          |
+| `libzcash::SproutSpendingKey`                    |             |                                                                                                                                                                                                          |
+| `CScript`                                        |             |                                                                                                                                                                                                          |
+| `ZcashdUnifiedAccountMetadata`                   |             |                                                                                                                                                                                                          |
+| `libzcash::UFVKId`                               |             |                                                                                                                                                                                                          |
+| `ZcashdUnifiedAddressMetadata`                   |             |                                                                                                                                                                                                          |
+| `OrchardWalletNoteCommitmentTreeWriter`          |             |                                                                                                                                                                                                          |
+| `boost::CChainParams`                            |             |                                                                                                                                                                                                          |
+| `MnemonicSeed`                                   |             |                                                                                                                                                                                                          |
 
 ## Full Diffs
 
