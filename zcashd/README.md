@@ -111,20 +111,20 @@ Check out the full diff [here](#v4)
 
 ### Added and Removed Fields:
 
-| Name                         | Description | Keys                           | Value                                   |
-| ---------------------------- | ----------- | ------------------------------ | --------------------------------------- |
-| ~~acc~~                      |             | ~~`string`~~                   | ~~`CAccount`~~                          |
-| ~~acentry~~                  |             | ~~`string` + `uint64_t`~~      | ~~`CAccountingEntry`~~                  |
-| ~~hdseed~~                   |             | ~~`uin256`~~                   | ~~`HDSeed`~~                            |
-| ~~chdseed~~                  |             | ~~`uin256`~~                   | ~~`vector<unsigned char>`~~             |
-| networkinfo                  |             | -                              | `string`                                |
-| orchard_note_commitment_tree |             | -                              | `OrchardWalletNoteCommitmentTreeWriter` |
-| unifiedaccount               |             | `ZcashdUnifiedAccountMetadata` | 0x00                                    |
-| unifiedfvk                   |             | `libzcash::UFVKId`             | `boost::CChainParams`                   |
-| unifiedaddrmeta              |             | `ZcashdUnifiedAddressMetadata` | 0x00                                    |
-| mnemonicphrase               |             | `uint256`                      | `MnemonicSeed`                          |
-| cmnemonicphrase              |             | `uint256`                      | `std::vector<unsigned char>`            |
-| mnemonichdchain              |             | -                              | `CHDChain`                              |
+| Name                         | Description                  | Keys                           | Value                                                   |
+| ---------------------------- | ---------------------------- | ------------------------------ | ------------------------------------------------------- |
+| ~~acc~~                      | -                            | ~~`string`~~                   | ~~`CAccount`~~                                          |
+| ~~acentry~~                  | -                            | ~~`string` + `uint64_t`~~      | ~~`CAccountingEntry`~~                                  |
+| ~~hdseed~~                   | -                            | ~~`uin256`~~                   | ~~`HDSeed`~~                                            |
+| ~~chdseed~~                  | -                            | ~~`uin256`~~                   | ~~`vector<unsigned char>`~~                             |
+| networkinfo                  | Network identifier.          | -                              | `string`                                                |
+| orchard_note_commitment_tree |                              | -                              | `OrchardWalletNoteCommitmentTreeWriter`                 |
+| unifiedaccount               | Unified account information. | `ZcashdUnifiedAccountMetadata` | 0x00                                                    |
+| unifiedfvk                   | Encoded unified FVK.         | `libzcash::UFVKId`             | `libzcash::UnifiedFullViewingKey::Encode(CCHainParams)` |
+| unifiedaddrmeta              | Unified address metadata.    | `ZcashdUnifiedAddressMetadata` | 0x00                                                    |
+| mnemonicphrase               | Mnemonic phrase.             | `uint256`                      | `MnemonicSeed`                                          |
+| cmnemonicphrase              | Encrypted mnemonic phrase.   | `uint256`                      | `std::vector<unsigned char>`                            |
+| mnemonichdchain              | (WIP: legacy hd data?)       | -                              | `CHDChain`                                              |
 
 Check out the full diff [here](#v5)
 
