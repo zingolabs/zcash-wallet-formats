@@ -186,9 +186,9 @@ enum WalletFeature
 | string                                        | UTF-8 encoded string.                                  | 1 byte (length) + bytes of the string                                                                                               |
 | unsigned char                                 | Byte or octet.                                         | 1 byte                                                                                                                              |
 | bool                                          | Boolean value.                                         | 1 byte (0x00 = false, 0x01 = true)                                                                                                  |
-| <span id="CCompactSize">CCompactSize</span>   | A variable-length encoding for collection sizes.       | 1 byte for sizes < 253, 3 bytes for sizes between 253 and 65535, 5 bytes for sizes between 65536 and 4GB, 9 bytes for larger sizes. |
-| <span id="vector">`vector<T>`</span>          | Dynamic array of elements of type T                    | [`CCompactSize`](#CCompactSize) (number of elements) + serialized elements in order.                                                |
-| <span id="map">`map<K, V>`</span>             | A map of key-value pairs                               | `CCompactSize` (number of key-value pairs) + serialized keys and values in order.                                                   |
+| <span id="CCompactSize">`CCompactSize`</span> | A variable-length encoding for collection sizes.       | 1 byte for sizes < 253, 3 bytes for sizes between 253 and 65535, 5 bytes for sizes between 65536 and 4GB, 9 bytes for larger sizes. |
+| <span id="vector">`vector<T>`</span>          | Dynamic array of elements of type T                    | [`CCompactSize`](#CCompactSize) (number of elements) + serialized elements `T` in order.                                            |
+| <span id="map">`map<K, V>`</span>             | A map of key-value pairs                               | [`CCompactSize`](#CCompactSize) (number of key-value pairs) + serialized keys `K` and values `V` in order.                          |
 
 ## Class Serialization Reference
 
