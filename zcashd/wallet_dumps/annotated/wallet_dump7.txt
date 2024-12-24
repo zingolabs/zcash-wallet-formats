@@ -24,7 +24,7 @@ HEADER=END
  0776657273696f6e # 07 + version
  b28d5b00 # likely a version
  0962657374626c6f636b # 09 + bestblock
- b28d5b0000 # blocknumber
+ b28d5b0000 # blockhash
  0a64656661756c746b6579 # 0a + defaultkey
  21022094799b330f1f0da42d71b03348fd17a6ea703dc09c2f4833944fd70c9aba1d # a public key
  0a6d696e76657273696f6e # 0a + minversion
