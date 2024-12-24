@@ -63,6 +63,15 @@ where:
 Each `value` has an associated C++ class from [zcashd](https://github.com/zcash/zcash).
 Check **[this table](#class-serialization-reference)** to learn more about how each class is serialized.
 
+## Encryption
+
+Private key encryption is done based on a CMasterKey, which holds a salt and random encryption key.
+CMasterKeys are encrypted using AES-256-CBC using a key derived using derivation method nDerivationMethod
+(0 == EVP_sha512()) and derivation iterations nDeriveIterations. vchOtherDerivationParameters is provided
+for alternative algorithms which may require more parameters (such as scrypt). Wallet Private Keys are
+then encrypted using AES-256-CBC with the double-sha256 of the public key as the IV, and the
+master key's key as the encryption key (see keystore.[ch]).
+
 ## Source
 
 The `wallet.dat` files under `dat_files/` (0 to 7) were generated while running the `qa/zcash/full_test_suite.py` tests from [Zcashd](https://github.com/zcash/zcash).
