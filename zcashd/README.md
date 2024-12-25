@@ -37,13 +37,6 @@ in the wallet as having independent balances, even though the Bitcoin-derived RP
 part of a larger undifferentiated pool of funds. Over the intervening years, users have come to depend upon this inadvertent semantic
 change.
 
-## Constants
-
-The following constants are used throughout this document:
-
-- PRIVATE_KEY_SIZE: 279
-- COMPRESSED_PRIVATE_KEY_SIZE: 214
-
 ## Format
 
 Each `dat` file is a BerkeleyDB[^1] store. Entries are stored as follows:
