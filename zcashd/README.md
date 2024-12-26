@@ -37,16 +37,20 @@ in the wallet as having independent balances, even though the Bitcoin-derived RP
 part of a larger undifferentiated pool of funds. Over the intervening years, users have come to depend upon this inadvertent semantic
 change.
 
-## Format
+## Serialization framework overview
 
-Each `dat` file is a BerkeleyDB[^1] store. Entries are stored as follows:
+Bitcoind (and zcashd, by extension) employs a custom serialization framework to encode both `Key` and `Value` fields.
+This framework handles type-specific serialization, compact sizes, optional fields, and more.
+See the [serialization reference](#serialization-reference) for details on how each type is serialized.
+
+Data is stored in a `dat` file, which are implemented as a BerkeleyDB[^1]. Each entry is serialized using the following structure:
 
 ```
 <keyname_length><keyname><key>
 <value(s)>
 ```
 
-where:
+Where:
 
 - `<keyname_length>` is a byte representing the length of `<keyname>`.
 - `<keyname>` is an ASCII encoded string of the length `<keyname_length>` and `<key>` the binary data.
@@ -54,24 +58,11 @@ where:
 - `<value>` is the output of the serialization of each `Value`.
 
 Each `value` has an associated C++ class from [zcashd](https://github.com/zcash/zcash).
-Check **[this table](#class-serialization-reference)** to learn more about how each class is serialized.
+Check **[this table](#serialization-reference)** to learn more about how each class is serialized.
 
-## Encryption
+## Serialization of Key/Value pairs by version
 
-Private key encryption is done based on a CMasterKey, which holds a salt and random encryption key.
-
-CMasterKeys are encrypted using AES-256-CBC[^4] using a key derived using derivation method nDerivationMethod
-(0 == EVP_sha512()) and derivation iterations nDeriveIterations. vchOtherDerivationParameters is provided
-for alternative algorithms which may require more parameters (such as scrypt).
-
-Wallet Private Keys are then encrypted using AES-256-CBC with the double-sha256 of the
-public key as the IV, and the master key's key as the encryption key.
-
-## Source
-
-The `wallet.dat` files under `dat_files/` (0 to 7) were generated while running the `qa/zcash/full_test_suite.py` tests from [Zcashd](https://github.com/zcash/zcash).
-
-## v3.0.0-rc1
+### v3.0.0-rc1
 
 [Wallet source code](https://github.com/zcash/zcash/blob/v3.0.0/src/wallet/walletdb.cpp)
 
@@ -112,15 +103,15 @@ Open in fullscreen, as this table is too wide.
 | zkey\*               | Sprout Payment Address and Spending Key.                       | `libzcash::SproutPaymentAddress`               | `libzcash::SproutSpendingKey`                                                                                          |
 | zkeymeta\*           | Sprout Payment Address and key metadata.                       | `libzcash::SproutPaymentAddress`               | [`CKeyMetadata`](#CKeyMetadata)                                                                                        |
 
-## v4.0.0
+### v4.0.0
 
 No changes to storage format since v3.0.0
 
 Check out the full diff [here](./DIFF.md#v4)
 
-## v5.0.0
+### v5.0.0
 
-### Added and Removed Fields:
+#### Added and Removed Fields:
 
 | Name                         | Description                  | Keys                           | Value                                                   |
 | ---------------------------- | ---------------------------- | ------------------------------ | ------------------------------------------------------- |
@@ -139,9 +130,9 @@ Check out the full diff [here](./DIFF.md#v4)
 
 Check out the full diff [here](./DIFF.md#v5)
 
-## v6.0.0
+### v6.0.0
 
-### Added Fields:
+#### Added Fields:
 
 | Name               | Description                                                                                                                 | Key | Value           | Serialized as             |
 | ------------------ | --------------------------------------------------------------------------------------------------------------------------- | --- | --------------- | ------------------------- |
@@ -150,23 +141,9 @@ Check out the full diff [here](./DIFF.md#v5)
 
 Check out the full diff [here](./DIFF.md#v6)
 
-## Wallet versions
+## Serialization reference
 
-The following specifies the client version numbers for particular wallet features:
-
-```cpp
-enum WalletFeature
-{
-    FEATURE_BASE = 10500, // the earliest version new wallets supports (only useful for getinfo's clientversion output)
-
-    FEATURE_WALLETCRYPT = 40000, // wallet encryption
-    FEATURE_COMPRPUBKEY = 60000, // compressed public keys
-
-    FEATURE_LATEST = 60000
-};
-```
-
-## Common Data Types Serialization Reference
+### Common data types
 
 | Data Type                                     | Description                                            | Serialized as                                                                                                                       |
 | --------------------------------------------- | ------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------- |
@@ -184,7 +161,7 @@ enum WalletFeature
 | <span id="vector">`vector<T>`</span>          | Dynamic array of elements of type T.                   | [`CCompactSize`](#CCompactSize) (number of elements) + serialized elements `T` in order.                                            |
 | <span id="map">`map<K, V>`</span>             | A map of key-value pairs.                              | [`CCompactSize`](#CCompactSize) (number of key-value pairs) + serialized keys `K` and values `V` in order.                          |
 
-## Class Serialization Reference
+### Classes
 
 | Class                                                                                               | Description                                                                                    | Serialized as                                                                                                                                                                                                                                                                                                                   |
 | --------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -218,6 +195,37 @@ enum WalletFeature
 | <span id="OrchardWalletNoteCommitmentTreeWriter">`OrchardWalletNoteCommitmentTreeWriter`</span>     |                                                                                                |                                                                                                                                                                                                                                                                                                                                 |
 | <span id="boost::CChainParams">`boost::CChainParams`</span>                                         |                                                                                                |                                                                                                                                                                                                                                                                                                                                 |
 | <span id="MnemonicSeed">`MnemonicSeed`</span>                                                       |                                                                                                |                                                                                                                                                                                                                                                                                                                                 |
+
+## Encryption
+
+Private key encryption is done based on a CMasterKey, which holds a salt and random encryption key.
+
+CMasterKeys are encrypted using AES-256-CBC[^4] using a key derived using derivation method nDerivationMethod
+(0 == EVP_sha512()) and derivation iterations nDeriveIterations. vchOtherDerivationParameters is provided
+for alternative algorithms which may require more parameters (such as scrypt).
+
+Wallet Private Keys are then encrypted using AES-256-CBC with the double-sha256 of the
+public key as the IV, and the master key's key as the encryption key.
+
+## Wallet versions
+
+The following specifies the client version numbers for particular wallet features:
+
+```cpp
+enum WalletFeature
+{
+    FEATURE_BASE = 10500, // the earliest version new wallets supports (only useful for getinfo's clientversion output)
+
+    FEATURE_WALLETCRYPT = 40000, // wallet encryption
+    FEATURE_COMPRPUBKEY = 60000, // compressed public keys
+
+    FEATURE_LATEST = 60000
+};
+```
+
+## Example wallets
+
+The `wallet.dat` files under `dat_files/` (0 to 7) were generated while running the `qa/zcash/full_test_suite.py` tests from [Zcashd](https://github.com/zcash/zcash).
 
 [^1]: https://www.oracle.com/database/technologies/related/berkeleydb.html
 [^2]: https://zips.z.cash/zip-0032
