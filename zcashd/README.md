@@ -238,10 +238,10 @@ enum WalletFeature
 
 The `wallet.dat` files under `dat_files/` (0 to 7) were generated while running the `qa/zcash/full_test_suite.py` tests from [Zcashd](https://github.com/zcash/zcash).
 
-[^1]: https://www.oracle.com/database/technologies/related/berkeleydb.html
-[^2]: https://zips.z.cash/zip-0032
-[^3]: https://www.secg.org/sec1-v2.pdf
-[^4]: https://datatracker.ietf.org/doc/html/rfc3602
-[^5]: https://linux.die.net/man/3/evp_sha512
-[^6]: https://datatracker.ietf.org/doc/html/rfc7914
+[^1]: [BerkeleyDB](https://www.oracle.com/database/technologies/related/berkeleydb.html)
+[^2]: [ZIP-32: Shielded Hierarchical Deterministic Wallets](https://zips.z.cash/zip-0032)
+[^3]: [Standards for Efficient Cryptography 1: Elliptic Curve Cryptography](https://www.secg.org/sec1-v2.pdf)
+[^4]: [The AES-CBC Cipher Algorithm and Its Use with IPsec](https://datatracker.ietf.org/doc/html/rfc3602)
+[^5]: [evp_sha512 - Linux man page](https://linux.die.net/man/3/evp_sha512)
+[^6]: [The scrypt Password-Based Key Derivation Function](https://datatracker.ietf.org/doc/html/rfc7914)
 [^7]: https://github.com/bitcoin/bitcoin/blob/4b5659c6b115315c9fd2902b4edd4b960a5e066e/src/wallet/scriptpubkeyman.h#L52-L100
