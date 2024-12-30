@@ -63,6 +63,9 @@ Check **[this table](#serialization-reference)** to learn more about how each cl
 
 What value/pair is serialized is taken from [this walletdb.cpp file](https://github.com/zcash/zcash/blob/master/src/wallet/walletdb.cpp).
 
+The following key-values can be found: the property names in bold mean only one instance of this type can exist in the entire database,
+while the others, suffixed by '\*' can have multiple instances. `key` and `value` columns of the table contain the types that the stored data is representing.
+
 ### v3.0.0-rc1
 
 Taken from: https://zips.z.cash/zip-0400.
