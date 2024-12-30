@@ -56,7 +56,7 @@ Where:
 - `<key>` is the output of the serialization of each `Key`.
 - `<value>` is the output of the serialization of each `Value`.
 
-Each `value` has an associated C++ class from [zcashd](https://github.com/zcash/zcash).
+Each key and value has an associated C++ class (and sometimes a Rust struct, depending on the version) from [zcashd](https://github.com/zcash/zcash).
 Check **[this table](#serialization-reference)** to learn more about how each class is serialized.
 
 ## Serialization of Key/Value pairs by version
