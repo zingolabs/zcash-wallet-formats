@@ -112,20 +112,20 @@ Check out the full diff [here](./DIFF.md#v4)
 
 #### Added and Removed Fields:
 
-| Name                         | Description                  | Keys                                                            | Value                                                                                             |
-| ---------------------------- | ---------------------------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| ~~acc~~                      | -                            | ~~`string`~~                                                    | ~~`CAccount`~~                                                                                    |
-| ~~acentry~~                  | -                            | ~~`string` + `uint64_t`~~                                       | ~~`CAccountingEntry`~~                                                                            |
-| ~~hdseed~~                   | -                            | ~~`uin256`~~                                                    | ~~`RawHDSeed`~~                                                                                   |
-| ~~chdseed~~                  | -                            | ~~`uin256`~~                                                    | ~~`vector<unsigned char>`~~                                                                       |
-| networkinfo                  | Network identifier.          | -                                                               | `string`                                                                                          |
-| orchard_note_commitment_tree |                              | -                                                               | [`OrchardWalletNoteCommitmentTreeWriter`](#OrchardWalletNoteCommitmentTreeWriter)                 |
-| unifiedaccount               | Unified account information. | [`ZcashdUnifiedAccountMetadata`](#ZcashdUnifiedAccountMetadata) | 0x00                                                                                              |
-| unifiedfvk                   | Encoded unified FVK.         | [`libzcash::UFVKId`](#UFVKId)                                   | [`libzcash::UnifiedFullViewingKey::Encode(string, UnifiedFullViewingKeyPtr)`](#encode) as string` |
-| unifiedaddrmeta              | Unified address metadata.    | [`ZcashdUnifiedAddressMetadata`](#ZcashdUnifiedAddressMetadata) | 0x00                                                                                              |
-| mnemonicphrase               | Mnemonic phrase.             | `uint256`                                                       | [`MnemonicSeed`](#MnemonicSeed)                                                                   |
-| cmnemonicphrase              | Encrypted mnemonic phrase.   | `uint256`                                                       | `std::vector<unsigned char>`                                                                      |
-| mnemonichdchain              | Encrypted HD chain.          | -                                                               | `CHDChain`                                                                                        |
+| Name                         | Keys                                                            | Value                                                                                             | Description                  |
+| ---------------------------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ---------------------------- |
+| ~~acc~~                      | ~~`string`~~                                                    | ~~`CAccount`~~                                                                                    | -                            |
+| ~~acentry~~                  | ~~`string` + `uint64_t`~~                                       | ~~`CAccountingEntry`~~                                                                            | -                            |
+| ~~hdseed~~                   | ~~`uin256`~~                                                    | ~~`RawHDSeed`~~                                                                                   | -                            |
+| ~~chdseed~~                  | ~~`uin256`~~                                                    | ~~`vector<unsigned char>`~~                                                                       | -                            |
+| networkinfo                  | -                                                               | `string`                                                                                          | Network identifier.          |
+| orchard_note_commitment_tree | -                                                               | [`OrchardWalletNoteCommitmentTreeWriter`](#OrchardWalletNoteCommitmentTreeWriter)                 |                              |
+| unifiedaccount               | [`ZcashdUnifiedAccountMetadata`](#ZcashdUnifiedAccountMetadata) | 0x00                                                                                              | Unified account information. |
+| unifiedfvk                   | [`libzcash::UFVKId`](#UFVKId)                                   | [`libzcash::UnifiedFullViewingKey::Encode(string, UnifiedFullViewingKeyPtr)`](#encode) as string` | Encoded unified FVK.         |
+| unifiedaddrmeta              | [`ZcashdUnifiedAddressMetadata`](#ZcashdUnifiedAddressMetadata) | 0x00                                                                                              | Unified address metadata.    |
+| mnemonicphrase               | `uint256`                                                       | [`MnemonicSeed`](#MnemonicSeed)                                                                   | Mnemonic phrase.             |
+| cmnemonicphrase              | `uint256`                                                       | `std::vector<unsigned char>`                                                                      | Encrypted mnemonic phrase.   |
+| mnemonichdchain              | -                                                               | `CHDChain`                                                                                        | Encrypted HD chain.          |
 
 Check out the full diff [here](./DIFF.md#v5)
 
@@ -133,10 +133,10 @@ Check out the full diff [here](./DIFF.md#v5)
 
 #### Added Fields:
 
-| Name               | Description                                                                                                                 | Key | Value           | Serialized as             |
-| ------------------ | --------------------------------------------------------------------------------------------------------------------------- | --- | --------------- | ------------------------- |
-| **bestblock**      | The current best block of the blockchain. Empty block locator so versions that require a merkle branch automatically rescan | -   | `CBlockLocator` | `vector<uint256>` (empty) |
-| bestblock_nomerkle | A place in the block chain. If another node doesn't have the same branch, it can find a recent common trunk.                | -   | `CBlockLocator` | `vector<uint256>`         |
+| Name               | Key | Value           | Serialized as             | Description                                                                                                                 |
+| ------------------ | --- | --------------- | ------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| **bestblock**      | -   | `CBlockLocator` | `vector<uint256>` (empty) | The current best block of the blockchain. Empty block locator so versions that require a merkle branch automatically rescan |
+| bestblock_nomerkle | -   | `CBlockLocator` | `vector<uint256>`         | A place in the block chain. If another node doesn't have the same branch, it can find a recent common trunk.                |
 
 Check out the full diff [here](./DIFF.md#v6)
 
