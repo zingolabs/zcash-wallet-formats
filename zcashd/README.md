@@ -42,7 +42,7 @@ Bitcoind (and zcashd, by extension) employs a custom serialization framework to 
 This framework handles type-specific serialization, compact sizes, optional fields, and more.
 See the [serialization reference](#serialization-reference) for details on how each type is serialized.
 
-Data is stored in a `dat` file, which are implemented as a BerkeleyDB[^1]. Each entry is serialized using the following structure:
+Data is stored in `dat` files, which are implemented as a BerkeleyDB[^1]. Each entry is serialized using the following structure:
 
 ```
 <keyname_length><keyname><key>
