@@ -239,8 +239,8 @@ This format is standard for representing signed numbers in binary and is compati
 | <span id="MerkleBridge">`MerkleBridge<H>`</span> (WIP: use a better syntax for conditionals)         | Information required to "update" witnesses from one state of a Merkle tree to another.                               | `unsigned char` = '2' (serialization version) + `optional<uint64_t>` (prior position) + `vector<Address>` (node addresses from ommers) + `vector<Address + H (value)>` (ommers) + `uint64_t` (frontier position) + (frontier is right child) ? [`H` (hash) + `optional<H>` (most recent leaf) + `vector<H>` (the remaining leaves)] : [`H` (most recent leaf) + `optional<H>` (empty)`+`vector<H>` (all leaves)] |
 | <span id="BridgeTree">`BridgeTree`</span>                                                            | Sparse representation of a Merkle tree.                                                                              | `unsigned char` = '3' (serialization version) + `vector<MerkleBridge>` (prior bridges) + `optional<MerkleBridge>` (current bridge) + `vector<uint64_t (position) + `uint64_t` (index in the bridges vector)>` (marked indices)                                                                                                                                                                                   |
 | <span id="OrchardWalletNoteCommitmentTreeWriter">`OrchardWalletNoteCommitmentTreeWriter`</span>      |                                                                                                                      | `unsigned char` = '1' (note state version) + `optional<uint32_t>` (last checkpoint) + `BridgeTree` (commitment tree) +`vector<uint256 (txid) + uint256 (tx height) + vector< `uint32_t`(action index) +`uint64_t` (position)> (action positions)>` (note positions)                                                                                                                                              |
-| <span id="encode">`libzcash::UnifiedFullViewingKey::Encode(string, UnifiedFullViewingKeyPtr)`</span> |                                                                                                                      | (WIP: Defined in src/rust/src/unified_keys.rs#L95)                                                                                                                                                                                                                                                                                                                                                               |
-| <span id="MnemonicSeed">`MnemonicSeed`</span>                                                        |                                                                                                                      | (WIP: Check enum in src/rust/src/zip339_ffi.rs) `uint32_t` (language) + `string` (mnemonic)                                                                                                                                                                                                                                                                                                                      |
+| <span id="encode">`libzcash::UnifiedFullViewingKey::Encode(string, UnifiedFullViewingKeyPtr)`</span> | Serialized Ufvk.                                                                                                     | `string` (Bech32m-encoded network HRP combined with the jumbled and Base32-encoded representation of the HRP.[^9])                                                                                                                                                                                                                                                                                               |
+| <span id="MnemonicSeed">`MnemonicSeed`</span>                                                        |                                                                                                                      | `uint32_t` (language, more information [here](#languages)) + `string` (mnemonic)                                                                                                                                                                                                                                                                                                                                 |
 
 ## Encryption
 
@@ -269,6 +269,28 @@ enum WalletFeature
 };
 ```
 
+## Languages
+
+```cpp
+// These must match src/rust/src/zip339_ffi.rs.
+// (They happen to also match the integer values correspond in the bip0039-rs crate with the
+// "all-languages" feature enabled, but that's not required.)
+enum Language
+{
+    English = 0,
+    SimplifiedChinese = 1,
+    TraditionalChinese = 2,
+    Czech = 3,
+    French = 4,
+    Italian = 5,
+    Japanese = 6,
+    Korean = 7,
+    Portuguese = 8,
+    Spanish = 9,
+    SIZE_HACK = 0xFFFFFFFF // needed when compiling as C
+};
+```
+
 ## Example wallets
 
 The `wallet.dat` files under `dat_files/` (0 to 7) were generated while running the `qa/zcash/full_test_suite.py` tests from [Zcashd](https://github.com/zcash/zcash).
@@ -281,3 +303,4 @@ The `wallet.dat` files under `dat_files/` (0 to 7) were generated while running 
 [^6]: [The scrypt Password-Based Key Derivation Function](https://datatracker.ietf.org/doc/html/rfc7914)
 [^7]: https://github.com/bitcoin/bitcoin/blob/4b5659c6b115315c9fd2902b4edd4b960a5e066e/src/wallet/scriptpubkeyman.h#L52-L100
 [^8]: [Succinct Non-Interactive Zero Knowledge for a von Neumann Architecture, section 4.1: The PGHR protocol and the two elliptic curves](https://eprint.iacr.org/2013/279.pdf)
+[^9]: [ZIP-316: Unified Addresses and Unified Viewing Keys](https://zips.z.cash/zip-0316)
