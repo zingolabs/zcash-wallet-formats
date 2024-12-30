@@ -112,7 +112,7 @@ Check out the full diff [here](./DIFF.md#v4)
 
 #### Added and Removed Fields:
 
-| Name                         | Keys                                                            | Value                                                                                             | Description                  |
+| `keyname`                    | `key`                                                           | `value`                                                                                           | Description                  |
 | ---------------------------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ---------------------------- |
 | ~~acc~~                      | ~~`string`~~                                                    | ~~`CAccount`~~                                                                                    | -                            |
 | ~~acentry~~                  | ~~`string` + `uint64_t`~~                                       | ~~`CAccountingEntry`~~                                                                            | -                            |
@@ -133,10 +133,10 @@ Check out the full diff [here](./DIFF.md#v5)
 
 #### Added Fields:
 
-| Name               | Key | Value           | Serialized as             | Description                                                                                                                 |
-| ------------------ | --- | --------------- | ------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| **bestblock**      | -   | `CBlockLocator` | `vector<uint256>` (empty) | The current best block of the blockchain. Empty block locator so versions that require a merkle branch automatically rescan |
-| bestblock_nomerkle | -   | `CBlockLocator` | `vector<uint256>`         | A place in the block chain. If another node doesn't have the same branch, it can find a recent common trunk.                |
+| `keyname`          | `key` | `value`                 | Description                                                                                                                 |
+| ------------------ | ----- | ----------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| **bestblock**      | -     | `CBlockLocator` (empty) | The current best block of the blockchain. Empty block locator so versions that require a merkle branch automatically rescan |
+| bestblock_nomerkle | -     | `CBlockLocator`         | A place in the block chain. If another node doesn't have the same branch, it can find a recent common trunk.                |
 
 Check out the full diff [here](./DIFF.md#v6)
 
