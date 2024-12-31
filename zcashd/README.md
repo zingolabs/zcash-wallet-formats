@@ -41,6 +41,7 @@ change.
 Bitcoind (and zcashd, by extension) employs a custom serialization framework to encode both `Key` and `Value` fields.
 This framework handles type-specific serialization, compact sizes, optional fields, and more.
 See the [serialization reference](#serialization-reference) for details on how each type is serialized.
+Also check out [the Bitcoin Core Onboarding's wallet database section](https://bitcoincore.academy/wallet-database.html).
 
 Data is stored in `dat` files, which are implemented as a BerkeleyDB[^1]. Each entry is serialized using the following structure:
 
