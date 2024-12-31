@@ -115,21 +115,21 @@ Check out the full diff [here](./DIFF.md#v4)
 
 #### Added and Removed Fields:
 
-| `keyname`                    | `key`                                                           | `value`                                                                                           | Description                  |
-| ---------------------------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ---------------------------- |
-| ~~acc~~                      | ~~`string`~~                                                    | ~~`CAccount`~~                                                                                    | -                            |
-| ~~acentry~~                  | ~~`string` + `uint64_t`~~                                       | ~~`CAccountingEntry`~~                                                                            | -                            |
-| ~~hdseed~~                   | ~~`uin256`~~                                                    | ~~`RawHDSeed`~~                                                                                   | -                            |
-| ~~chdseed~~                  | ~~`uin256`~~                                                    | ~~`vector<unsigned char>`~~                                                                       | -                            |
-| networkinfo                  | -                                                               | `string`                                                                                          | Network identifier.          |
-| orchard_note_commitment_tree | -                                                               | [`OrchardWalletNoteCommitmentTreeWriter`](#OrchardWalletNoteCommitmentTreeWriter)                 |                              |
-| unifiedaccount               | [`ZcashdUnifiedAccountMetadata`](#ZcashdUnifiedAccountMetadata) | 0x00                                                                                              | Unified account information. |
-| unifiedfvk                   | [`libzcash::UFVKId`](#UFVKId)                                   | [`libzcash::UnifiedFullViewingKey::Encode(string, UnifiedFullViewingKeyPtr)`](#encode) as string` | Encoded unified FVK.         |
-| unifiedaddrmeta              | [`ZcashdUnifiedAddressMetadata`](#ZcashdUnifiedAddressMetadata) | 0x00                                                                                              | Unified address metadata.    |
-| mnemonicphrase               | `uint256`                                                       | [`MnemonicSeed`](#MnemonicSeed)                                                                   | Mnemonic phrase.             |
-| cmnemonicphrase              | `uint256`                                                       | `std::vector<unsigned char>`                                                                      | Encrypted mnemonic phrase.   |
-| mnemonichdchain              | -                                                               | `CHDChain`                                                                                        | Encrypted HD chain.          |
-| recipientmapping\*           | `pair<uint256, CSerializeRecipientAddress>`                     | `string`                                                                                          | Maps transaction to UA.      |
+| `keyname`                    | `key`                                                           | `value`                                                                                          | Description                  |
+| ---------------------------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ | ---------------------------- |
+| ~~acc~~                      | ~~`string`~~                                                    | ~~`CAccount`~~                                                                                   | -                            |
+| ~~acentry~~                  | ~~`string` + `uint64_t`~~                                       | ~~`CAccountingEntry`~~                                                                           | -                            |
+| ~~hdseed~~                   | ~~`uin256`~~                                                    | ~~`RawHDSeed`~~                                                                                  | -                            |
+| ~~chdseed~~                  | ~~`uin256`~~                                                    | ~~`vector<unsigned char>`~~                                                                      | -                            |
+| networkinfo                  | -                                                               | `string`                                                                                         | Network identifier.          |
+| orchard_note_commitment_tree | -                                                               | [`OrchardWalletNoteCommitmentTreeWriter`](#OrchardWalletNoteCommitmentTreeWriter)                |                              |
+| unifiedaccount               | [`ZcashdUnifiedAccountMetadata`](#ZcashdUnifiedAccountMetadata) | 0x00                                                                                             | Unified account information. |
+| unifiedfvk                   | [`libzcash::UFVKId`](#UFVKId)                                   | [`libzcash::UnifiedFullViewingKey::Encode(string, UnifiedFullViewingKeyPtr)`](#encode) as string | Encoded unified FVK.         |
+| unifiedaddrmeta              | [`ZcashdUnifiedAddressMetadata`](#ZcashdUnifiedAddressMetadata) | 0x00                                                                                             | Unified address metadata.    |
+| mnemonicphrase               | `uint256`                                                       | [`MnemonicSeed`](#MnemonicSeed)                                                                  | Mnemonic phrase.             |
+| cmnemonicphrase              | `uint256`                                                       | `std::vector<unsigned char>`                                                                     | Encrypted mnemonic phrase.   |
+| mnemonichdchain              | -                                                               | `CHDChain`                                                                                       | Encrypted HD chain.          |
+| recipientmapping\*           | `pair<uint256, CSerializeRecipientAddress>`                     | `string`                                                                                         | Maps transaction to UA.      |
 
 Check out the full diff [here](./DIFF.md#v5)
 
