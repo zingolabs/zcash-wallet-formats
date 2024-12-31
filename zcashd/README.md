@@ -129,6 +129,7 @@ Check out the full diff [here](./DIFF.md#v4)
 | mnemonicphrase               | `uint256`                                                       | [`MnemonicSeed`](#MnemonicSeed)                                                                   | Mnemonic phrase.             |
 | cmnemonicphrase              | `uint256`                                                       | `std::vector<unsigned char>`                                                                      | Encrypted mnemonic phrase.   |
 | mnemonichdchain              | -                                                               | `CHDChain`                                                                                        | Encrypted HD chain.          |
+| recipientmapping\*           | `pair<uint256, CSerializeRecipientAddress>`                     | `string`                                                                                          | Maps transaction to UA.      |
 
 Check out the full diff [here](./DIFF.md#v5)
 
@@ -136,10 +137,10 @@ Check out the full diff [here](./DIFF.md#v5)
 
 #### Added Fields:
 
-| `keyname`          | `key` | `value`                 | Description                                                                                                                  |
-| ------------------ | ----- | ----------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| **bestblock**      | -     | `CBlockLocator` (empty) | The current best block of the blockchain. Empty block locator so versions that require a merkle branch automatically rescan. |
-| bestblock_nomerkle | -     | `CBlockLocator`         | A place in the block chain. If another node doesn't have the same branch, it can find a recent common trunk.                 |
+| `keyname`              | `key` | `value`                 | Description                                                                                                                  |
+| ---------------------- | ----- | ----------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| **bestblock**          | -     | `CBlockLocator` (empty) | The current best block of the blockchain. Empty block locator so versions that require a merkle branch automatically rescan. |
+| **bestblock_nomerkle** | -     | `CBlockLocator`         | A place in the block chain. If another node doesn't have the same branch, it can find a recent common trunk.                 |
 
 Check out the full diff [here](./DIFF.md#v6)
 
