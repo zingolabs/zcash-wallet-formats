@@ -1,6 +1,8 @@
 # Zecwallet
 
-## Background info
+## Background information
+
+Zecwallet uses a bespoke format for storing wallet data on disk.
 
 The following snippet was taken from [here](https://github.com/adityapk00/zecwallet-light-cli/blob/bea9a26e3dcf6ed1dcc703848a942d343e38360c/bip39bug.md).
 
