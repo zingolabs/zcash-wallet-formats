@@ -248,7 +248,7 @@ This format is standard for representing signed numbers in binary and is compati
 | <span id="ZcashdUnifiedAddressMetadata">`ZcashdUnifiedAddressMetadata`</span>                        | Metadata for a unified address.                                                                                      | `libzcash::UFVKId` (ufvkId) + [`libzcash::diversifier_index_t`](#diversifier_index_t) (diversifierIndex) + `vector`[`<libzcash::ReceiverType>`](#ReceiverType) (serReceiverTypes)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 | <span id="Address">`Address`</span>                                                                  | Address or location of a node of the Merkle tree.                                                                    | `unsigned char`(level in merkle tree) +`uint64_t` (address index)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 | <span id="MerkleBridge">`MerkleBridge<H>`</span>                                                     | Information required to "update" witnesses from one state of a Merkle tree to another.                               | `unsigned char` = '2' (serialization version) + `optional<uint64_t>` (prior position) + `vector<Address>` (node locations from ommers) + `vector<Address + H (value)>` (ommers) + `uint64_t` (frontier position) + (frontier is right child) ? [`H` (hash) + `optional<H>` (most recent leaf) + `vector<H>` (the remaining leaves)] : [`H` (most recent leaf) + `optional<H>` (empty) + `vector<H>` (all leaves)]                                                                                                                                                                                                                                                                                                                                                                                |
-| <span id="BridgeTree">`BridgeTree`</span>                                                            | Sparse representation of a Merkle tree.                                                                              | `unsigned char` = '3' (serialization version) + `vector<MerkleBridge>` (prior bridges) + `optional<MerkleBridge>` (current bridge) + `vector<uint64_t` (position) + `uint64_t` (index in the bridges vector)>` (marked indices)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| <span id="BridgeTree">`BridgeTree`</span>                                                            | Sparse representation of a Merkle tree.                                                                              | `unsigned char` = '3' (serialization version) + `vector<MerkleBridge>` (prior bridges) + `optional<MerkleBridge>` (current bridge) + `vector<uint64_t (position) + uint64_t (index in the bridges vector)>` (marked indices)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | <span id="OrchardWalletNoteCommitmentTreeWriter">`OrchardWalletNoteCommitmentTreeWriter`</span>      | Note commitment tree for an Orchard wallet. (WIP: create separate reference)                                         | `unsigned char` = '1' (note state version) + `optional<uint32_t>` (last checkpoint) + `BridgeTree` (commitment tree) + `vector<uint256` (txid) + `uint256` (tx height) + vector<`uint32_t`(action index) +`uint64_t` (position)> (action positions)>` (note positions)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | <span id="encode">`libzcash::UnifiedFullViewingKey::Encode(string, UnifiedFullViewingKeyPtr)`</span> | Serialized Ufvk. (WIP: add details)                                                                                  | `string` (Bech32m-encoded network HRP combined with the jumbled and Base32-encoded representation of the HRP.[^9])                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
 | <span id="MnemonicSeed">`MnemonicSeed`</span>                                                        | Mnemonic seed.                                                                                                       | `uint32_t` (language, more information [here](#languages)) + `string` (mnemonic)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
@@ -262,10 +262,10 @@ The idea is to show conditionals in a way that is easy to read.
 
 #### MerkleBridge<H: HashSer + Ord>
 
-The following was taken from the `write_bridge` function under `src/rust/src/incremental_merkle_tree.rs`.
+> Taken from the `write_bridge` function under `src/rust/src/incremental_merkle_tree.rs`.
 
 ```cpp
-SER_V2 = 2 // (serialization version)
+unsigned char = 2 // (serialization version, SER_V2)
 optional<uint64_t> // (prior position)
 vector<Address> // (node locations from ommers)
 vector<Address + H (value)> // (ommers)
@@ -280,6 +280,26 @@ if (frontier.is_right_child()) {
     optional<H> // (empty)
     vector<H> // (all leaves)
 }
+```
+
+#### BridgeTree<H, u32, DEPTH>
+
+> Taken from the `write_tree` function under `src/rust/src/incremental_merkle_tree.rs`.
+
+```cpp
+unsigned char = '3' // (serialization version, SER_V3)
+vector<MerkleBridge> // (prior bridges)
+optional<MerkleBridge> // (current bridge at the tip of this tree)
+vector<
+    uint64_t // (position)
+    uint64_t // (index in the bridges vector)
+> // (map from leaf positions that have been marked to the index of the bridge whose tip is at that position in this tree's list of bridges)
+vector<
+    uint32_t // (checkpoint id, block height)
+    uint64_t // (prior bridges length)
+    vector<uint64_t> // (the set of the positions that have been marked during the period that this checkpoint is the current checkpoint)
+    vector<uint64_t> // (mark positions forgotten due to notes at those positions having been spent since the position at which this checkpoint was created)
+> // (checkpoints, referring to the checkpoints to which this tree may be rewound)
 ```
 
 ## Encryption
