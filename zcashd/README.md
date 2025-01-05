@@ -262,7 +262,7 @@ The idea is to show conditionals in a way that is easy to read.
 
 #### MerkleBridge<H: HashSer + Ord>
 
-> Taken from the `write_bridge` function under `src/rust/src/incremental_merkle_tree.rs`.
+> Taken from the [`write_bridge`](https://github.com/zcash/zcash/blob/4f9fb43a3d56e2557fb2436a0689bce1ba3ae1d3/src/rust/src/incremental_merkle_tree.rs#L167) function under `src/rust/src/incremental_merkle_tree.rs`.
 
 ```cpp
 unsigned char = 2 // (serialization version, SER_V2)
@@ -284,7 +284,7 @@ if (frontier.is_right_child()) {
 
 #### BridgeTree<H, u32, DEPTH>
 
-> Taken from the `write_tree` function under `src/rust/src/incremental_merkle_tree.rs`.
+> Taken from the [`write_tree`](https://github.com/zcash/zcash/blob/4f9fb43a3d56e2557fb2436a0689bce1ba3ae1d3/src/rust/src/incremental_merkle_tree.rs#L315) function under `src/rust/src/incremental_merkle_tree.rs`.
 
 ```cpp
 unsigned char = '3' // (serialization version, SER_V3)
