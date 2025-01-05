@@ -20,3 +20,34 @@ The following snippet was taken from [here](https://github.com/adityapk00/zecwal
 > The bug can be automatically fixed by the wallet by running the `fixbip39bug` command. Just start `zecwallet-cli` and type `fixbip39bug`.
 >
 > If you have any funds in the incorrect addresses, they'll be sent to yourself, and the correct addresses re-derived.
+
+Wallet storage is implemented in the following files:
+
+- `lib/src/lighwallet/data.rs`
+- `lib/src/lighwallet/keys.rs`
+- `lib/src/lighwallet/utils.rs`
+- `lib/src/lighwallet/wallet_txns.rs`
+- `lib/src/lighwallet/walletokey.rs`
+- `lib/src/lighwallet/wallettkey.rs`
+- `lib/src/lighwallet/walletzkey.rs`
+- `lib/src/lightclient.rs`
+- `lib/src/lighwallet.rs`
+
+The top-level functions used to write/read wallet data is in `lib/src/lightwallet.rs#439`.
+
+## Schema (WIP)
+
+The overall schema looks as follows:
+
+| Keyname           | Value                                     | Description             |
+| ----------------- | ----------------------------------------- | ----------------------- |
+| Version           | u64                                       |                         |
+| Keys              |                                           |                         |
+| Blocks            | Vector                                    |                         |
+| Transactions      |                                           |                         |
+| Chain Name        | String                                    |                         |
+| Wallet Options    |                                           |                         |
+| Birthday          | u64                                       |                         |
+| Verified Tree     | Option<Vector<u8>>                        |                         |
+| Price             |                                           | Price information.      |
+| Orchard Witnesses | Option<BridgeTree<MerkleHashOrchard, 32>> | Orchard Witnesses Tree. |
