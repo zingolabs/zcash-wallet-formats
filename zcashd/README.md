@@ -221,7 +221,7 @@ This format is standard for representing signed numbers in binary and is compati
 | <span id="JSDescription">`JSDescription`</span>                                                      | JoinSplit description.                                                                                               | `CAmount` (vpub_old) + `CAmount` (vpub_new) + `uint256` (anchor) + `array<uint256>[2]` (nullifiers) + `array<uint256>[2]` (commitments) + `uint256` (ephemeralKey) + `uint256` (randomSeed) + `array<uint256>[2]` (message auth codes)                                                     |
 | <span id="OrchardWalletTxMeta">`OrchardWalletTxMeta`</span>                                          | A container for storing information derived from a tx that is relevant to restoring Orchard wallet caches.           | `map<uint32_t, libzcash::OrchardIncomingViewingKey>` (mapOrchardActionData) + `vector<uint32_t>` (vActionsSpendingMyNotes)                                                                                                                                                                 |
 | <span id="SaplingBundle">`SaplingBundle`</span>                                                      | The Sapling component of an authorized v5 transaction.                                                               | Check [`SaplingBundle`](#saplingbundle)                                                                                                                                                                                                                                                    |
-| <span id="OrchardBundle">`OrchardBundle`</span> (WIP: expand types)                                  | The Orchard component of an authorized transaction.                                                                  | (actions) + (flags) + (value_balance) + (anchor) + `byte` (authorization proof) + (authorizations) + (binding signature)                                                                                                                                                                   |
+| <span id="OrchardBundle">`OrchardBundle`</span> (WIP: expand types)                                  | The Orchard component of an authorized transaction.                                                                  |                                                                                                                                                                                                                                                                                            |
 | <span id="SaplingV4Writer">`SaplingV4Writer`</span>                                                  | Writer for the Sapling components of a v4 transaction (Sapling bundle), excluding binding signature.                 | `int64_t` (zat balance. Sapling spends - Sapling outputs) + `vector<SpendDescription>` (shielded spends) + `vector<OutputDescription>` (shielded outputs)                                                                                                                                  |
 | <span id="VerificationKey">`ed25519::VerificationKey`</span>                                         | Ed25519 public key.                                                                                                  | `array<uint8_t>[32]`                                                                                                                                                                                                                                                                       |
 | <span id="Signature">`ed25519::Signature`</span>                                                     | Ed25519 digital signature.                                                                                           | `array<uint8_t>[64]`                                                                                                                                                                                                                                                                       |
@@ -274,7 +274,7 @@ uint256 // (rk)
 // Shielded outputs (without proof)
 uint256 // (commitment value)
 uint256 //(cmu)
-uint256 // (ephemeral_key)
+uint256 // (ephemeral key)
 libzcash::SaplingEncCiphertext // (enc_ciphertext)
 libzcash::SaplingOutCiphertext // (out_ciphertexts)
 
@@ -299,6 +299,34 @@ array<
 > //  (shielded outputs zkProofs)
 
 array<unsigned char>[64] // (binding signatures)
+```
+
+#### OrchardBundle
+
+> Taken from the `write_v5_bundle` function under `depends/<arch>/vendored-sources/zcash_primitives/src/transaction/components/orchard.rs`.
+
+```cpp
+vector<
+    uint256 // (commitment to the net value created or consumed by the action)
+    uint256 // (nullifier)
+    uint256 // (rk)
+    uint256 // (cmx, commitment to the new note being created)
+
+    {
+        uint256 // (ephemeral key)
+        array<uint8_t>[580] // (encrypted note ciphertext)
+        array<uint8_t>[80] // (encrypted value that allows the holder of the outgoing cipher key for the note to recover the note plaintext)
+    } // (note ciphertext)
+> // (actions without auth)
+
+byte // (flags. https://zips.z.cash/protocol/protocol.pdf#txnencoding)
+int64_t // (value balance, net value moved into or out of the Orchard shielded pool)
+uint256 // (anchor, the root of the Orchard commitment tree that this bundle commits to)
+vector<uint8_t> // (proof components of the authorizing data)
+array<
+    uint8_t // (authorization for an Orchard action)
+>[64] // (authorizations for each orchard action)
+array<uint8_t>[64] // (binding signature)
 ```
 
 #### CTransaction
