@@ -249,7 +249,7 @@ This format is standard for representing signed numbers in binary and is compati
 | <span id="Address">`Address`</span>                                                                  | Address or location of a node of the Merkle tree.                                                                    | `unsigned char`(level in merkle tree) +`uint64_t` (address index)                                                                                                                                                                                                                          |
 | <span id="MerkleBridge">`MerkleBridge<H>`</span>                                                     | Information required to "update" witnesses from one state of a Merkle tree to another.                               | Check [`MerkleBridge Serialization`](#merklebridgeh-hashser--ord)                                                                                                                                                                                                                          |
 | <span id="BridgeTree">`BridgeTree`</span>                                                            | Sparse representation of a Merkle tree.                                                                              | Check [`BridgeTree Serialization`](#bridgetreeh-u32-depth)                                                                                                                                                                                                                                 |
-| <span id="OrchardWalletNoteCommitmentTreeWriter">`OrchardWalletNoteCommitmentTreeWriter`</span>      | Note commitment tree for an Orchard wallet. (WIP: create separate reference)                                         | `unsigned char` = '1' (note state version) + `optional<uint32_t>` (last checkpoint) + `BridgeTree` (commitment tree) + `vector<uint256` (txid) + `uint256` (tx height) + vector<`uint32_t`(action index) +`uint64_t` (position)> (action positions)>` (note positions)                     |
+| <span id="OrchardWalletNoteCommitmentTreeWriter">`OrchardWalletNoteCommitmentTreeWriter`</span>      | Note commitment tree for an Orchard wallet.                                                                          | Check [`OrchardWalletNoteCommitmentTreeWriter Serialization`](#orchardwalletnotecommitmenttreewriter)                                                                                                                                                                                      |
 | <span id="encode">`libzcash::UnifiedFullViewingKey::Encode(string, UnifiedFullViewingKeyPtr)`</span> | Serialized Ufvk. (WIP: add details)                                                                                  | `string` (Bech32m-encoded network HRP combined with the jumbled and Base32-encoded representation of the HRP.[^9])                                                                                                                                                                         |
 | <span id="MnemonicSeed">`MnemonicSeed`</span>                                                        | Mnemonic seed.                                                                                                       | `uint32_t` (language, more information [here](#languages)) + `string` (mnemonic)                                                                                                                                                                                                           |
 | <span id="ReceiverTypeSer">`ReceiverTypeSer`</span>                                                  | Serialization wrapper for reading and writing ReceiverType in CompactSize format.                                    | `CCompactSize` (size) + `uint64_t` (type, 0 = P2PKH, 1 = P2SH, 2 = Sapling, 3 = Orchard)                                                                                                                                                                                                   |
@@ -441,6 +441,27 @@ vector<
     vector<uint64_t> // (the set of the positions that have been marked during the period that this checkpoint is the current checkpoint)
     vector<uint64_t> // (mark positions forgotten due to notes at those positions having been spent since the position at which this checkpoint was created)
 > // (checkpoints, referring to the checkpoints to which this tree may be rewound)
+```
+
+#### OrchardWalletNoteCommitmentTreeWriter
+
+> Taken from the [`orchard_wallet_write_note_commitment_tree`](https://github.com/zcash/zcash/blob/4f9fb43a3d56e2557fb2436a0689bce1ba3ae1d3/src/rust/src/wallet.rs#L1264) function under `src/rust/src/wallet.rs`.
+
+```cpp
+unsigned char = '1' // (note state version, NOTE_STATE_V1)
+optional<uint32_t> // (last checkpoint, block height)
+BridgeTree<H, u32, DEPTH> // (commitment tree)
+
+/// Note positions
+vector<
+    uint256 // (txid)
+    uint256 // (tx height)
+    // Action positions
+    vector<
+        uint32_t // (action index)
+        uint64_t // (position)
+    >
+>
 ```
 
 ## Encryption
