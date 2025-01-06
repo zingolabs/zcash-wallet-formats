@@ -251,7 +251,7 @@ This format is standard for representing signed numbers in binary and is compati
 | <span id="MerkleBridge">`MerkleBridge<H>`</span>                                                     | Information required to "update" witnesses from one state of a Merkle tree to another.                               | Check [`MerkleBridge Serialization`](#merklebridgeh-hashser--ord)                                                                                                                                                                                                                          |
 | <span id="BridgeTree">`BridgeTree`</span>                                                            | Sparse representation of a Merkle tree.                                                                              | Check [`BridgeTree Serialization`](#bridgetreeh-u32-depth)                                                                                                                                                                                                                                 |
 | <span id="OrchardWalletNoteCommitmentTreeWriter">`OrchardWalletNoteCommitmentTreeWriter`</span>      | Note commitment tree for an Orchard wallet.                                                                          | Check [`OrchardWalletNoteCommitmentTreeWriter Serialization`](#orchardwalletnotecommitmenttreewriter)                                                                                                                                                                                      |
-| <span id="encode">`libzcash::UnifiedFullViewingKey::Encode(string, UnifiedFullViewingKeyPtr)`</span> | Serialized Ufvk. (WIP: add details)                                                                                  | `string` (Bech32m-encoded network HRP combined with the jumbled and Base32-encoded representation of the HRP.[^9])                                                                                                                                                                         |
+| <span id="encode">`libzcash::UnifiedFullViewingKey::Encode(string, UnifiedFullViewingKeyPtr)`</span> | Serialized Ufvk.                                                                                                     | `string` (Bech32m-encoded network HRP combined with the jumbled and Base32-encoded representation of the HRP.[^9])                                                                                                                                                                         |
 | <span id="MnemonicSeed">`MnemonicSeed`</span>                                                        | Mnemonic seed.                                                                                                       | `uint32_t` (language, more information [here](#languages)) + `string` (mnemonic)                                                                                                                                                                                                           |
 | <span id="ReceiverTypeSer">`ReceiverTypeSer`</span>                                                  | Serialization wrapper for reading and writing ReceiverType in CompactSize format.                                    | `CCompactSize` (size) + `uint64_t` (receiver type: 0 = P2PKH, 1 = P2SH, 2 = Sapling, 3 = Orchard)                                                                                                                                                                                          |
 | <span id="CSerializeRecipientAddress">`CSerializeRecipientAddress`</span>                            | Recipient address.                                                                                                   |                                                                                                                                                                                                                                                                                            |
@@ -478,6 +478,44 @@ if (receiverType == P2PKH) {
 } else if (receiverType == OrcharRawAddress) {
     OrchardRawAddress // (Orchard raw address)
 }
+```
+
+#### libzcash::UnifiedFullViewingKey::Encode(string, UnifiedFullViewingKeyPtr)
+
+> Taken from the [`unified_full_viewing_key_serialize`](https://github.com/zcash/zcash/blob/4f9fb43a3d56e2557fb2436a0689bce1ba3ae1d3/src/rust/src/unified_keys_ffi.rs#L93) function under `src/rust/src/unified_keys_ffi.rs`.
+
+```cpp
+/*
+* Bech32m encoding of (
+*   HRP,
+*   Jumbled padded raw encoding of the HRP, in base32
+* )
+*
+* where HRP is the string representation of the network (main, test, regtest)
+*/
+Bech32m(
+    string, // (HRP, string representation of the network (main, test, regtest))
+    f4jumble(
+        {
+            vector<
+                uint32_t // (typecode, P2pkh, P2sh, Sapling, Orchard)
+                vector<
+                    /*
+                    * Orchard([u8; 96]) => `(ak, nk, rivk)` each 32 bytes
+                    * Sapling([u8; 128]) => `(ak, nk, ovk, dk)` each 32 bytes
+                    *
+                    * Pruned version of the extended public key for the BIP 44 account corresponding
+                    * to the transparent address subtree from which transparent addresses are derived.
+                    * This includes just the chain code (32 bytes) and the compressed public key (33 bytes).
+                    * P2pkh([u8; 65]) => `(chaincode, pk)`
+                    */
+                    FVK
+                >
+            > // (raw encoding)
+            array<uint8_t>[16] // (padding, HRP as bytes)
+        }
+    )
+) // as string
 ```
 
 ## Encryption
