@@ -237,6 +237,7 @@ This format is standard for representing signed numbers in binary and is compati
 | <span id="SaplingPaymentAddress">`libzcash::SaplingPaymentAddress`</span>                            | Sapling payment address.                                                                                             | [`diversifier_t`](#diversifier_t) (diversifier) + `uint256` (pk_d)                                                                                                                                                                                                                         |
 | <span id="ReceivingKey">`libzcash::ReceivingKey`</span>                                              | Receiving key for shielded transactions.                                                                             | `uint256` (sk_enc)                                                                                                                                                                                                                                                                         |
 | <span id="SproutPaymentAddress">`libzcash::SproutPaymentAddress`</span>                              | Sprout payment address.                                                                                              | `uint256` (a_pk) + `uint256` (pk_enc)                                                                                                                                                                                                                                                      |
+| <span id="OrchardRawAddress">`OrchardRawAddress`</span>                                              | Raw Orchard address. This type doesn't exist per se, but is used to avoid inline definitions.                        | [`diversifier_t`](#diversifier_t) (diversifier) + `uint256` (pk_d)                                                                                                                                                                                                                         |
 | <span id="SproutViewingKey">`libzcash::SproutViewingKey`</span>                                      | Sprout viewing key.                                                                                                  | `uint256` (a_pk) + [`libzcash::ReceivingKey`](#ReceivingKey) (sk_enc)                                                                                                                                                                                                                      |
 | <span id="SproutSpendingKey">`libzcash::SproutSpendingKey`</span>                                    | Sprout spending key.                                                                                                 | `uint252` (a_sk)                                                                                                                                                                                                                                                                           |
 | <span id="CScriptBase">`CScriptBase`</span>                                                          | Serialized script, used inside transaction inputs and outputs.                                                       | [`prevector`](#prevector)`<28, unsigned char>` (script)                                                                                                                                                                                                                                    |
@@ -252,8 +253,8 @@ This format is standard for representing signed numbers in binary and is compati
 | <span id="OrchardWalletNoteCommitmentTreeWriter">`OrchardWalletNoteCommitmentTreeWriter`</span>      | Note commitment tree for an Orchard wallet.                                                                          | Check [`OrchardWalletNoteCommitmentTreeWriter Serialization`](#orchardwalletnotecommitmenttreewriter)                                                                                                                                                                                      |
 | <span id="encode">`libzcash::UnifiedFullViewingKey::Encode(string, UnifiedFullViewingKeyPtr)`</span> | Serialized Ufvk. (WIP: add details)                                                                                  | `string` (Bech32m-encoded network HRP combined with the jumbled and Base32-encoded representation of the HRP.[^9])                                                                                                                                                                         |
 | <span id="MnemonicSeed">`MnemonicSeed`</span>                                                        | Mnemonic seed.                                                                                                       | `uint32_t` (language, more information [here](#languages)) + `string` (mnemonic)                                                                                                                                                                                                           |
-| <span id="ReceiverTypeSer">`ReceiverTypeSer`</span>                                                  | Serialization wrapper for reading and writing ReceiverType in CompactSize format.                                    | `CCompactSize` (size) + `uint64_t` (type, 0 = P2PKH, 1 = P2SH, 2 = Sapling, 3 = Orchard)                                                                                                                                                                                                   |
-| <span id="CSerializeRecipientAddress">`CSerializeRecipientAddress`</span>                            | Recipient address.                                                                                                   | `ReceiverTypeSer(receiver)` (WIP: add details)                                                                                                                                                                                                                                             |
+| <span id="ReceiverTypeSer">`ReceiverTypeSer`</span>                                                  | Serialization wrapper for reading and writing ReceiverType in CompactSize format.                                    | `CCompactSize` (size) + `uint64_t` (receiver type: 0 = P2PKH, 1 = P2SH, 2 = Sapling, 3 = Orchard)                                                                                                                                                                                          |
+| <span id="CSerializeRecipientAddress">`CSerializeRecipientAddress`</span>                            | Recipient address.                                                                                                   |                                                                                                                                                                                                                                                                                            |
 
 ### More details
 
@@ -462,6 +463,21 @@ vector<
         uint64_t // (position)
     >
 >
+```
+
+#### CSerializeRecipientAddress<libzcash::ReceiverType>
+
+```cpp
+ReceiverTypeSer // (receiver type)
+if (receiverType == P2PKH) {
+    uint160 // (P2PKH address)
+} else if (receiverType == P2SH) {
+    uint160 // (P2SH address)
+} else if (receiverType == SaplingPaymentAddress) {
+    libzcash::SaplingPaymentAddress // (Sapling payment address)
+} else if (receiverType == OrcharRawAddress) {
+    OrchardRawAddress // (Orchard raw address)
+}
 ```
 
 ## Encryption
