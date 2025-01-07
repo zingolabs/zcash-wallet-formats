@@ -39,4 +39,8 @@ let expected_tables = vec![
 ];
 ```
 
+Here's an ER Diagram of the database schema:
+
+![ER Diagram](./assets/images/zashi-erd-dbvis.png)
+
 The client also generates various **indexes** and **views**.
