@@ -280,7 +280,7 @@ libzcash::SaplingEncCiphertext // (enc_ciphertext)
 libzcash::SaplingOutCiphertext // (out_ciphertexts)
 
 if (shielded_spends.length > 0 AND shielded_outputs.length > 0) {
-int64_t // (value balance)
+    int64_t // (value balance)
 }
 
 if (shielded_spends.length > 0) {
