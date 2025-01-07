@@ -12,5 +12,5 @@ Check out the following surveys:
 - [Zcashd](./zcashd/README.md)
 - [Zecwallet](./zecwallet/README.md)
 - [Zashi](./zashi/README.md)
-- Zingo (coming soon)
+- [Zingo](./zingo/README.md)
 - Ywallet (coming soon)
