@@ -39,15 +39,86 @@ The top-level functions used to write/read wallet data is in `lib/src/lightwalle
 
 The overall schema looks as follows:
 
-| Keyname           | Value                                     | Description             |
+| Keyname           | Value Type                                | Description             |
 | ----------------- | ----------------------------------------- | ----------------------- |
 | Version           | u64                                       |                         |
-| Keys              |                                           |                         |
-| Blocks            | Vector                                    |                         |
-| Transactions      |                                           |                         |
+| Keys              | [`Keys`](#keys)                           |                         |
+| Blocks            | Vector<[`BlockData`](#blockdata)>         |                         |
+| Transactions      | [`WalletTxns`](#wallettxns)               |                         |
 | Chain Name        | String                                    |                         |
-| Wallet Options    |                                           |                         |
+| Wallet Options    | [`WalletOptions`](#walletoptions)         |                         |
 | Birthday          | u64                                       |                         |
 | Verified Tree     | Option<Vector<u8>>                        |                         |
 | Price             |                                           | Price information.      |
 | Orchard Witnesses | Option<BridgeTree<MerkleHashOrchard, 32>> | Orchard Witnesses Tree. |
+
+## Types
+
+### `String`
+
+Strings are written as len + utf8.
+
+```rust
+u64 // length
+bytes // utf8 bytes
+```
+
+### `Keys`
+
+```rust
+u64 // Version
+u8 // Encrypted (1 = true, 0 = false)
+[u8; 48] // Encrypted seed bytes
+u8 // Nonce
+[u8; 32] // Seed
+Vector<WalletOKey> // Orchard keys
+Vector<WalletZKey> // ZKeys (combination of HD keys derived from the seed, viewing keys and imported spending keys)
+Vector<WalletTKey> // Transparent private keys
+```
+
+### `WalletOKey`
+
+### `WalletZKey`
+
+A struct that holds z-address private keys or viewing keys
+
+### `BlockData`
+
+Contains the encoded block data and the block height.
+
+```rust
+i32 // height
+Vector<u8> // Block hash
+CommitmentTree::<Node>::empty() // WIP
+u64 // BlockData struct version
+Vector<u8> // Encoded block data (ecb) WIP: hex(CompactBlock), what's CompactBlock?
+```
+
+### `WalletTxns`
+
+List of all transactions in a wallet.
+
+```rust
+u64 // WalletTxns struct version
+
+// The hashmap, write a set of tuples. Store them sorted so that wallets are deterministically saved
+Vector<
+    TxId // Transaction id
+    WalletTx // Transaction data
+>
+```
+
+### `WalletOptions`
+
+```rust
+u64 // WalletOptions struct version
+u8 // Memo download option (0 = No memos, 1 = Wallet memos, 2 = All memos)
+i64 // Spam threshold
+```
+
+## Important Information
+
+### Transparent Key Derivation
+
+WIP: Describe the differences in how Zecwallet uses a different derivation path level for transparent keys.
+Include this paper: https://github.com/BlockchainCommons/Research/blob/master/papers/bcr-2023-012-envelope-expression.md
