@@ -44,3 +44,40 @@ Here's an ER Diagram of the database schema:
 ![ER Diagram](./assets/images/zashi-erd-dbvis.png)
 
 The client also generates various **indexes** and **views**.
+
+## Objects stored
+
+### Block
+
+```rust
+height: INTEGER
+hash: BLOB
+time: INTEGER
+sapling_tree: BLOB
+sapling_commitment_tree_size: INTEGER
+orchard_commitment_tree_size: INTEGER
+sapling_output_count: INTEGER
+orchard_output_count: INTEGER
+```
+
+### Account
+
+### Ephemeral Address
+
+### Address
+
+### Transaction
+
+```rust
+txid: BLOB
+created: TEXT
+block: <BLOCK>
+mined_height: INTEGER
+tx_index: INTEGER
+expiry_height: INTEGER
+raw: BLOB
+fee: INTEGER
+target_height: INTEGER
+```
+
+### Sent Note
