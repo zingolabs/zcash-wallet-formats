@@ -14,3 +14,12 @@ Check out the following surveys:
 - [Zashi](./zashi/README.md)
 - [Zingo](./zingo/README.md)
 - Ywallet (coming soon)
+
+### Wallet Ecosystem Overview (WIP)
+
+### Concepts
+
+| Name                     | Defined in                               | Zecwallet | Zcashd                            | Zingo | Zashi | Ywallet |
+| ------------------------ | ---------------------------------------- | --------- | --------------------------------- | ----- | ----- | ------- |
+| Unified Full Viewing Key | [ZIP-0316](https://zips.z.cash/zip-0316) |           | [UFVK](./zcashd/README.md#encode) |       |       |         |
+| Unified Address          | [ZIP-0316](https://zips.z.cash/zip-0316) |           |                                   |       |       |         |
