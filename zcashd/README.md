@@ -74,8 +74,8 @@ Open in fullscreen, as this table is too wide.
 
 | `keyname`            | `key`                                                               | `value`                                                                                                                                                                           | Description                                                    |
 | -------------------- | ------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------- |
-| acc\*                | [`string`](#string) (account name)                                  | [`CAccount`](#CAccount)                                                                                                                                                           | Account information.                                           |
-| acentry\*            | `string` (account name) + [`uint64_t`](#uint64_t) (counter)         | [`CAccountingEntry`](#CAccountingEntry)                                                                                                                                           | Account entry. Tracks internal transfers.                      |
+| acc\*                | [`string`](#string) (account name)                                  | [`CAccount`](#CAccount)                                                                                                                                                           | DISABLED. Account information.                                 |
+| acentry\*            | `string` (account name) + [`uint64_t`](#uint64_t) (counter)         | [`CAccountingEntry`](#CAccountingEntry)                                                                                                                                           | DISABLED. Account entry. Tracks internal transfers.            |
 | **bestblock**        | -                                                                   | [`CBlockLocator`](#CBlockLocator)                                                                                                                                                 | The current best block of the blockchain.                      |
 | **chdseed**          | [`uint256`](#uint256) (seed fingerprint)                            | [`vector`](#vector)[`<unsigned char>`](#unsigned_char) (see [Encryption](#encryption))                                                                                            | Encrypted HD seed.                                             |
 | ckey\*               | [`CPubKey`](#CPubKey)                                               | `vector<unsigned char>` (see [Encryption](#encryption))                                                                                                                           | Transparent pubkey and encrypted private key.                  |
@@ -106,11 +106,27 @@ Open in fullscreen, as this table is too wide.
 | zkey\*               | `libzcash::SproutPaymentAddress`                                    | [`libzcash::SproutSpendingKey`](#SproutSpendingKey)                                                                                                                               | Sprout Payment Address and Spending Key.                       |
 | zkeymeta\*           | `libzcash::SproutPaymentAddress`                                    | `CKeyMetadata`                                                                                                                                                                    | Sprout Payment Address and key metadata.                       |
 
+#### Notes
+
+The 'Account' API, which included both `acc` and `acentry` and were inherited from Bitcoin Core, has been disabled since the launch of Zcash. and finally removed in zcashd [v4.5.0](#v450).
+Read the [zcashd v4.5.0 release notes](https://github.com/zcash/zcash/releases/tag/v4.5.0)
+and [this bitcoin-core v0.17.0 release notes](https://github.com/bitcoin/bitcoin/blob/master/doc/release-notes/release-notes-0.17.0.md#label-and-account-apis-for-wallet)
+for more information.
+
 ### v4.0.0
 
 No changes to storage format since v3.0.0
 
 Check out the full diff [here](./DIFF.md#v4)
+
+### v4.5.0
+
+#### Removed Fields:
+
+| `keyname`   | `key`                     | `value`                | Description |
+| ----------- | ------------------------- | ---------------------- | ----------- |
+| ~~acc~~     | ~~`string`~~              | ~~`CAccount`~~         | -           |
+| ~~acentry~~ | ~~`string` + `uint64_t`~~ | ~~`CAccountingEntry`~~ | -           |
 
 ### v5.0.0
 
@@ -118,8 +134,6 @@ Check out the full diff [here](./DIFF.md#v4)
 
 | `keyname`                        | `key`                                                           | `value`                                                                                                      | Description                       |
 | -------------------------------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ | --------------------------------- |
-| ~~acc~~                          | ~~`string`~~                                                    | ~~`CAccount`~~                                                                                               | -                                 |
-| ~~acentry~~                      | ~~`string` + `uint64_t`~~                                       | ~~`CAccountingEntry`~~                                                                                       | -                                 |
 | ~~hdseed~~                       | ~~`uin256`~~                                                    | ~~`RawHDSeed`~~                                                                                              | -                                 |
 | ~~chdseed~~                      | ~~`uin256`~~                                                    | ~~`vector<unsigned char>`~~                                                                                  | -                                 |
 | **networkinfo**                  | -                                                               | `pair<string = 'Zcash', string (network identifier)>`                                                        | Network identifier.               |
