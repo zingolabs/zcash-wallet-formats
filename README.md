@@ -19,7 +19,7 @@ Check out the following surveys:
 
 ### Concepts
 
-| Name                     | Defined in                               | Zecwallet | Zcashd                            | Zingo | Zashi | Ywallet |
-| ------------------------ | ---------------------------------------- | --------- | --------------------------------- | ----- | ----- | ------- |
-| Unified Full Viewing Key | [ZIP-0316](https://zips.z.cash/zip-0316) |           | [UFVK](./zcashd/README.md#encode) |       |       |         |
-| Unified Address          | [ZIP-0316](https://zips.z.cash/zip-0316) |           |                                   |       |       |         |
+| Name                     | Defined in                               | Zecwallet | Zcashd                            | Zingo | eZcash                                  | Zashi | Ywallet |
+| ------------------------ | ---------------------------------------- | --------- | --------------------------------- | ----- | --------------------------------------- | ----- | ------- |
+| Unified Full Viewing Key | [ZIP-0316](https://zips.z.cash/zip-0316) |           | [UFVK](./zcashd/README.md#encode) |       | [UnifiedViewingKey](./ezcash/README.md) |       |         |
+| Unified Address          | [ZIP-0316](https://zips.z.cash/zip-0316) |           |                                   |       |                                         |       |         |
