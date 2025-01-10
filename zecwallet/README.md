@@ -3,6 +3,7 @@
 ## Background information
 
 Zecwallet uses a bespoke format for storing wallet data on disk.
+The data is written and read linearly using Rust's `BufReader`/`BufWriter`.
 
 The following snippet was taken from [here](https://github.com/adityapk00/zecwallet-light-cli/blob/bea9a26e3dcf6ed1dcc703848a942d343e38360c/bip39bug.md).
 
@@ -78,6 +79,8 @@ Vector<WalletTKey> // Transparent private keys
 
 ### `WalletOKey`
 
+A struct that holds orchard private keys or viewing keys
+
 ### `WalletZKey`
 
 A struct that holds z-address private keys or viewing keys
@@ -120,5 +123,4 @@ i64 // Spam threshold
 
 ### Transparent Key Derivation
 
-WIP: Describe the differences in how Zecwallet uses a different derivation path level for transparent keys.
 Include this paper: https://github.com/BlockchainCommons/Research/blob/master/papers/bcr-2023-012-envelope-expression.md
