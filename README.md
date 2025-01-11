@@ -14,7 +14,8 @@ Check out the following surveys:
 - [Zingo](./zingo/README.md)
 - [eZcash](./ezcash/README.md)
 - [Zashi](./zashi/README.md)
-- Ywallet (coming soon)
+- [YWallet](./ywallet/README.md)
+- Zenith (coming soon)
 
 ### Wallet Ecosystem Overview (WIP)
 

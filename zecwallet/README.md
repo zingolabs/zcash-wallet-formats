@@ -85,6 +85,8 @@ A struct that holds orchard private keys or viewing keys
 
 A struct that holds z-address private keys or viewing keys
 
+### `WalletTKey`
+
 ### `BlockData`
 
 Contains the encoded block data and the block height.
@@ -110,6 +112,10 @@ Vector<
     WalletTx // Transaction data
 >
 ```
+
+### `TxId`
+
+### `WalletTx`
 
 ### `WalletOptions`
 
