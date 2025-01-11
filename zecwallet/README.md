@@ -53,6 +53,12 @@ The overall schema looks as follows:
 | Price             |                                           | Price information.      |
 | Orchard Witnesses | Option<BridgeTree<MerkleHashOrchard, 32>> | Orchard Witnesses Tree. |
 
+## Constants
+
+```rust
+SECRET_KEY_SIZE = 32 (0x20)
+```
+
 ## Types
 
 ### `String`
@@ -86,6 +92,29 @@ A struct that holds orchard private keys or viewing keys
 A struct that holds z-address private keys or viewing keys
 
 ### `WalletTKey`
+
+```rust
+u64 // WalletTKey struct version
+WalletTKeyType // keytype
+u8 // Locked (1 = true, 0 = false)
+Option<SecretKey> // Spending key
+String // Address
+Option<u32> // HD Key number (WIP: address index?)
+Option<Vector<u8>> // Encrypted Spending Key (WIP: how is it encrypted?)
+Option<Vector<u8>> // Nonce
+```
+
+### WalletTKeyType
+
+```rust
+u32 // 0 = HD key, 1 = imported key
+```
+
+### `SecretKey`
+
+```rust
+[u8; SECRET_KEY_SIZE]
+```
 
 ### `BlockData`
 
