@@ -97,7 +97,7 @@ A struct that holds z-address private keys or viewing keys
 u64 // WalletTKey struct version
 WalletTKeyType // keytype
 u8 // Locked (1 = true, 0 = false)
-Option<SecretKey> // Spending key
+Option<SecretKey> // Secret key
 String // Address
 Option<u32> // HD Key number (WIP: address index?)
 Option<Vector<u8>> // Encrypted Spending Key (WIP: how is it encrypted?)
@@ -113,7 +113,7 @@ u32 // 0 = HD key, 1 = imported key
 ### `SecretKey`
 
 ```rust
-[u8; SECRET_KEY_SIZE]
+[u8; SECRET_KEY_SIZE] // A secp256k1 secret key
 ```
 
 ### `BlockData`
