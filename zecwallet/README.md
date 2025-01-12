@@ -95,14 +95,19 @@ A struct that holds z-address private keys or viewing keys
 
 ### `WalletTKey`
 
+Private keys are encrypted using the `secretbox` Rust crate, by getting the doublesha256 of the user's password and
+a randomly generated nonce. The seal function, used to encrypt the private key,
+is `crypto_secretbox_xsalsa20poly1305`, a particular combination of Salsa20 and Poly1305 specified in [Cryptography in NaCl](https://nacl.cr.yp.to/valid.html).
+For more information, read https://cr.yp.to/highspeed/naclcrypto-20090310.pdf.
+
 ```rust
 u64 // WalletTKey struct version
 WalletTKeyType // keytype
 u8 // Locked (1 = true, 0 = false)
 Option<SecretKey> // Secret key
 String // Address
-Option<u32> // HD Key number (WIP: address index?)
-Option<Vector<u8>> // Encrypted Spending Key (WIP: how is it encrypted?)
+Option<u32> // HD Key number. Only present if it is an HD key
+Option<Vector<u8>> // Encrypted Secret Key. Output of secretbox::seal(secret_key, nonce, doublesha256(password))
 Option<Vector<u8>> // Nonce
 ```
 
