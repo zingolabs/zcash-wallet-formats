@@ -36,7 +36,9 @@ Wallet storage is implemented in the following files:
 
 The top-level functions used to write/read wallet data is in `lib/src/lightwallet.rs#439`.
 
-## Schema (WIP)
+## Schema
+
+Note: all numeric types are written as little endian.
 
 The overall schema looks as follows:
 
@@ -144,9 +146,61 @@ Vector<
 
 ### `TxId`
 
+```rust
+[u8; 32] // Transaction id
+```
+
 ### `WalletTx`
 
+```rust
+u64 // WalletTx struct version
+u32 // Block height
+u8 // Unconfirmed (1 = true, 0 = false)
+u64 // Datetime
+TxId // Transaction id
+
+// Sapling notes
+Vector<
+    SaplingNoteData
+>
+
+// UTXOs
+Vector<
+    Utxo
+>
+
+u64 // Total Orchard value spent
+u64 // Total Sapling value spent
+u64 // Total Transparent value spent
+
+// Outgoing transaction metadata
+Vector<OutgoingTxMetadata>
+
+u8 // Full transaction scanned (1 = true, 0 = false)
+Option<f64> // Zec price. Writes a IEEE754 double-precision (8 bytes) floating point number.
+
+// Sapling spent nullifiers
+Vector<Nullifier>
+
+// Orchard notes
+Vector<OrchardNoteData>
+
+// Orchard spent nullifiers
+Vector<Nullifier>
+
+```
+
+### `SaplingNoteData`
+
+### `Utxo`
+
 ### `WalletOptions`
+
+### `OutgoingTxMetadata`
+
+### `Nullifier
+
+### `OrchardNoteData`
 
 ```rust
 u64 // WalletOptions struct version
