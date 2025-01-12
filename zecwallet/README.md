@@ -180,27 +180,112 @@ u8 // Full transaction scanned (1 = true, 0 = false)
 Option<f64> // Zec price. Writes a IEEE754 double-precision (8 bytes) floating point number.
 
 // Sapling spent nullifiers
-Vector<Nullifier>
+Vector<sapling::Nullifier>
 
 // Orchard notes
 Vector<OrchardNoteData>
 
 // Orchard spent nullifiers
-Vector<Nullifier>
-
+Vector<orchard::Nullifier>
 ```
 
 ### `SaplingNoteData`
 
+```rust
+u64 // SaplingNoteData struct version
+ExtendedFullViewingKey // Extended full viewing key
+```
+
+### `ExtendedFullViewingKey`
+
+```rust
+u8 // Key depth
+[u8; 4] // Parent FVK tag
+u32 // Child index
+[u8; 32] // Chain code
+sapling::FullViewingKey // [u8; 96]. Full viewing key
+[u8; 32] // Diversifier key
+```
+
+### `sapling::FullViewingKey`
+
+```rust
+JubjubSubgroupPoint // [u8; 32]. ak
+NullifierDerivingKey // [u8; 32]. nk
+OutgoingViewingKey // ovk
+
+```
+
+### `sapling::ViewingKey`
+
+```rust
+jubjub::SubgroupPoint // ak
+sapling::NullifierDerivingKey // nk
+OutgoingViewingKey // ovk
+```
+
+### `sapling::NullifierDerivingKey`
+
+```rust
+jubjub::SubgroupPoint
+```
+
+### `OutgoingViewingKey`
+
+```rust
+[u8; 32] // ovk
+```
+
 ### `Utxo`
+
+```rust
+u64 // Utxo struct version
+u32 // Address length
+String // Address
+TxId // Transaction id
+u64 // Output index
+u64 // Value
+i32 // Height
+
+// Script
+Vector<u8>
+
+Option<TxId> // Spent
+Option<i32> // Spent at height
+
+// Unconfirmed spent
+Option<
+    TxId // Transaction id
+    u32 // Height
+>
+```
 
 ### `WalletOptions`
 
 ### `OutgoingTxMetadata`
 
-### `Nullifier
+### `sapling::Nullifier`
+
+```rust
+[u8; 32]
+```
+
+### `orchard::Nullifier`
+
+The base field of the Pallas and iso-Pallas curves, used to represent a
+unique nullifier for a note.
+
+```rust
+[u8; 32] // Base field of the Pallas and iso-Pallas curves
+```
 
 ### `OrchardNoteData`
+
+### `jubjub::SubgroupPoint`
+
+```rust
+[u8; 32]
+```
 
 ```rust
 u64 // WalletOptions struct version
