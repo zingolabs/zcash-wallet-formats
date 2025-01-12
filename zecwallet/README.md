@@ -262,6 +262,12 @@ Option<
 
 ### `WalletOptions`
 
+```rust
+u64 // WalletOptions struct version
+u8 // Memo download option (0 = No memos, 1 = Wallet memos, 2 = All memos)
+i64 // Spam threshold
+```
+
 ### `OutgoingTxMetadata`
 
 ### `sapling::Nullifier`
@@ -285,12 +291,6 @@ unique nullifier for a note.
 
 ```rust
 [u8; 32]
-```
-
-```rust
-u64 // WalletOptions struct version
-u8 // Memo download option (0 = No memos, 1 = Wallet memos, 2 = All memos)
-i64 // Spam threshold
 ```
 
 ## Important Information
