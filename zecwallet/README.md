@@ -300,6 +300,83 @@ unique nullifier for a note.
 
 ### `OrchardNoteData`
 
+Note that we don't write the unconfirmed_spent field, because if the wallet is restarted,
+we don't want to be beholden to any expired txns
+
+```rust
+u64 // OrchardNoteData struct version
+orchard::FullViewingKey // Full viewing key
+
+orchard::Address // Recipient
+u64 // Note value
+orchard::Nullifier // Note rho
+[u8; 32] // Note rseed (random seed)
+
+Option<u64> // Witness position
+
+// Spent
+Option<
+    TxId // Transaction id
+    u32 // Height
+>
+
+// Unconfirmed spent
+Option<
+    TxId // Transaction id
+    u32 // Height
+>
+
+Option<MemoBytes> // Memo
+
+u8 // Is change (1 = true, 0 = false)
+u8 // Have spending key (1 = true, 0 = false)
+```
+
+### `orchard::Address`
+
+```rust
+[u8; 11] // Diversifier
+[u8; 32] // Diversified Transmission Key
+```
+
+### `orchard::FullViewingKey`
+
+Zcash Protocol Spec § 5.6.4.4: Orchard Raw Full Viewing Keys.
+Result is of length [u8; 96]
+
+```rust
+orchard::SpendValidatingKey // ak
+orchard::NullifierDerivingKey // nk
+orchard::CommitIvkRandomness // rivk
+```
+
+### `orchard::SpendValidatingKey`
+
+A key used to validate spend authorization signatures.
+The point repr is the same as I2LEOSP of its x-coordinate.
+[Orchard Key Components](https://zips.z.cash/protocol/nu5.pdf#orchardkeycomponents).
+
+```rust
+[u8; 32] // redpallas::VerificationKey<SpendAuth>
+```
+
+### `orchard::NullifierDerivingKey`
+
+A key used to derive Nullifiers from Notes.
+[Orchard Key Components](https://zips.z.cash/protocol/nu5.pdf#orchardkeycomponents).
+
+```rust
+[u8; 32] // pallas::Base
+```
+
+### `orchard::CommitIvkRandomness`
+
+[Orchard Key Components](https://zips.z.cash/protocol/nu5.pdf#orchardkeycomponents).
+
+```rust
+[u8; 32] // pallas::Scalar
+```
+
 ### `jubjub::SubgroupPoint`
 
 ```rust
