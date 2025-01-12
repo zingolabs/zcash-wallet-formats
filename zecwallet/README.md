@@ -270,6 +270,19 @@ i64 // Spam threshold
 
 ### `OutgoingTxMetadata`
 
+```rust
+u64 // Address length
+String // Address
+u64 // Value
+MemoBytes // Memo serialized per ZIP 302
+```
+
+### `MemoBytes`
+
+```rust
+[u8; 512] // Memo
+```
+
 ### `sapling::Nullifier`
 
 ```rust
