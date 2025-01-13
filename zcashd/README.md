@@ -506,6 +506,7 @@ if (receiverType == P2PKH) {
 * )
 *
 * where HRP is the string representation of the network (main, test, regtest)
+* For more information, read https://zips.z.cash/zip-0316#jumbling
 */
 Bech32m(
     string, // (HRP, string representation of the network (main, test, regtest))
