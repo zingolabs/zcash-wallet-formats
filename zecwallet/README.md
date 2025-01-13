@@ -22,6 +22,8 @@ The following snippet was taken from [here](https://github.com/adityapk00/zecwal
 >
 > If you have any funds in the incorrect addresses, they'll be sent to yourself, and the correct addresses re-derived.
 
+More information in [the Zecwallet-CLI v1.1.0 release notes](https://github.com/adityapk00/zecwallet-light-cli/releases/tag/1.1.0).
+
 Wallet storage is implemented in the following files:
 
 - `lib/src/lighwallet/data.rs`
@@ -40,20 +42,20 @@ The top-level functions used to write/read wallet data is in `lib/src/lightwalle
 
 Note: all numeric types are written as little endian.
 
-The overall schema looks as follows:
+The data stored comes from the `LightWallet` struct, and is written as follows:
 
-| Keyname           | Value Type                                | Description             |
-| ----------------- | ----------------------------------------- | ----------------------- |
-| Version           | u64                                       |                         |
-| Keys              | [`Keys`](#keys)                           |                         |
-| Blocks            | Vector<[`BlockData`](#blockdata)>         |                         |
-| Transactions      | [`WalletTxns`](#wallettxns)               |                         |
-| Chain Name        | String                                    |                         |
-| Wallet Options    | [`WalletOptions`](#walletoptions)         |                         |
-| Birthday          | u64                                       |                         |
-| Verified Tree     | Option<Vector<u8>>                        |                         |
-| Price             |                                           | Price information.      |
-| Orchard Witnesses | Option<BridgeTree<MerkleHashOrchard, 32>> | Orchard Witnesses Tree. |
+| Keyname           | Value Type                                | Description                 |
+| ----------------- | ----------------------------------------- | --------------------------- |
+| Version           | u64                                       | LightWallet struct version. |
+| Keys              | [`Keys`](#keys)                           | Wallet keys.                |
+| Blocks            | Vector<[`BlockData`](#blockdata)>         | Blocks.                     |
+| Transactions      | [`WalletTxns`](#wallettxns)               | Transactions.               |
+| Chain Name        | String                                    | Chain name.                 |
+| Wallet Options    | [`WalletOptions`](#walletoptions)         | Options.                    |
+| Birthday          | u64                                       | Wallet birthday height.     |
+| Verified Tree     | Option<TreeState>                         | Commitment tree state.      |
+| Price             | WalletZecPriceInfo                        | Price information.          |
+| Orchard Witnesses | Option<BridgeTree<MerkleHashOrchard, 32>> | Orchard Witnesses Tree.     |
 
 ## Constants
 
@@ -75,7 +77,7 @@ bytes // utf8 bytes
 ### `Keys`
 
 ```rust
-u64 // Version
+u64 // Keys struct version
 u8 // Encrypted (1 = true, 0 = false)
 [u8; 48] // Encrypted seed bytes
 u8 // Nonce
@@ -83,6 +85,17 @@ u8 // Nonce
 Vector<WalletOKey> // Orchard keys
 Vector<WalletZKey> // ZKeys (combination of HD keys derived from the seed, viewing keys and imported spending keys)
 Vector<WalletTKey> // Transparent private keys
+```
+
+### `TreeState`
+
+```rust
+String // Network name: "main" or "test"
+u64 // Block height
+String // Block ID (hash)
+u32 // Unix epoch time when the block was mined
+String // Sapling commitment tree state
+String // Orchard commitment tree state
 ```
 
 ### `WalletOKey`
@@ -130,9 +143,69 @@ Contains the encoded block data and the block height.
 ```rust
 i32 // height
 Vector<u8> // Block hash
-CommitmentTree::<Node>::empty() // WIP
+CommitmentTree::<Node>::empty() // Commitment tree. Serialized as: (Optional(empty), Optional(empty), vec[] (also empty))
 u64 // BlockData struct version
-Vector<u8> // Encoded block data (ecb) WIP: hex(CompactBlock), what's CompactBlock?
+Vector<u8> // Encoded compact block (ecb)
+```
+
+### `CompactBlock`
+
+This is not a Rust type, but a Protocol Buffer type.
+
+```rust
+u32 // Proto version
+u64 // Height
+Vector<u8> // Hash
+Vector<u8> // Previous hash
+u32 // Unix epoch time when the block was mined
+Vector<u8> // (hash, prevHash, and time) OR (full header)
+Vector<CompactTx> // Zero or more compact transactions from this block
+```
+
+### `CompactTx`
+
+This is not a Rust type, but a Protocol Buffer type.
+
+```rust
+u64 // Index within the full block
+Vector<u8> // Transaction hash (ID), same as in block explorers
+Option<u32> // Transaction fee (optional)
+Vector<CompactSaplingSpend> // Sapling inputs
+Vector<CompactSaplingOutput> // Sapling outputs
+Vector<CompactOrchardAction> // Orchard actions
+```
+
+### `CompactSaplingSpend`
+
+CompactSaplingSpend is a Sapling Spend Description as described in 7.3 of the Zcash protocol specification.
+
+This is not a Rust type, but a Protocol Buffer type.
+
+```rust
+Vector<u8> // Nullifier (nf)
+```
+
+Output is a Sapling Output Description as described in section 7.4 of the Zcash protocol spec. Total size is 948.
+
+### `CompactSaplingOutput`
+
+This is not a Rust type, but a Protocol Buffer type.
+
+```rust
+Vector<u8> // Note commitment u-coordinate (cmu)
+Vector<u8> // Ephemeral public key (epk)
+Vector<u8> // First 52 bytes of ciphertext
+```
+
+### `CompactOrchardAction`
+
+This is not a Rust type, but a Protocol Buffer type.
+
+```rust
+Vector<u8> // Nullifier of the input note (32 bytes)
+Vector<u8> // x-coordinate of the note commitment for the output note (cmx, 32 bytes)
+Vector<u8> // Encoding of an ephemeral Pallas public key (ephemeralKey, 32 bytes)
+Vector<u8> // Note plaintext component of the encCiphertext field (ciphertext, 52 bytes)
 ```
 
 ### `WalletTxns`
@@ -386,6 +459,14 @@ A key used to derive Nullifiers from Notes.
 
 ```rust
 [u8; 32]
+```
+
+### `WalletZecPriceInfo`
+
+```rust
+u64 // WalletZecPriceInfo struct version
+Option<u64> // Last historical prices fetched at (timestamp)
+u64 // Historical prices retry count
 ```
 
 ## Important Information
