@@ -2,8 +2,7 @@
 
 This repository tracks the progress of a survey on wallet export formats, with an emphasis on zcashd and zecwallet.
 
-Some work related to parsing is being done in the [bdb-parser (outdated)](https://github.com/dorianvp/zcashd-bdb-parser)
-and in [the universal wallet parser](https://github.com/dorianvp/uzw-parser).
+Some work related to parsing is being done in [the universal wallet parser](https://github.com/dorianvp/uzw-parser).
 
 ### Wallet Ecosystem Overview
 
@@ -24,7 +23,7 @@ backend/library that generates their storage format. These wallets include:
 - [Zecwallet](./zecwallet/README.md) (Zecwallet-lite, zecwallet-light-cli, zecwallet-fullnode)
 - [Zingo](./zingo/README.md) (Zingo, Zingo-pc, Zingo-cli)
 - [eZcash](./ezcash/README.md)
-- [Zashi](./zashi/README.md)
+- [Zashi](./zashi/README.md) (zcash_client_sqlite)
 - [YWallet](./ywallet/README.md)
 - Zenith (coming soon)
 - Nighthawk (coming soon)
