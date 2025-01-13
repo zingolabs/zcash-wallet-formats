@@ -60,7 +60,9 @@ The data stored comes from the `LightWallet` struct, and is written as follows:
 ## Constants
 
 ```rust
-SECRET_KEY_SIZE = 32 (0x20)
+SECRET_KEY_SIZE: u8 = 32 (0x20)
+MERKLE_DEPTH: u8 = 32 (0x20)
+SER_V1: u8 = 1
 ```
 
 ## Types
@@ -230,6 +232,8 @@ Vector<
 
 ### `WalletTx`
 
+V5 transaction data.
+
 ```rust
 u64 // WalletTx struct version
 u32 // Block height
@@ -373,7 +377,7 @@ The base field of the Pallas and iso-Pallas curves, used to represent a
 unique nullifier for a note.
 
 ```rust
-[u8; 32] // Base field of the Pallas and iso-Pallas curves
+pallas::Base // Base field of the Pallas and iso-Pallas curves
 ```
 
 ### `OrchardNoteData`
@@ -444,7 +448,7 @@ A key used to derive Nullifiers from Notes.
 [Orchard Key Components](https://zips.z.cash/protocol/nu5.pdf#orchardkeycomponents).
 
 ```rust
-[u8; 32] // pallas::Base
+pallas::Base
 ```
 
 ### `orchard::CommitIvkRandomness`
@@ -461,12 +465,97 @@ A key used to derive Nullifiers from Notes.
 [u8; 32]
 ```
 
+### `pallas::Base`
+
+```rust
+[u8; 32]
+```
+
 ### `WalletZecPriceInfo`
 
 ```rust
 u64 // WalletZecPriceInfo struct version
 Option<u64> // Last historical prices fetched at (timestamp)
 u64 // Historical prices retry count
+```
+
+### `BridgeTree<H = MerkleHashOrchard, Depth = MERKLE_DEPTH>`
+
+```rust
+u64 // BridgeTree struct version
+
+Vector<MerkleBridge> // Prior bridges
+
+Option<MerkleBridge> // Current bridge
+
+// Witnessed indices. A map from positions for which we wish to be able to compute an authentication path to index in the bridges vector.
+Vector<
+    u64 // Position
+    u64 // Index
+>
+
+Vector<Checkpoint> // Checkpoints
+u64 // Max checkpoints
+```
+
+### `MerkleBridge`
+
+```rust
+SER_V1
+
+Option<u64> // Prior position. The position of the final leaf in the frontier of the bridge that this bridge is the successor of.
+
+// Bridge auth fragments
+Vector<
+    u64 // Position
+    AuthFragment
+>
+
+NonEmptyFrontier<MerkleHashOrchard>
+```
+
+### `AuthFragment`
+
+```rust
+u64 // Position
+u64 // Altitudes observed
+Vector<MerkleHashOrchard>
+```
+
+### `MerkleHashOrchard`
+
+```rust
+pallas::Base // Hash
+```
+
+### `NonEmptyFrontier<H>`
+
+```rust
+u64 // Position
+
+if (leaf is left) {
+    H // Left hash
+    Optional<None> // Right hash
+} else {
+    H // Left hash
+    Optional<H> // Right hash
+}
+
+Vector<H> // Frontier ommers
+```
+
+### `Checkpoint`
+
+```rust
+u64 // Bridge length
+u8 // Is witnessed (1 = true, 0 = false)
+Vector<u64> // Witnessed positions
+
+// The set of previously-witnessed positions that have had their witnesses removed during the period that this checkpoint is the current checkpoint
+Vector<
+    u64 // Position
+    u64 // Index
+>
 ```
 
 ## Important Information
