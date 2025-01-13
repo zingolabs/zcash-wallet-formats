@@ -473,4 +473,6 @@ u64 // Historical prices retry count
 
 ### Transparent Key Derivation
 
-Include this paper: https://github.com/BlockchainCommons/Research/blob/master/papers/bcr-2023-012-envelope-expression.md
+Unlike other wallets, Zecwallet always derives the scope (change) as `0` (external).
+
+WIP: Include this paper: https://github.com/BlockchainCommons/Research/blob/master/papers/bcr-2023-012-envelope-expression.md
