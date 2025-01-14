@@ -3,7 +3,7 @@
 Zcash-devtool is able to inspect the following types:
 
 - `bip0039::Mnemonic` (A mnemonic phrase)
-- `ZcashAddress`. This includes the following addres kinds:
+- `ZcashAddress`. This includes the following address kinds:
 
   - `Sprout([u8; 64])`
   - `Sapling([u8; 43])`
