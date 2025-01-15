@@ -42,7 +42,7 @@ change.
 using hardened derivation for `address_index`:
 
 ```
-m/purpose'/coint_type'/account'/address_index
+m/purpose'/coin_type'/account'/address_index
 ```
 
 Note that the primary derivation path is defined in [ZIP-32](https://zips.z.cash/zip-0032).
