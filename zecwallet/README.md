@@ -44,18 +44,18 @@ Note: all numeric types are written as little endian.
 
 The data stored comes from the `LightWallet` struct, and is written as follows:
 
-| Keyname           | Value Type                                | Description                 |
-| ----------------- | ----------------------------------------- | --------------------------- |
-| Version           | u64                                       | LightWallet struct version. |
-| Keys              | [`Keys`](#keys)                           | Wallet keys.                |
-| Blocks            | Vector<[`BlockData`](#blockdata)>         | Blocks.                     |
-| Transactions      | [`WalletTxns`](#wallettxns)               | Transactions.               |
-| Chain Name        | String                                    | Chain name.                 |
-| Wallet Options    | [`WalletOptions`](#walletoptions)         | Options.                    |
-| Birthday          | u64                                       | Wallet birthday height.     |
-| Verified Tree     | Option<TreeState>                         | Commitment tree state.      |
-| Price             | WalletZecPriceInfo                        | Price information.          |
-| Orchard Witnesses | Option<BridgeTree<MerkleHashOrchard, 32>> | Orchard Witnesses Tree.     |
+| Keyname                             | Value Type                                | Description                 |
+| ----------------------------------- | ----------------------------------------- | --------------------------- |
+| Version                             | u64                                       | LightWallet struct version. |
+| Keys                                | [`Keys`](#keys)                           | Wallet keys.                |
+| Blocks                              | Vector<[`BlockData`](#blockdata)>         | Blocks.                     |
+| Transactions                        | [`WalletTxns`](#wallettxns)               | Transactions.               |
+| Chain Name                          | String                                    | Chain name.                 |
+| Wallet Options                      | [`WalletOptions`](#walletoptions)         | Options.                    |
+| <span id="birthday">Birthday</span> | u64                                       | Wallet birthday height.     |
+| Verified Tree                       | Option<TreeState>                         | Commitment tree state.      |
+| Price                               | WalletZecPriceInfo                        | Price information.          |
+| Orchard Witnesses                   | Option<BridgeTree<MerkleHashOrchard, 32>> | Orchard Witnesses Tree.     |
 
 ## Constants
 
