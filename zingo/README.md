@@ -2,7 +2,8 @@
 
 ## Background information
 
-Zingolib uses a bespoke format for storing wallet data on disk.
+Zingo/Zingolib is a fork of [Zecwallet](../zecwallet/README.md) and, as a result, many structures are similar.
+It uses a bespoke format for storing wallet data on disk.
 
 The top-level functions used to write/read wallet data is in `zingolib/src/wallet/disk.rs#48`.
 
