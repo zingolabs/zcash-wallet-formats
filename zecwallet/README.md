@@ -57,6 +57,13 @@ The data stored comes from the `LightWallet` struct, and is written as follows:
 | Price                               | WalletZecPriceInfo                        | Price information.          |
 | Orchard Witnesses                   | Option<BridgeTree<MerkleHashOrchard, 32>> | Orchard Witnesses Tree.     |
 
+## Encryption
+
+Private keys are encrypted using the `secretbox` Rust crate, by getting the doublesha256 of the user's password and
+a randomly generated nonce. The seal function, used to encrypt the private key,
+is `crypto_secretbox_xsalsa20poly1305`, a particular combination of Salsa20 and Poly1305 specified in [Cryptography in NaCl](https://nacl.cr.yp.to/valid.html).
+For more information, read https://cr.yp.to/highspeed/naclcrypto-20090310.pdf.
+
 ## Constants
 
 ```rust
@@ -102,18 +109,39 @@ String // Orchard commitment tree state
 
 ### `WalletOKey`
 
-A struct that holds orchard private keys or viewing keys
+A struct that holds orchard private keys or viewing keys.
+
+```rust
+u64 // WalletOKey struct version
+WalletOKeyType // keytype
+u8 // Locked (1 = true, 0 = false)
+Option<u32> // HD Key number. Only present if it is an HD key
+orchard::FullViewingKey // Full viewing key
+Option<orchard::SpendingKey> // Spending key
+
+// Encrypted Spending Key
+Option<Vector<u8>> // Output of secretbox::seal(secret_key, nonce, doublesha256(password)). Check `Encryption` for more information
+Option<Vector<u8>> // Nonce
+```
 
 ### `WalletZKey`
 
-A struct that holds z-address private keys or viewing keys
+A struct that holds z-address private keys or viewing keys.
+
+```rust
+u64 // WalletZKey struct version
+WalletZKeyType // keytype
+u8 // Locked (1 = true, 0 = false)
+Option<ExtendedSpendingKey> // Extended Spending key
+ExtendedFullViewingKey // Extended Full Viewing key
+Option<u32> // HD Key number. Only present if it is an HD key
+
+// Encrypted Extended Spending Key
+Option<Vector<u8>> // Output of secretbox::seal(secret_key, nonce, doublesha256(password)). Check `Encryption` for more information
+Option<Vector<u8>> // Nonce
+```
 
 ### `WalletTKey`
-
-Private keys are encrypted using the `secretbox` Rust crate, by getting the doublesha256 of the user's password and
-a randomly generated nonce. The seal function, used to encrypt the private key,
-is `crypto_secretbox_xsalsa20poly1305`, a particular combination of Salsa20 and Poly1305 specified in [Cryptography in NaCl](https://nacl.cr.yp.to/valid.html).
-For more information, read https://cr.yp.to/highspeed/naclcrypto-20090310.pdf.
 
 ```rust
 u64 // WalletTKey struct version
@@ -126,7 +154,19 @@ Option<Vector<u8>> // Encrypted Secret Key. Output of secretbox::seal(secret_key
 Option<Vector<u8>> // Nonce
 ```
 
-### WalletTKeyType
+### `WalletZKeyType`
+
+```rust
+u32 // 0 = HD key, 1 = Imported Spending key, 2 = Imported Viewing Key
+```
+
+### `WalletOKeyType`
+
+```rust
+u32 // 0 = HD key, 1 = Imported Spending key, 2 = Imported Full Viewing Key
+```
+
+### `WalletTKeyType`
 
 ```rust
 u32 // 0 = HD key, 1 = imported key
@@ -289,6 +329,25 @@ sapling::FullViewingKey // [u8; 96]. Full viewing key
 [u8; 32] // Diversifier key
 ```
 
+### `ExtendedSpendingKey`
+
+```rust
+u8 // Depth
+[u8; 4] // Parent FVK tag
+u32 // Child index
+[u8; 32] // Chain code
+sapling::ExpandedSpendingKey // [u8; 96]. Spending key
+[u8; 32] // Diversifier key
+```
+
+### `sapling::ExpandedSpendingKey`
+
+```rust
+[u64; 4] // ask
+[u64; 4] // nsk
+[u8; 32] // ovk
+```
+
 ### `sapling::FullViewingKey`
 
 ```rust
@@ -430,6 +489,12 @@ Result is of length [u8; 96]
 orchard::SpendValidatingKey // ak
 orchard::NullifierDerivingKey // nk
 orchard::CommitIvkRandomness // rivk
+```
+
+### `orchard::SpendingKey`
+
+```rust
+[u8; 32] // sk
 ```
 
 ### `orchard::SpendValidatingKey`
