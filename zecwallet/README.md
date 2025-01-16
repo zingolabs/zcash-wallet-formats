@@ -88,7 +88,7 @@ bytes // utf8 bytes
 ```rust
 u64 // Keys struct version
 u8 // Encrypted (1 = true, 0 = false)
-[u8; 48] // Encrypted seed bytes
+[u8; 48] // Encrypted seed bytes. Check the `Encryption` section.
 u8 // Nonce
 [u8; 32] // Seed
 Vector<WalletOKey> // Orchard keys
@@ -114,13 +114,13 @@ A struct that holds orchard private keys or viewing keys.
 ```rust
 u64 // WalletOKey struct version
 WalletOKeyType // keytype
-u8 // Locked (1 = true, 0 = false)
+u8 // Locked/encrypted (1 = true, 0 = false)
 Option<u32> // HD Key number. Only present if it is an HD key
 orchard::FullViewingKey // Full viewing key
 Option<orchard::SpendingKey> // Spending key
 
 // Encrypted Spending Key
-Option<Vector<u8>> // Output of secretbox::seal(secret_key, nonce, doublesha256(password)). Check `Encryption` for more information
+Option<Vector<u8>> // Output of secretbox::seal(secret_key, nonce, doublesha256(password)). Check `Encryption` for more information.
 Option<Vector<u8>> // Nonce
 ```
 
@@ -131,13 +131,13 @@ A struct that holds z-address private keys or viewing keys.
 ```rust
 u64 // WalletZKey struct version
 WalletZKeyType // keytype
-u8 // Locked (1 = true, 0 = false)
+u8 // Locked/encrypted (1 = true, 0 = false)
 Option<ExtendedSpendingKey> // Extended Spending key
 ExtendedFullViewingKey // Extended Full Viewing key
 Option<u32> // HD Key number. Only present if it is an HD key
 
 // Encrypted Extended Spending Key
-Option<Vector<u8>> // Output of secretbox::seal(secret_key, nonce, doublesha256(password)). Check `Encryption` for more information
+Option<Vector<u8>> // Output of secretbox::seal(secret_key, nonce, doublesha256(password)). Check `Encryption` for more information.
 Option<Vector<u8>> // Nonce
 ```
 
@@ -146,11 +146,11 @@ Option<Vector<u8>> // Nonce
 ```rust
 u64 // WalletTKey struct version
 WalletTKeyType // keytype
-u8 // Locked (1 = true, 0 = false)
+u8 // Locked/encrypted (1 = true, 0 = false)
 Option<SecretKey> // Secret key
 String // Address
 Option<u32> // HD Key number. Only present if it is an HD key
-Option<Vector<u8>> // Encrypted Secret Key. Output of secretbox::seal(secret_key, nonce, doublesha256(password))
+Option<Vector<u8>> // Encrypted Secret Key. Output of secretbox::seal(secret_key, nonce, doublesha256(password)). Check the `Encryption` section.
 Option<Vector<u8>> // Nonce
 ```
 
