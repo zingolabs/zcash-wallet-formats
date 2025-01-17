@@ -24,7 +24,24 @@ For (3), it may not be migrated but could be used for reference purposes during 
 
 ## Non-recoverable data:
 
-- Imported Keys
+- Imported Keys (WIP: Check which methods used to add each key stores them on disk. Add != Load)
+
+  - Sprout Spending Keys (WIP: Do we really want to migrate Sprout keys? Or should we just ignore them, so that users move their funds out of the Sprout pool?)
+  - Sprout Viewing Keys
+  - Sprout Payment Addresses (includes Sprout Payment Address and Receiving Key)
+  - Transparent Secret Keys
+  - Transparent Public Keys
+  - CScript (WIP)
+  - Watch Only T-Addresses (WIP: Also CScript?)
+  - Sapling Spending Keys
+  - Sapling Extended Spending Keys
+  - Sapling Extended Full Viewing Keys
+  - Sapling Payment Address (this includes Sapling IVK)
+  - Metadata for Sapling IVK (Associates a [`CKeyMetadata`](./README.md#CKeyMetadata). Expands to creation time, HD/ZIP-32 keypath, and fingerprint)
+  - Orchard Spending Keys
+  - Orchard Raw Addresses (includes an Orchard IVK)
+  - Unified Full Viewing Keys
+
 - Seed Phrase
 - Address book information
 - Network information (id)
