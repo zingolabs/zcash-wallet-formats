@@ -45,6 +45,18 @@ using hardened derivation for `address_index`:
 m/purpose'/coin_type'/account'/address_index
 ```
 
+The following text is taken from [this Github issue](https://github.com/zcash/zips/issues/675).
+
+When Sapling was released, `zcashd` implemented HD derivation of Sapling addresses in a fashion that was inconsistent with HD derivation according to BIP 44.
+In version 4.7.0 `zcashd` introduced HD derivation from a mnemonic seed according to BIP 32 and BIP 44, with a nonstandard accommodation in the generation
+of the mnemonic seed to make it possible to also reproduce previously derived Sapling keys. This accommodation needs to be documented,
+along with the process for correct discovery of such previously-derived Sapling keys.
+
+In addition, in order to continue allow `zcashd`'s legacy transparent APIs such as `getnewaddress` and `z_getnewaddress` to continue to function, `zcashd` introduced
+the idea of the `ZCASH_LEGACY_ACCOUNT` constant for use in address derivation consistent with the previous semantics of those methods.
+Derivation of keys under `ZCASH_LEGACY_ACCOUNT` is also nonstandard with respect to BIP 32 and BIP 44, and so needs to be properly documented here in order
+to make it possible for other wallet implementations to correctly rediscover funds controlled by keys derived using this mechanism.
+
 Note that the primary derivation path is defined in [ZIP-32](https://zips.z.cash/zip-0032).
 
 ## Serialization framework overview
