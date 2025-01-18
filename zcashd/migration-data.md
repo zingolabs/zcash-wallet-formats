@@ -26,7 +26,7 @@ For (3), it may not be migrated but could be used for reference purposes during 
 
 - Imported Keys (WIP: Check which methods used to add each key stores them on disk. Add != Load)
 
-  - Sprout Spending Keys (WIP: Do we really want to migrate Sprout keys? Or should we just ignore them, so that users move their funds out of the Sprout pool?)
+  - Sprout Spending Keys (WIP: This is taken care of by `z_setmigration`)
   - Sprout Viewing Keys
   - Sprout Payment Addresses (includes Sprout Payment Address and Receiving Key)
   - Transparent Secret Keys
