@@ -558,6 +558,13 @@ Bech32m(
 
 ## Encryption
 
+WARNING: Wallet encryption is disabled. See the following for more information:
+
+- https://zcash.github.io/zcash/user/security-warnings.html
+- https://github.com/zcash/zcash/issues/1552
+- https://github.com/zcash/zcash/pull/1569
+- https://github.com/zcash/zcash/issues/1528
+
 Private key encryption, along with other sensitive data, is done based on a CMasterKey, which holds a salt and random encryption key.
 
 CMasterKeys are encrypted using AES-256-CBC[^4] using a key derived using derivation method nDerivationMethod
