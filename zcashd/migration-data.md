@@ -24,9 +24,11 @@ For (3), it may not be migrated but could be used for reference purposes during 
 
 ## Non-recoverable data:
 
+Notes: Sprout Keys are taken care of by `z_setmigration`. They shouldn't be migrated.
+
 - Imported Keys (WIP: Check which methods used to add each key stores them on disk. Add != Load)
 
-  - Sprout Spending Keys (WIP: This is taken care of by `z_setmigration`)
+  - Sprout Spending Keys
   - Sprout Viewing Keys
   - Sprout Payment Addresses (includes Sprout Payment Address and Receiving Key)
   - Transparent Secret Keys
