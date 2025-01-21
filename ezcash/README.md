@@ -58,6 +58,24 @@ ZcashWallet --> Accounts
 Accounts --> Account
 HDWallets --> HDWallet
 
+Account --> ZcashAccount
+Account --> ZcashTransactions
+
+ZcashAccount --> #
+ZcashAccount --> BirthdayHeight
+ZcashAccount --> MaxTransparentIndex
+ZcashAccount --> UnifiedViewingKey
+ZcashAccount --> Seed
+ZcashAccount --> Mnemonic
+
+Seed --> ZcashNetwork
+Seed --> (base64)
+
+Mnemonic --> (phrase)
+Mnemonic --> (password)
+
+HDWallet --> BIP39Mnemonic
+
 ContactManager --> Contact
 
 Contact --> Collection
