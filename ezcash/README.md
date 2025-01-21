@@ -69,10 +69,10 @@ ZcashAccount --> Seed
 ZcashAccount --> Mnemonic
 
 Seed --> ZcashNetwork
-Seed --> (base64)
+Seed --> [base64]
 
-Mnemonic --> (phrase)
-Mnemonic --> (password)
+Mnemonic --> [phrase]
+Mnemonic --> [password]
 
 HDWallet --> BIP39Mnemonic
 
