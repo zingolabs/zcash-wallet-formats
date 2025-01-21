@@ -64,6 +64,8 @@ Account --> ZcashAccount
 Account --> ZcashTransactions
 
 ZcashAccount --> _seeBelow_
+ZcashTransaction --> TxId
+ZcashTransaction --> DateTimeOffset
 
 HDWallet --> BIP39Mnemonic
 
@@ -73,13 +75,14 @@ Contact --> Collection
 Contact --> IntKeyedAddressMap
 
 IntKeyedAddressMap --> AssignedSendingAddresses
+
 ```
 
 **`ZcashAccount`:**
 ```mermaid
 flowchart TB
 
-ZcashAccount --> #
+ZcashAccount --> Id
 ZcashAccount --> BirthdayHeight
 ZcashAccount --> MaxTransparentIndex
 ZcashAccount --> UnifiedViewingKey
