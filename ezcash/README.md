@@ -61,7 +61,7 @@ HDWallets --> HDWallet
 Account --> ZcashAccount
 Account --> ZcashTransactions
 
-ZcashAccount --> _see below_
+ZcashAccount --> _seeBelow_
 
 HDWallet --> BIP39Mnemonic
 
@@ -75,6 +75,8 @@ IntKeyedAddressMap --> AssignedSendingAddresses
 
 **`ZcashAccount`:**
 ```mermaid
+flowchart TB
+
 ZcashAccount --> #
 ZcashAccount --> BirthdayHeight
 ZcashAccount --> MaxTransparentIndex
