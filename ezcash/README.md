@@ -47,6 +47,8 @@ Note that the table representation may be harder to interpret due to the nesting
 | ZcashNetwork                                          | integer (0 OR 1)     | 0 = MainNet, 1 = TestNet                                             | 0 OR 1                                                                                                                                                                         |                                               |
 
 
+## eZCash Data Tree
+
 **Overall:**
 ```mermaid
 flowchart TB
