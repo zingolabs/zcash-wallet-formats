@@ -45,7 +45,7 @@ Note that the table representation may be harder to interpret due to the nesting
 | Decimal                                               | string               | pattern: "^-?\\d\u002B(\\.\\d\u002B)?$"                              | string                                                                                                                                                                         |                                               |
 | <span id="Bip39Mnemonic">Bip39Mnemonic</span>         | array (1 to N items) |                                                                      | [string (seed phrase), string (password)]                                                                                                                                      |                                               |
 | ZcashNetwork                                          | integer (0 OR 1)     | 0 = MainNet, 1 = TestNet                                             | 0 OR 1                                                                                                                                                                         |                                               |
-
+**Overall:**
 ```mermaid
 flowchart TB
 DataRoot --> ZcashWallet
@@ -61,6 +61,20 @@ HDWallets --> HDWallet
 Account --> ZcashAccount
 Account --> ZcashTransactions
 
+ZcashAccount --> _see below_
+
+HDWallet --> BIP39Mnemonic
+
+ContactManager --> Contact
+
+Contact --> Collection
+Contact --> IntKeyedAddressMap
+
+IntKeyedAddressMap --> AssignedSendingAddresses
+```
+
+**`ZcashAccount`:**
+```mermaid
 ZcashAccount --> #
 ZcashAccount --> BirthdayHeight
 ZcashAccount --> MaxTransparentIndex
@@ -73,13 +87,4 @@ Seed --> _base64_
 
 Mnemonic --> _phrase_
 Mnemonic --> _password_
-
-HDWallet --> BIP39Mnemonic
-
-ContactManager --> Contact
-
-Contact --> Collection
-Contact --> IntKeyedAddressMap
-
-IntKeyedAddressMap --> AssignedSendingAddresses
 ```
