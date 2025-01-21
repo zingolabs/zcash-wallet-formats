@@ -45,3 +45,12 @@ Note that the table representation may be harder to interpret due to the nesting
 | Decimal                                               | string               | pattern: "^-?\\d\u002B(\\.\\d\u002B)?$"                              | string                                                                                                                                                                         |                                               |
 | <span id="Bip39Mnemonic">Bip39Mnemonic</span>         | array (1 to N items) |                                                                      | [string (seed phrase), string (password)]                                                                                                                                      |                                               |
 | ZcashNetwork                                          | integer (0 OR 1)     | 0 = MainNet, 1 = TestNet                                             | 0 OR 1                                                                                                                                                                         |                                               |
+
+```mermaid
+flowchart TB
+DataRoot --> ZcashWallet
+DataRoot --> ContactManager
+DataRoot --> ExchangeRateRecord
+```
+
+```
