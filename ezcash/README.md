@@ -64,6 +64,8 @@ Account --> ZcashAccount
 Account --> ZcashTransactions
 
 ZcashAccount --> _seeBelow_
+
+ZcashTransactions --> ZcashTransaction
 ZcashTransaction --> TxId
 ZcashTransaction --> DateTimeOffset
 
