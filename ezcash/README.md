@@ -55,7 +55,7 @@ DataRoot --> ExchangeRateRecord
 ZcashWallet --> HDWallets
 ZcashWallet --> Accounts
 
-Account --> Account
+Accounts --> Account
 HDWallets --> HDWallet
 
 ContactManager --> Contact
