@@ -51,6 +51,17 @@ flowchart TB
 DataRoot --> ZcashWallet
 DataRoot --> ContactManager
 DataRoot --> ExchangeRateRecord
-```
 
+ZcashWallet --> HDWallets
+ZcashWallet --> Accounts
+
+Account --> Account
+HDWallets --> HDWallet
+
+ContactManager --> Contact
+
+Contact --> Collection
+Contact --> IntKeyedAddressMap
+
+IntKeyedAddressMap --> AssignedSendingAddresses
 ```
