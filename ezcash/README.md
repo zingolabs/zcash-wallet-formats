@@ -69,7 +69,7 @@ ZcashAccount --> Seed
 ZcashAccount --> Mnemonic
 
 Seed --> ZcashNetwork
-Seed --> [base64]
+Seed --> _base64_
 
 Mnemonic --> [phrase]
 Mnemonic --> [password]
