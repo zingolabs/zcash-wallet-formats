@@ -33,7 +33,7 @@ Notes: Sprout Keys are taken care of by `z_setmigration`. They shouldn't be migr
   - Sprout Payment Addresses (includes Sprout Payment Address and Receiving Key)
   - Transparent Secret Keys
   - Transparent Public Keys
-  - Redeem Scripts
+  - Scripts (P2SH redeem scripts, multisig scriptPubKeys and P2SH multisig scripts)
   - Watch Only T-Addresses (pubkey extracted from CScript)
   - Sapling Spending Keys
   - Sapling Extended Spending Keys
