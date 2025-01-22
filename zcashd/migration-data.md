@@ -26,15 +26,14 @@ For (3), it may not be migrated but could be used for reference purposes during 
 
 Notes: Sprout Keys are taken care of by `z_setmigration`. They shouldn't be migrated.
 
-- Imported Keys (WIP: Check which methods used to add each key stores them on disk. Add != Load)
-
+- Imported Keys
   - Sprout Spending Keys
   - Sprout Viewing Keys
   - Sprout Payment Addresses (includes Sprout Payment Address and Receiving Key)
   - Transparent Secret Keys
   - Transparent Public Keys
   - Scripts (P2SH redeem scripts, multisig scriptPubKeys and P2SH multisig scripts)
-  - Watch Only T-Addresses (pubkey extracted from CScript)
+  - Watch Only T-Addresses (pubkey extracted from a CScript)
   - Sapling Spending Keys
   - Sapling Extended Spending Keys
   - Sapling Extended Full Viewing Keys
@@ -43,7 +42,6 @@ Notes: Sprout Keys are taken care of by `z_setmigration`. They shouldn't be migr
   - Orchard Spending Keys
   - Orchard Raw Addresses (includes an Orchard IVK)
   - Unified Full Viewing Keys
-
 - Seed Phrase
 - Address book information
 - Network information (id)

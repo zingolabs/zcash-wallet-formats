@@ -167,7 +167,7 @@ Check out the full diff [here](./DIFF.md#v4)
 | **mnemonicphrase**               | `uint256` (seed fingerprint)                                    | [`MnemonicSeed`](#MnemonicSeed) (seed)                                                                       | Mnemonic phrase.                  |
 | **cmnemonicphrase**              | `uint256`                                                       | `std::vector<unsigned char>` (encrypted mnemonic seed. Check [Encryption](#encryption) for more information) | Encrypted mnemonic phrase.        |
 | **mnemonichdchain**              | -                                                               | [`CHDChainV5`](#CHDChainV5)                                                                                  | HD chain metadata.                |
-| recipientmapping\*               | `pair<uint256, CSerializeRecipientAddress>`                     | `string` (recipient)                                                                                         | Maps transaction to recipient UA. |
+| recipientmapping\*               | `pair<uint256, CSerializeRecipientAddress>`                     | `string` (recipient UA)                                                                                      | Maps transaction to recipient UA. |
 
 Check out the full diff [here](./DIFF.md#v5)
 
