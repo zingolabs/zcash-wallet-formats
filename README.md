@@ -4,6 +4,8 @@ This repository tracks the progress of a survey on wallet export formats, with a
 
 Some work related to parsing is being done in [the universal wallet parser](https://github.com/dorianvp/uzw-parser).
 
+See also [our spreadsheet collating this data](https://docs.google.com/spreadsheets/d/1MdahX4igppx7a4BdrcO5TGB2-mO1EtXrlKssypfEHUQ/edit?gid=0#gid=0).
+
 ### Wallet Ecosystem Overview
 
 The zcashd reference client is being deprecated, and this means that funds must be exported from the client and converted to other wallets.
