@@ -3,7 +3,10 @@
 ## Important Information
 
 [ZIP-400](https://zips.z.cash/zip-0400) documents the schema used for zcashd `v3.0.0-rc1`. Since then, the format has changed a bit.
-[This issue](https://github.com/zcash/zips/issues/964) also tracks ZIP-400's update.
+[zips#964](https://github.com/zcash/zips/issues/964) also tracks ZIP-400's update.
+
+There's also a document explaining what data / state needs to be migrated from `wallet.dat` to a future full node wallet [here](./migration-data.md).
+That document is more targeted torwards [zcash#3873](https://github.com/zcash/zcash/issues/6873).
 
 ## Background
 
