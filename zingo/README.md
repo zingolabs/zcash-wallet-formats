@@ -39,13 +39,24 @@ Vector<ReceiverSelection>
 ### `BlockData`
 
 ```rust
-
+i32 // Block height
+Vector<u8> // Block hash bytes
+SaplingCommitmentTree // Sapling note commitment tree
+u64 // BlockData struct version
+Vector<u8> // Encoded compact block (ecb)
 ```
 
 ### `TxMap`
 
 ```rust
-
+u64 // TxMap struct version
+Vector<
+    (
+        TxId,
+        TransactionRecord
+    )
+>
+Option<WitnessTrees>
 ```
 
 ### `WalletOptions`
@@ -72,7 +83,7 @@ Vector<ReceiverSelection>
 
 ```
 
-=================================================================
+---
 
 ### `UnifiedKeyStore`
 
@@ -100,6 +111,14 @@ if (has_spend_capability) {
 ### `UnifiedSpendingKey`
 
 ### `UnifiedFullViewingKey`
+
+### `SaplingCommitmentTree`
+
+### `TxId`
+
+### `TransactionRecord`
+
+### `WitnessTrees`
 
 ## Changes
 
