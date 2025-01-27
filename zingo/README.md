@@ -133,7 +133,7 @@ CompactSize<ufvk_bytes> // ufvk_bytes is a byte representation of the unified fu
 
 ### `SaplingCommitmentTree`
 
-A legacy `CommitmentTree` as an array of bytes. zIn code, this appears as a parametrized generic type, called CommitmentTree<sapling_crypto::Node, 32>.
+A legacy `CommitmentTree` as an array of bytes. In code, this appears as a parametrized generic type, called CommitmentTree<sapling_crypto::Node, 32>.
 
 ```rust
 Option<sapling::Node> // Left
