@@ -18,7 +18,7 @@ The overall schema looks as follows:
 | Blocks                              | Vector<[`BlockData`](#blockdata)>           | Last 100 blocks, used for reorgs.                       |
 | Transaction Metadata Set            | [`TxMap`](#txmap)                           | HashMap of all transactions in a wallet, keyed by txid. |
 | ChainType                           | String                                      |                                                         |
-| Wallet Options                      |                                             |                                                         |
+| Wallet Options                      | [`WalletOptions`](#walletoptions)           | Wallet Options.                                         |
 | <span id="birthday">Birthday</span> | u64                                         |                                                         |
 | Verified Tree                       | Option<[`TreeState`](#treestate)>           | Highest verified block                                  |
 | Price                               | [`WalletZecPriceInfo`](#walletzecpriceinfo) | Price information.                                      |
@@ -114,7 +114,9 @@ if (has_spend_capability) {
 ### `ReceiverSelection`
 
 ```rust
-
+u8 // ReceiverSelection struct VERSION = 1
+u8 // Receivers. Serialized as follows:
+// 0 0 0 0 0 (1 if transparent, else 0) (1 if sapling, else 0) (1 if orchard, else 0)
 ```
 
 ### `UnifiedSpendingKey`
