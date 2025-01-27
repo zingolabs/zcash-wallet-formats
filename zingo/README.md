@@ -13,7 +13,7 @@ The overall schema looks as follows:
 
 | Keyname                             | Value                                       | Description                                             |
 | ----------------------------------- | ------------------------------------------- | ------------------------------------------------------- |
-| LightWallet Version                 | u64 = 30                                    |                                                         |
+| LightWallet Version                 | u64 = 30                                    | LightWallet struct version.                             |
 | Keys                                | [`WalletCapability`](#walletcapability)     | Transaction Context Keys.                               |
 | Blocks                              | Vector<[`BlockData`](#blockdata)>           | Last 100 blocks, used for reorgs.                       |
 | Transaction Metadata Set            | [`TxMap`](#txmap)                           | HashMap of all transactions in a wallet, keyed by txid. |
@@ -30,7 +30,10 @@ The overall schema looks as follows:
 ### `WalletCapability`
 
 ```rust
-
+u8 // WalletCapability struct VERSION = 4
+u32 // Rejection address length
+UnifiedKeyStore // Stores spending or viewing keys
+Vector<ReceiverSelection>
 ```
 
 ### `BlockData`
@@ -68,6 +71,35 @@ The overall schema looks as follows:
 ```rust
 
 ```
+
+=================================================================
+
+### `UnifiedKeyStore`
+
+In-memory store for wallet spending or viewing keys.
+
+```rust
+u8 // UnifiedKeyStore struct VERSION = 0
+if (has_spend_capability) {
+    u8 // KEY_TYPE_SPEND = 2
+    UnifiedSpendingKey // Unified spending key
+} else if (has_view_capability) {
+    u8 // KEY_TYPE_VIEW = 1
+    UnifiedFullViewingKey // Unified full viewing key
+} else if (empty_capability) {
+    u8 // KEY_TYPE_EMPTY = 0
+}
+```
+
+### `ReceiverSelection`
+
+```rust
+
+```
+
+### `UnifiedSpendingKey`
+
+### `UnifiedFullViewingKey`
 
 ## Changes
 
