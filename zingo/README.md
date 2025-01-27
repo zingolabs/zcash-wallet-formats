@@ -70,19 +70,26 @@ Option<u32> // Transaction filter size
 ### `TreeState`
 
 ```rust
-
+String // Network name: "main" or "test"
+u64 // Block height
+String // Block ID (hash)
+u32 // Unix epoch time when the block was mined
+String // Sapling commitment tree state
+String // Orchard commitment tree state
 ```
 
 ### `WalletZecPriceInfo`
 
 ```rust
-
+u64 // WalletZecPriceInfo struct version
+Option<u64> // Last historical prices fetched at (timestamp)
+u64 // Historical prices retry count
 ```
 
 ### `Mnemonic`
 
 ```rust
-
+u32 // Account index
 ```
 
 ---
