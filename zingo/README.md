@@ -62,7 +62,9 @@ Option<WitnessTrees>
 ### `WalletOptions`
 
 ```rust
-
+u64 // WalletOptions struct version
+u8 // Memo download option (0 = No memos, 1 = Wallet memos, 2 = All memos)
+Option<u32> // Transaction filter size
 ```
 
 ### `TreeState`
