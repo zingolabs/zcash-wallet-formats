@@ -127,7 +127,23 @@ CompactSize<usk_bytes> // usk_bytes is a byte representation of the unified spen
 
 ### `UnifiedFullViewingKey`
 
+```rust
+CompactSize<ufvk_bytes> // ufvk_bytes is a byte representation of the unified full viewing key. WIP: Explain what data is included.
+```
+
 ### `SaplingCommitmentTree`
+
+A legacy `CommitmentTree` as an array of bytes. zIn code, this appears as a parametrized generic type, called CommitmentTree<sapling_crypto::Node, 32>.
+
+```rust
+Option<sapling::Node> // Left
+Option<sapling::Node> // Right
+
+// Parents
+Vector<
+    Option<sapling::Node>
+>
+```
 
 ### `TxId`
 
@@ -154,6 +170,8 @@ if (S < 253) {
 }
 T
 ```
+
+### `sapling::Node`
 
 ## Changes
 
