@@ -147,7 +147,44 @@ Vector<
 
 ### `TxId`
 
+The identifier for a Zcash transaction.
+
+- For v1-4 transactions, this is a double-SHA-256 hash of the encoded transaction.
+  This means that it is malleable, and only a reliable identifier for transactions that have been mined.
+- For v5 transactions onwards, this identifier is derived only from "effecting" data,
+  which means that it is not malleable, and is non-malleable in all contexts.
+
+```rust
+[u8; 32] // See above
+```
+
 ### `TransactionRecord`
+
+```rust
+u64 // TransactionRecord struct version
+i32 // Block height
+u8 // 1 = Confirmed, 0 = Unconfirmed
+u64 // Tx Timestampt (datetime)
+TxId // Transaction ID
+Vector<SaplingNote> // Sapling notes
+Vector<OrchardNote> // Orchard notes
+Vector<TransparentOutput> // Transparent outputs
+
+// The following fields come from the `value_spent_by_pool` function:
+u64 // Total Transparent value spent
+u64 // Total Sapling value spent
+u64 // Total Orchard value spent
+
+Vector<OutgoingTxData> // Outgoing transaction metadata
+
+u8 = 0 // REMOVED. Previously `full_tx_scanned field`
+
+Option<f64> // Price of Zec when this Tx was created
+
+Vector<sapling::Nullifier> // Spent Sapling nullifiers
+Vector<orchard::Nullifier> // Spent Orchard nullifiers
+
+```
 
 ### `WitnessTrees`
 
@@ -172,6 +209,18 @@ T
 ```
 
 ### `sapling::Node`
+
+### `SaplingNote`
+
+### `OrchardNote`
+
+### `TransparentOutput`
+
+### `OutgoingTxData`
+
+### `sapling::Nullifier`
+
+### `orchard::Nullifier`
 
 ## Changes
 
