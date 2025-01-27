@@ -121,6 +121,10 @@ u8 // Receivers. Serialized as follows:
 
 ### `UnifiedSpendingKey`
 
+```rust
+CompactSize<usk_bytes> // usk_bytes is a byte representation of the unified spending key. WIP: Explain what data is included.
+```
+
 ### `UnifiedFullViewingKey`
 
 ### `SaplingCommitmentTree`
@@ -130,6 +134,26 @@ u8 // Receivers. Serialized as follows:
 ### `TransactionRecord`
 
 ### `WitnessTrees`
+
+### `CompactSize<S, T>`
+
+Writes the provided usize 'S' in compact form, and then 'T'.
+
+```rust
+if (S < 253) {
+    u8 // S
+} else if (S < 0xFFFF) {
+    u8 = 253
+    u16 // S
+} else if (S < 0xFFFFFFFF) {
+    u8 = 254
+    u32 // S
+} else {
+    u8 = 255
+    u64 // S
+}
+T
+```
 
 ## Changes
 
