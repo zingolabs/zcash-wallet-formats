@@ -94,6 +94,15 @@ u32 // Account index
 
 ---
 
+### `String`
+
+Strings are written as len + utf8.
+
+```rust
+u64 // length
+bytes // utf8 bytes
+```
+
 ### `UnifiedKeyStore`
 
 In-memory store for wallet spending or viewing keys.
@@ -280,17 +289,112 @@ Option<i32> // If the funds are spent, the height at which they were spent
 
 ### `OutgoingTxData`
 
+```rust
+CompactSize<u64 = 0> // OutgoingTxData struct version
+
+if (recipient.is_ua) {
+    u64 // Unified address length
+    String // Unified address
+} else {
+    u64 // Recipient address length
+    String // Recipient address
+}
+
+u64 // Amount to the receiver
+MemoBytes // Memo
+Option<
+    CompactSize<u64> // Output index
+>
+```
+
 ### `sapling::Nullifier`
 
 ### `orchard::Nullifier`
 
-### `sapling::ShardTree`
+### `sapling::ShardTree` (WIP: How are generics used?)
 
 In code, this appears as a parametrized generic type, called ShardTree<MemoryShardStore<Node, BlockHeight>, COMMITMENT_TREE_LEVELS, MAX_SHARD_LEVEL>.
 
-### `orchard::ShardTree`
+```rust
+// Shards (Memory shard store)
+Vector< // Shard roots
+    u8 // Root level
+    u64 // Root index
+
+    // Shard root
+    PrunableTree<orchard::Node>
+>
+
+// Checkpoints
+Vector<
+    u32 // Checkpoint id
+
+    if (tree_state.is_empty) {
+        u8 = 0
+    } else if (tree_state.at_position) {
+        u8 = 1
+        u64 // Position
+    }
+
+    Vector<u8> // Marks removed (Positions)
+>
+PrunableTree<orchard::Node> // Shard (Cap)
+```
+
+### `orchard::ShardTree` (WIP: How are generics used?)
 
 In code, this appears as a parametrized generic type, called ShardTree<MemoryShardStore<MerkleHashOrchard, BlockHeight>, COMMITMENT_TREE_LEVELS, MAX_SHARD_LEVEL>.
+
+```rust
+// Shards (Memory shard store)
+Vector< // Shard roots
+    u8 // Root level
+    u64 // Root index
+
+    // Shard root
+    PrunableTree<orchard::Node>
+>
+
+// Checkpoints
+Vector<
+    u32 // Checkpoint id
+
+    if (tree_state.is_empty) {
+        u8 = 0
+    } else if (tree_state.at_position) {
+        u8 = 1
+        u64 // Position
+    }
+
+    Vector<u8> // Marks removed (Positions)
+>
+PrunableTree<orchard::Node> // Shard (Cap)
+```
+
+### `PrunableTree<H>`
+
+```rust
+u8 // SER_V1 = 1
+
+if (tree.is_parent) {
+    u8 // PARENT_TAG = 2
+    Option<H> // ann
+    PrunableTree<H> // left
+    PrunableTree<H> // right
+} else if (tree.is_leaf) {
+    u8 // LEAF_TAG = 1
+    orchard::Node // Value
+    RetentionFlags // Retention flags
+} else if (tree.is_nil) {
+    u8 // NIL_TAG = 0
+}
+```
+
+### `RetentionFlags`
+
+```rust
+u8 // EPHEMERAL = 0b00000000, CHECKPOINT = 0b00000001, MARKED = 0b00000010, REFERENCE = 0b00000100
+```
 
 ### `ConfirmationStatus`
 
