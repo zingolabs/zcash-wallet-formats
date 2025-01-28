@@ -56,6 +56,9 @@ DataRoot --> ZcashWallet
 DataRoot --> ContactManager
 DataRoot --> ExchangeRateRecord
 
+ExchangeRateRecord --> TradingPair
+ExchangeRateRecord --> RateRow["(timestamp, exchangeRate)[]"]
+
 ZcashWallet --> HDWallets
 ZcashWallet --> Accounts
 
@@ -70,15 +73,16 @@ ZcashAccount --> _seeBelow_
 ZcashTransactions --> ZcashTransaction
 ZcashTransaction --> TxId
 ZcashTransaction --> DateTimeOffset
+ZcashTransaction --> MutableMemo
+ZcashTransaction --> ExpiredUnmined
 
 HDWallet --> BIP39Mnemonic
 
 ContactManager --> Contact
 
-Contact --> Collection
-Contact --> IntKeyedAddressMap
-
-IntKeyedAddressMap --> AssignedSendingAddresses
+Contact --> Name
+Contact --> ReceivingAddresses["Receiving addresses"]
+Contact --> AssignedAddresses["Addresses shared with the contact, indexed by account"]
 
 ```
 
@@ -90,8 +94,11 @@ ZcashAccount --> Id
 ZcashAccount --> BirthdayHeight
 ZcashAccount --> MaxTransparentIndex
 ZcashAccount --> UnifiedViewingKey
-ZcashAccount --> Seed
-ZcashAccount --> Mnemonic
+ZcashAccount --> HDDerivation
+
+HDDerivation --> Seed
+HDDerivation --> Mnemonic
+HDDerivation --> AccountIndex
 
 Seed --> ZcashNetwork
 Seed --> _base64_
