@@ -220,7 +220,7 @@ T
 jubjub::Base
 ```
 
-### `SaplingNote`
+### `SaplingNote` (WIP: How are generics used?)
 
 ```rust
 u8 // VERSION
@@ -240,7 +240,25 @@ u8 // Have spending key (1 = true, 0 = false)
 u32 // If have, output index, else u32::MAX
 ```
 
-### `OrchardNote`
+### `OrchardNote` (WIP: How are generics used?)
+
+```rust
+u8 // VERSION
+diversifier // WIP
+()
+Option<u64> // Witnessed position
+Option<sapling::Nullifier>
+Option<
+    TxId // Transaction id
+    ConfirmationStatus // Status
+>
+
+Option<MemoBytes>
+
+u8 // Is change (1 = true, 0 = false)
+u8 // Have spending key (1 = true, 0 = false)
+u32 // If have, output index, else u32::MAX
+```
 
 ### `TransparentOutput`
 
