@@ -188,6 +188,12 @@ Vector<orchard::Nullifier> // Spent Orchard nullifiers
 
 ### `WitnessTrees`
 
+```rust
+u8 // VERSION = 0
+sapling::ShardTree // Witness tree Sapling
+orchard::ShardTree // Witness tree Orchard
+```
+
 ### `CompactSize<S, T>`
 
 Writes the provided usize 'S' in compact form, and then 'T'.
@@ -210,7 +216,29 @@ T
 
 ### `sapling::Node`
 
+```rust
+jubjub::Base
+```
+
 ### `SaplingNote`
+
+```rust
+u8 // VERSION
+diversifier // WIP
+()
+Option<u64> // Witnessed position
+Option<sapling::Nullifier>
+Option<
+    TxId // Transaction id
+    ConfirmationStatus // Status
+>
+
+Option<MemoBytes>
+
+u8 // Is change (1 = true, 0 = false)
+u8 // Have spending key (1 = true, 0 = false)
+u32 // If have, output index, else u32::MAX
+```
 
 ### `OrchardNote`
 
@@ -221,6 +249,38 @@ T
 ### `sapling::Nullifier`
 
 ### `orchard::Nullifier`
+
+### `sapling::ShardTree`
+
+In code, this appears as a parametrized generic type, called ShardTree<MemoryShardStore<Node, BlockHeight>, COMMITMENT_TREE_LEVELS, MAX_SHARD_LEVEL>.
+
+### `orchard::ShardTree`
+
+In code, this appears as a parametrized generic type, called ShardTree<MemoryShardStore<MerkleHashOrchard, BlockHeight>, COMMITMENT_TREE_LEVELS, MAX_SHARD_LEVEL>.
+
+### `ConfirmationStatus`
+
+```rust
+u8 // ConfirmationStatus struct VERSION
+
+if (calculated) {
+    u8 = 0
+} else if (transmitted) {
+    u8 = 1
+} else if (mempool) {
+    u8 = 2
+} else if (confirmed) {
+    u8 = 3
+}
+
+u32 // height
+```
+
+### `MemoBytes`
+
+```rust
+[u8; 512]
+```
 
 ## Changes
 
