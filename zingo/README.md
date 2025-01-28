@@ -177,7 +177,7 @@ u64 // Total Orchard value spent
 
 Vector<OutgoingTxData> // Outgoing transaction metadata
 
-u8 = 0 // REMOVED. Previously `full_tx_scanned field`
+u8 = 0 // REMOVED. Previously `full_tx_scanned` field
 
 Option<f64> // Price of Zec when this Tx was created
 
@@ -245,7 +245,7 @@ u32 // If have, output index, else u32::MAX
 ```rust
 u8 // VERSION
 diversifier // WIP
-()
+() // REMOVED. Previously `full_tx_scanned` field
 Option<u64> // Witnessed position
 Option<sapling::Nullifier>
 Option<
@@ -261,6 +261,22 @@ u32 // If have, output index, else u32::MAX
 ```
 
 ### `TransparentOutput`
+
+```rust
+u64 // TransparentOutput struct version
+u32 // Address length
+Vector<u8> // Address
+
+TxId // Transaction id
+
+u64 // Address index
+u64 // Value
+i32 = 0 // REMOVED. Previously `height` field
+
+Vector<u8> // Script
+Option<TxId> // If the funds are spent, the TxId
+Option<i32> // If the funds are spent, the height at which they were spent
+```
 
 ### `OutgoingTxData`
 
