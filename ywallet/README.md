@@ -20,18 +20,17 @@ version INTEGER NOT NULL
 id_account: INTEGER PK
 name: TEXT NOT NULL
 seed: TEXT
-account_index: INTEGER NOT NULL
-spending_key: TEXT
-incoming_viewing_key: TEXT NOT NULL UNIQUE
+aindex: INTEGER NOT NULL
+sk: TEXT
+ivk: TEXT NOT NULL UNIQUE
 address: TEXT NOT NULL,
-diversifiers: ARRAY(INTEGER)
 ```
 
 ### Transaction
 
 ```rust
 id_tx: INTEGER PK
-account: Account NOT NULL
+account: INTEGER NOT NULL // Reference to Account
 txid: BLOB NOT NULL
 height: INTEGER NOT NULL
 timestamp: INTEGER NOT NULL
@@ -39,6 +38,7 @@ value: INTEGER NOT NULL
 address: TEXT
 memo: TEXT
 tx_index: INTEGER
+messages: BLOB
 ```
 
 With:
