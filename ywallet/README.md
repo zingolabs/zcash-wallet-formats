@@ -2,6 +2,10 @@
 
 YWallet stores it's data in an sqlite database.
 
+Here's an ER Diagram of the database schema:
+
+![ER Diagram](./assets/images/ywallet-erd-dbvis.png)
+
 ## Objects Stored
 
 ### Account
